@@ -21,6 +21,8 @@ helm:
       enabled: true
       hostname: "nginx.apps.ocelotspot.com"
       tls: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-staging
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
