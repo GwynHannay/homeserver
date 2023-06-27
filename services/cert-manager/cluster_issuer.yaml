@@ -18,3 +18,24 @@ spec:
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-token
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: gwyn@hannay.id.au
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+        name: letsencrypt-prod
+    solvers:
+      - selector:
+          dnsZones:
+            - "ocelotspot.com"
+        dns01:
+          cloudflare:
+            email: gwyn@hannay.id.au
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token
