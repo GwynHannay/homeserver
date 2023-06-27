@@ -19,7 +19,7 @@ helm:
       type: ClusterIP
     ingress:
       enabled: true
-      hostname: "nginx.ocelotspot.com"
+      hostname: "nginx.apps.ocelotspot.com"
       tls: true
   # Override immutable resources. This could be dangerous.
   force: false
