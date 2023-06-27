@@ -14,7 +14,12 @@ helm:
   version: 4.5.4
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
-  # values:
+  values:
+    speaker:
+      psp:
+        enabled: false
+      secretName: metallb-memberlist
+      secretKey: secretkey
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
