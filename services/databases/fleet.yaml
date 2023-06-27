@@ -17,10 +17,11 @@ helm:
   values:
     global:
       storageClass: longhorn
-    auth:
-      existingSecret: "pg-creds"
-      secretKeys:
-        adminPasswordKey: "pg-root-pass"
+      postgresql:
+        auth:
+          existingSecret: "pg-creds"
+          secretKeys:
+            adminPasswordKey: "pg-root-pass"
     audit:
       logTimezone: "Australia/Perth"
     # tls:
