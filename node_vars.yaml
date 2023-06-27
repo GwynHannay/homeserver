@@ -1,0 +1,17 @@
+---
+k8s_config: "~/.kube/config"
+
+rke2_config:
+  kube-scheduler-extra-env: "TZ=Australia/Perth"
+
+namespaces:
+  home: home
+  services: infra
+  data: data
+
+tls:
+  domain: "ocelotspot.com"
+  ingress_subdomain: "dns"
+
+helm_repos:
+  bitnami: "https://charts.bitnami.com/bitnami"
