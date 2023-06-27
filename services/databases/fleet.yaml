@@ -19,6 +19,7 @@ helm:
       storageClass: longhorn
       postgresql:
         auth:
+          postgresPassword: "${POSTGRES_PASSWORD}"
           existingSecret: "pg-creds"
           secretKeys:
             adminPasswordKey: "pg-root-pass"
