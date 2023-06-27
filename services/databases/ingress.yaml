@@ -4,6 +4,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   name: postgresql
+  namespace: infra
 spec:
   rules:
     - host: db.ocelotspot.com
