@@ -1,3 +1,4 @@
+defaultNamespace: infra
 namespace: infra
 
 helm:
