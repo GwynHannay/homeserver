@@ -1,5 +1,4 @@
 defaultNamespace: infra
-namespace: infra
 
 helm:
   chart: external-dns
