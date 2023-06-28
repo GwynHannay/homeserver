@@ -23,6 +23,9 @@ helm:
           existingSecret: "pg-creds"
     audit:
       logTimezone: "Australia/Perth"
+    primary:
+      service:
+        type: LoadBalancer
     # tls:
     #   enabled: true
     #   certificatesSecret: tls-postgresql-ingress
