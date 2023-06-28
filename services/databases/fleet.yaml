@@ -21,9 +21,6 @@ helm:
         auth:
           postgresPassword: "${POSTGRES_PASSWORD}"
           existingSecret: "pg-creds"
-          secretKeys:
-            adminPasswordKey: "pg-root-pass"
-            userPasswordKey: "pg-root-pass"
     audit:
       logTimezone: "Australia/Perth"
     # tls:
