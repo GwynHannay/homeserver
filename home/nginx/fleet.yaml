@@ -1,34 +1,34 @@
 defaultNamespace: home
 
-helm:
-  chart: nginx
+# helm:
+#   chart: nginx
 
-  repo: https://charts.bitnami.com/bitnami
+#   repo: https://charts.bitnami.com/bitnami
 
-  releaseName: nginx
-  # Makes helm skip the check for its own annotations
-  takeOwnership: false
-  # The version of the chart or semver constraint of the chart to find. If a constraint
-  # is specified it is evaluated each time git changes.
-  # The version also determines which chart to download from OCI registries.
-  version: 15.0.2
-  # Any values that should be placed in the `values.yaml` and passed to helm during
-  # install.
-  values:
-    service:
-      type: ClusterIP
-    ingress:
-      enabled: true
-      hostname: "nginx.apps.ocelotspot.com"
-      tls: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-  # Override immutable resources. This could be dangerous.
-  force: false
-  # Set the Helm --atomic flag when upgrading
-  atomic: false
-  # Disable go template pre-processing on the fleet values
-  disablePreProcess: false
-  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
-  # It will wait for as long as timeoutSeconds
-  waitForJobs: true
+#   releaseName: nginx
+#   # Makes helm skip the check for its own annotations
+#   takeOwnership: false
+#   # The version of the chart or semver constraint of the chart to find. If a constraint
+#   # is specified it is evaluated each time git changes.
+#   # The version also determines which chart to download from OCI registries.
+#   version: 15.0.2
+#   # Any values that should be placed in the `values.yaml` and passed to helm during
+#   # install.
+#   values:
+#     service:
+#       type: ClusterIP
+#     ingress:
+#       enabled: true
+#       hostname: "nginx.apps.ocelotspot.com"
+#       tls: true
+#       annotations:
+#         cert-manager.io/cluster-issuer: letsencrypt-prod
+#   # Override immutable resources. This could be dangerous.
+#   force: false
+#   # Set the Helm --atomic flag when upgrading
+#   atomic: false
+#   # Disable go template pre-processing on the fleet values
+#   disablePreProcess: false
+#   # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+#   # It will wait for as long as timeoutSeconds
+#   waitForJobs: true
