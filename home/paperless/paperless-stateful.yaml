@@ -89,17 +89,17 @@ spec:
             - name: PAPERLESS_TIKA_ENABLED
               value: 1
             - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
-              value: http://localhost:3000
+              value: "http://localhost:3000"
             - name: PAPERLESS_TIKA_ENDPOINT
-              value: http://localhost:9998
+              value: "http://localhost:9998"
             - name: PAPERLESS_CONSUMPTION_DIR
-              value: /nfs/consume
+              value: "/nfs/consume"
             - name: PAPERLESS_EXPORT_DIR
-              value: /nfs/export
+              value: "/nfs/export"
             - name: PAPERLESS_DATA_DIR
-              value: /longhorn/data
+              value: "/longhorn/data"
             - name: PAPERLESS_MEDIA_ROOT
-              value: /longhorn/media
+              value: "/longhorn/media"
             - name: PAPERLESS_FILENAME_FORMAT
               value: "{document_type}/{correspondent}_{title}_{created}"
             - name: PAPERLESS_FILENAME_FORMAT_REMOVE_NONE
@@ -107,11 +107,11 @@ spec:
             - name: PAPERLESS_LOGROTATE_MAX_BACKUPS
               value: 100
             - name: PAPERLESS_URL
-              value: https://papers.ocelotspot.com
+              value: "https://papers.ocelotspot.com"
             - name: PAPERLESS_OCR_LANGUAGE
-              value: eng
+              value: "eng"
             - name: PAPERLESS_OCR_SKIP_ARCHIVE_FILE
-              value: with_text
+              value: "with_text"
             - name: PAPERLESS_OCR_DESKEW
               value: true
             - name: PAPERLESS_OCR_ROTATE_PAGES
@@ -131,7 +131,7 @@ spec:
             - name: PAPERLESS_IGNORE_DATES
               value: "17/10/1987,20/06/1985"
             - name: PAPERLESS_FILENAME_DATE_ORDER
-              value: YMD
+              value: "YMD"
             - name: PAPERLESS_CONSUMER_POLLING
               value: 30
             - name: USERMAP_UID

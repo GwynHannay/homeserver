@@ -1,38 +1,38 @@
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: rclone-copy-scripts
-  namespace: infra
-spec:
-  template:
-    metadata:
-      namespace: infra
-    spec:
-      containers:
-        - image: bitnami/rclone
-          imagePullPolicy: IfNotPresent
-          name: rclone
-          args:
-            - copy 
-            - /nfs/ 
-            - /longhorn
-          securityContext:
-            runAsUser: 1001
-            runAsGroup: 1001
-            fsGroup: 1001
-          volumeMounts:
-            - mountPath: /nfs
-              name: nfs
-              readOnly: true
-            - mountPath: /longhorn
-              name: longhorn
-      restartPolicy: Never
-      volumes:
-        - hostPath:
-            path: /mnt/fileserver/rke2
-            type: Directory
-          name: nfs
-        - name: longhorn
-          persistentVolumeClaim:
-            claimName: fileserver
-  backoffLimit: 3
+# apiVersion: batch/v1
+# kind: Job
+# metadata:
+#   name: rclone-copy-scripts
+#   namespace: infra
+# spec:
+#   template:
+#     metadata:
+#       namespace: infra
+#     spec:
+#       containers:
+#         - image: bitnami/rclone
+#           imagePullPolicy: IfNotPresent
+#           name: rclone
+#           args:
+#             - copy 
+#             - /nfs/ 
+#             - /longhorn
+#           securityContext:
+#             runAsUser: 1001
+#             runAsGroup: 1001
+#             fsGroup: 1001
+#           volumeMounts:
+#             - mountPath: /nfs
+#               name: nfs
+#               readOnly: true
+#             - mountPath: /longhorn
+#               name: longhorn
+#       restartPolicy: Never
+#       volumes:
+#         - hostPath:
+#             path: /mnt/fileserver/rke2
+#             type: Directory
+#           name: nfs
+#         - name: longhorn
+#           persistentVolumeClaim:
+#             claimName: fileserver
+#   backoffLimit: 3
