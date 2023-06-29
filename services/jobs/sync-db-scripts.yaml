@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: rclone-job
+  name: rclone-job-try
   namespace: infra
 spec:
   template:
@@ -13,7 +13,9 @@ spec:
           imagePullPolicy: IfNotPresent
           name: rclone
           args:
-            - copy /nfs/ /longhorn
+            - copy 
+            - /nfs/ 
+            - /longhorn
           volumeMounts:
             - mountPath: /nfs
               name: nfs
