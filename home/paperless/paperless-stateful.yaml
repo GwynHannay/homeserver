@@ -135,9 +135,9 @@ spec:
             - name: PAPERLESS_CONSUMER_POLLING
               value: '30'
             - name: USERMAP_UID
-              value: 1001
+              value: '1001'
             - name: USERMAP_GID
-              value: 1001
+              value: '1001'
           securityContext:
             runAsUser: 1001
             runAsGroup: 1001
