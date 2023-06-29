@@ -14,21 +14,21 @@ spec:
       port: 80
       targetPort: http
       protocol: TCP
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: paperless
-#   namespace: home
-# spec:
-#   volumeMode: Filesystem
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 15Gi
-#   volumeName: paperless
-#   storageClassName: longhorn
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless
+  namespace: home
+spec:
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+  volumeName: paperless
+  storageClassName: longhorn
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -145,7 +145,7 @@ spec:
           volumeMounts:
             - name: nfs
               mountPath: /nfs
-            - name: paperless
+            - name: longhorn
               mountPath: /longhorn
           readinessProbe:
             tcpSocket:
@@ -162,15 +162,9 @@ spec:
           hostPath:
             path: /mnt/fileserver/paperless
             type: Directory
-      volumeClaimTemplates:
-        - metadata:
-            name: paperless
-          spec:
-            accessModes: [ "ReadWriteOnce" ]
-            storageClassName: "longhorn"
-            resources:
-              requests:
-                storage: 15Gi
+        - name: longhorn
+          existingVolumeClaim:
+            claimName: paperless
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
