@@ -162,15 +162,15 @@ spec:
           hostPath:
             path: /mnt/fileserver/paperless
             type: Directory
-      volumeClaimTemplates:
-      - metadata:
-          name: paperless
-        spec:
-          accessModes: [ "ReadWriteOnce" ]
-          storageClassName: "longhorn"
-          resources:
-            requests:
-              storage: 15Gi
+    volumeClaimTemplates:
+    - metadata:
+        name: paperless
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "longhorn"
+        resources:
+          requests:
+            storage: 15Gi
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
