@@ -150,6 +150,13 @@ spec:
           readinessProbe:
             tcpSocket:
               port: 8000
+          livenessProbe:
+            exec:
+              command:
+                - ls
+                - /longhorn/lost+found
+            initialDelaySeconds: 5
+            periodSeconds: 5
       volumes:
         - name: nfs
           hostPath:
