@@ -8,7 +8,7 @@ spec:
     metadata:
       namespace: infra
     spec:
-      container:
+      containers:
         - args:
             - rsync
             - '-avz'
