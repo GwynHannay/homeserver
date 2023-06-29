@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: rclone-job-try
+  name: rclone-job
   namespace: infra
 spec:
   template:
@@ -16,6 +16,10 @@ spec:
             - copy 
             - /nfs/ 
             - /longhorn
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 1001
+            fsGroup: 1001
           volumeMounts:
             - mountPath: /nfs
               name: nfs
