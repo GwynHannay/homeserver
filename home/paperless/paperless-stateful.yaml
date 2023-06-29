@@ -141,10 +141,10 @@ spec:
               value: '1001'
             - name: USERMAP_GID
               value: '1001'
-          securityContext:
-            runAsUser: 1001
-            runAsGroup: 1001
-            fsGroup: 1001
+          # securityContext:
+          #   runAsUser: 1001
+          #   runAsGroup: 1001
+          #   fsGroup: 1001
           volumeMounts:
             - name: nfs
               mountPath: /nfs
