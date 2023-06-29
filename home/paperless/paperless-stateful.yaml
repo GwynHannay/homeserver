@@ -87,7 +87,7 @@ spec:
                   name: pg-paperless-creds
                   key: db-pass
             - name: PAPERLESS_TIKA_ENABLED
-              value: true
+              value: '1'
             - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
               value: "http://localhost:3000"
             - name: PAPERLESS_TIKA_ENDPOINT
