@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: sync-db-scripts-rsync
+  name: sync-db-scripts
   namespace: infra
 spec:
   template:
@@ -15,6 +15,8 @@ spec:
           securityContext:
             runAsUser: 1001
           env:
+            - name: RSYNC_OPTIONS
+              value: '-avz'
             - name: RSYNC_SOURCE
               value: /nfs
             - name: RSYNC_TARGET
