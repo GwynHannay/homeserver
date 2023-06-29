@@ -9,16 +9,16 @@ spec:
       namespace: infra
     spec:
       containers:
-        - args:
-            - rsync '-avz' /nfs/ /longhorn
-          command:
-            - /bin/sh
-            - -c
-          image: busybox
+          image: secoresearch/rsync
           imagePullPolicy: IfNotPresent
-          name: busybox
+          name: rsync
           securityContext:
             runAsUser: 1001
+          env:
+            - name: RSYNC_SOURCE
+              value: /nfs
+            - name: RSYNC_TARGET
+              value: /longhorn
           volumeMounts:
             - mountPath: /nfs
               name: nfs
