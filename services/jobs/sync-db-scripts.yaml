@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: sync-db-scripts
+  name: rclone-job
   namespace: infra
 spec:
   template:
@@ -9,18 +9,11 @@ spec:
       namespace: infra
     spec:
       containers:
-        - image: secoresearch/rsync
+        - image: bitnami/rclone
           imagePullPolicy: IfNotPresent
-          name: rsync
-          securityContext:
-            runAsUser: 1001
-          env:
-            - name: RSYNC_OPTIONS
-              value: '-avz'
-            - name: RSYNC_SOURCE
-              value: /nfs
-            - name: RSYNC_TARGET
-              value: /longhorn
+          name: rclone
+          args:
+            - copy /nfs/ /longhorn
           volumeMounts:
             - mountPath: /nfs
               name: nfs
