@@ -157,12 +157,12 @@ spec:
                 - /longhorn/lost+found
             initialDelaySeconds: 5
             periodSeconds: 5
-        volumes:
-          - name: nfs
-            hostPath:
-              path: /mnt/fileserver/paperless
-              type: Directory
-        volumeClaimTemplates:
+      volumes:
+        - name: nfs
+          hostPath:
+            path: /mnt/fileserver/paperless
+            type: Directory
+      volumeClaimTemplates:
         - metadata:
             name: paperless
           spec:
