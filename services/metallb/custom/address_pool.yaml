@@ -7,7 +7,6 @@ metadata:
   # A name for the address pool. Services can request allocation
   # from a specific address pool using this name.
   name: first-pool
-  namespace: metallb-system
 spec:
   # A list of IP address ranges over which MetalLB has
   # authority. You can list multiple ranges in a single pool, they
@@ -22,7 +21,6 @@ apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: first-pool
-  namespace: metallb-system
 spec:
   ipAddressPools:
   - first-pool
