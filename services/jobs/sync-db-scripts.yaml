@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: sync-db-scripts-again
+  name: sync-db-scripts
   namespace: infra
 spec:
   template:
@@ -10,10 +10,7 @@ spec:
     spec:
       containers:
         - args:
-            - rsync
-            - '-avz'
-            - /nfs/
-            - /longhorn
+            - rsync '-avz' /nfs/ /longhorn
           command:
             - /bin/sh
             - -c
