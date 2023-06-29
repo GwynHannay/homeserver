@@ -2,11 +2,11 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: copy-paperless
-  namespace: infra
+  namespace: home
 spec:
   template:
     metadata:
-      namespace: infra
+      namespace: home
     spec:
       containers:
         - image: bitnami/rclone
