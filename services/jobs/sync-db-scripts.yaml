@@ -9,7 +9,7 @@ spec:
       namespace: infra
     spec:
       containers:
-          image: secoresearch/rsync
+        - image: secoresearch/rsync
           imagePullPolicy: IfNotPresent
           name: rsync
           securityContext:
