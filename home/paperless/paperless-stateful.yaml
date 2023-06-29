@@ -87,7 +87,7 @@ spec:
                   name: pg-paperless-creds
                   key: db-pass
             - name: PAPERLESS_TIKA_ENABLED
-              value: '1'
+              value: 'true'
             - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
               value: "http://localhost:3000"
             - name: PAPERLESS_TIKA_ENDPOINT
@@ -103,7 +103,7 @@ spec:
             - name: PAPERLESS_FILENAME_FORMAT
               value: "{document_type}/{correspondent}_{title}_{created}"
             - name: PAPERLESS_FILENAME_FORMAT_REMOVE_NONE
-              value: true
+              value: 'true'
             - name: PAPERLESS_LOGROTATE_MAX_BACKUPS
               value: 100
             - name: PAPERLESS_URL
@@ -113,9 +113,9 @@ spec:
             - name: PAPERLESS_OCR_SKIP_ARCHIVE_FILE
               value: "with_text"
             - name: PAPERLESS_OCR_DESKEW
-              value: true
+              value: 'true'
             - name: PAPERLESS_OCR_ROTATE_PAGES
-              value: true
+              value: 'true'
             - name: PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD
               value: 6
             - name: PAPERLESS_TASK_WORKERS
@@ -125,9 +125,9 @@ spec:
             - name: PAPERLESS_TRAIN_TASK_CRON
               value: "* 3 * * *"
             - name: PAPERLESS_CONSUMER_RECURSIVE
-              value: true
+              value: 'true'
             - name: PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
-              value: true
+              value: 'true'
             - name: PAPERLESS_FILENAME_DATE_ORDER
               value: "YMD"
             - name: PAPERLESS_IGNORE_DATES
