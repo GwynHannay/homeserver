@@ -105,7 +105,7 @@ spec:
             - name: PAPERLESS_FILENAME_FORMAT_REMOVE_NONE
               value: 'true'
             - name: PAPERLESS_LOGROTATE_MAX_BACKUPS
-              value: 100
+              value: '100'
             - name: PAPERLESS_URL
               value: "https://papers.ocelotspot.com"
             - name: PAPERLESS_OCR_LANGUAGE
@@ -117,9 +117,9 @@ spec:
             - name: PAPERLESS_OCR_ROTATE_PAGES
               value: 'true'
             - name: PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD
-              value: 6
+              value: '6'
             - name: PAPERLESS_TASK_WORKERS
-              value: 3
+              value: '3'
             - name: PAPERLESS_TIME_ZONE
               value: "Australia/Perth"
             - name: PAPERLESS_TRAIN_TASK_CRON
@@ -133,7 +133,7 @@ spec:
             - name: PAPERLESS_IGNORE_DATES
               value: "17/10/1987,20/06/1985"
             - name: PAPERLESS_CONSUMER_POLLING
-              value: 30
+              value: '30'
             - name: USERMAP_UID
               value: 1001
             - name: USERMAP_GID
