@@ -26,6 +26,13 @@ helm:
     primary:
       service:
         type: LoadBalancer
+      extraVolumeMounts:
+        - name: fileserver
+          mountPath: /fileserver
+      extraVolumes:
+        - name: fileserver
+          persistentVolumeClaim:
+            claimName: fileserver
     # tls:
     #   enabled: true
     #   certificatesSecret: tls-postgresql-ingress
