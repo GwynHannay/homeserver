@@ -145,7 +145,7 @@ spec:
           volumeMounts:
             - name: nfs
               mountPath: /nfs
-            - name: longhorn
+            - name: paperless
               mountPath: /longhorn
           readinessProbe:
             tcpSocket:
