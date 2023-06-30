@@ -16,6 +16,7 @@ spec:
             - copy 
             - /nfs/ 
             - /longhorn/data
+            - -v
           securityContext:
             runAsUser: 1001
             runAsGroup: 1001
