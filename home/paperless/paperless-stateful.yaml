@@ -1,192 +1,177 @@
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   labels:
-#     app.kubernetes.io/name: paperless
-#   name: paperless
-#   namespace: home
-# spec:
-#   selector:
-#     app.kubernetes.io/name: paperless
-#   type: ClusterIP
-#   ports:
-#     - name: http
-#       port: 80
-#       targetPort: http
-#       protocol: TCP
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: paperless
-#   namespace: home
-# spec:
-#   volumeMode: Filesystem
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 15Gi
-#   volumeName: paperless
-#   storageClassName: longhorn
-# ---
-# apiVersion: apps/v1
-# kind: StatefulSet
-# metadata:
-#   labels:
-#     app.kubernetes.io/name: paperless
-#   name: paperless
-#   namespace: home
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app.kubernetes.io/name: paperless
-#   serviceName: paperless
-#   template:
-#     metadata:
-#       labels:
-#         app.kubernetes.io/name: paperless
-#       name: paperless
-#     spec:
-#       containers:
-#         - name: paperless-redis
-#           image: bitnami/redis
-#           env:
-#             - name: ALLOW_EMPTY_PASSWORD
-#               value: "yes"
-#         - name: paperless-tika
-#           image: ghcr.io/paperless-ngx/tika:latest
-#           ports:
-#             - containerPort: 9998
-#         - name: paperless-gotenberg
-#           image: docker.io/gotenberg/gotenberg:7.8
-#           command:
-#             - gotenberg
-#             - --chromium-disable-javascript=true
-#             - --chromium-allow-list=file:///tmp/.*
-#           ports:
-#             - containerPort: 3000
-#         - name: paperless-ngx
-#           image: ghcr.io/paperless-ngx/paperless-ngx:latest
-#           ports:
-#             - containerPort: 8000
-#               name: http
-#               protocol: TCP
-#           env:
-#             - name: PAPERLESS_DBHOST
-#               valueFrom:
-#                 secretKeyRef:
-#                   name: pg-paperless-creds
-#                   key: db-host
-#             - name: PAPERLESS_DBUSER
-#               valueFrom:
-#                 secretKeyRef:
-#                   name: pg-paperless-creds
-#                   key: db-user
-#             - name: PAPERLESS_DBPASS
-#               valueFrom:
-#                 secretKeyRef:
-#                   name: pg-paperless-creds
-#                   key: db-pass
-#             - name: PAPERLESS_TIKA_ENABLED
-#               value: 'true'
-#             - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
-#               value: "http://localhost:3000"
-#             - name: PAPERLESS_TIKA_ENDPOINT
-#               value: "http://localhost:9998"
-#             - name: PAPERLESS_CONSUMPTION_DIR
-#               value: "/nfs/consume"
-#             - name: PAPERLESS_EXPORT_DIR
-#               value: "/nfs/export"
-#             - name: PAPERLESS_DATA_DIR
-#               value: "/longhorn/data"
-#             - name: PAPERLESS_MEDIA_ROOT
-#               value: "/longhorn/media"
-#             - name: PAPERLESS_FILENAME_FORMAT
-#               value: "{document_type}/{correspondent}_{title}_{created}"
-#             - name: PAPERLESS_FILENAME_FORMAT_REMOVE_NONE
-#               value: 'true'
-#             - name: PAPERLESS_LOGROTATE_MAX_BACKUPS
-#               value: '100'
-#             - name: PAPERLESS_URL
-#               value: "https://papers.ocelotspot.com"
-#             - name: PAPERLESS_OCR_LANGUAGE
-#               value: "eng"
-#             - name: PAPERLESS_OCR_SKIP_ARCHIVE_FILE
-#               value: "with_text"
-#             - name: PAPERLESS_OCR_DESKEW
-#               value: 'true'
-#             - name: PAPERLESS_OCR_ROTATE_PAGES
-#               value: 'true'
-#             - name: PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD
-#               value: '6'
-#             - name: PAPERLESS_TASK_WORKERS
-#               value: '3'
-#             - name: PAPERLESS_TIME_ZONE
-#               value: "Australia/Perth"
-#             - name: PAPERLESS_TRAIN_TASK_CRON
-#               value: "* 3 * * *"
-#             - name: PAPERLESS_CONSUMER_RECURSIVE
-#               value: 'true'
-#             - name: PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
-#               value: 'true'
-#             - name: PAPERLESS_FILENAME_DATE_ORDER
-#               value: "YMD"
-#             - name: PAPERLESS_IGNORE_DATES
-#               value: "17/10/1987,20/06/1985"
-#             - name: PAPERLESS_CONSUMER_POLLING
-#               value: '30'
-#             - name: USERMAP_UID
-#               value: '1001'
-#             - name: USERMAP_GID
-#               value: '1001'
-#           # securityContext:
-#           #   runAsUser: 1001
-#           #   runAsGroup: 1001
-#           #   fsGroup: 1001
-#           volumeMounts:
-#             - name: nfs
-#               mountPath: /nfs
-#             - name: longhorn
-#               mountPath: /longhorn
-#           readinessProbe:
-#             tcpSocket:
-#               port: 8000
-#           livenessProbe:
-#             exec:
-#               command:
-#                 - ls
-#                 - /longhorn/lost+found
-#             initialDelaySeconds: 5
-#             periodSeconds: 5
-#       volumes:
-#         - name: nfs
-#           hostPath:
-#             path: /mnt/fileserver/paperless
-#             type: Directory
-#         - name: longhorn
-#           existingVolumeClaim:
-#             claimName: paperless
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: paperless
-#   namespace: home
-#   annotations:
-#     cert-manager.io/cluster-issuer: letsencrypt-prod
-# spec:
-#   rules:
-#     - host: papers.ocelotspot.com
-#       http:
-#         paths:
-#         - path: /
-#           pathType: Prefix
-#           backend:
-#             service:
-#               name: paperless
-#               port:
-#                 number: 80
-#   tls:
-#   - secretName: "papers.ocelotspot.com-tls"
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: paperless
+  name: paperless
+  namespace: home
+spec:
+  selector:
+    app.kubernetes.io/name: paperless
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/name: paperless
+  name: paperless
+  namespace: home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: paperless
+  serviceName: paperless
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: paperless
+      name: paperless
+    spec:
+      containers:
+        - name: paperless-redis
+          image: bitnami/redis
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+        - name: paperless-tika
+          image: ghcr.io/paperless-ngx/tika:latest
+          ports:
+            - containerPort: 9998
+        - name: paperless-gotenberg
+          image: docker.io/gotenberg/gotenberg:7.8
+          command:
+            - gotenberg
+            - --chromium-disable-javascript=true
+            - --chromium-allow-list=file:///tmp/.*
+          ports:
+            - containerPort: 3000
+        - name: paperless-ngx
+          image: ghcr.io/paperless-ngx/paperless-ngx:latest
+          ports:
+            - containerPort: 8000
+              name: http
+              protocol: TCP
+          env:
+            - name: PAPERLESS_DBHOST
+              valueFrom:
+                secretKeyRef:
+                  name: pg-paperless-creds
+                  key: db-host
+            - name: PAPERLESS_DBUSER
+              valueFrom:
+                secretKeyRef:
+                  name: pg-paperless-creds
+                  key: db-user
+            - name: PAPERLESS_DBPASS
+              valueFrom:
+                secretKeyRef:
+                  name: pg-paperless-creds
+                  key: db-pass
+            - name: PAPERLESS_TIKA_ENABLED
+              value: 'true'
+            - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
+              value: "http://localhost:3000"
+            - name: PAPERLESS_TIKA_ENDPOINT
+              value: "http://localhost:9998"
+            - name: PAPERLESS_CONSUMPTION_DIR
+              value: "/nfs/consume"
+            - name: PAPERLESS_EXPORT_DIR
+              value: "/nfs/export"
+            - name: PAPERLESS_DATA_DIR
+              value: "/longhorn/data"
+            - name: PAPERLESS_MEDIA_ROOT
+              value: "/longhorn/media"
+            - name: PAPERLESS_FILENAME_FORMAT
+              value: "{document_type}/{correspondent}_{title}_{created}"
+            - name: PAPERLESS_FILENAME_FORMAT_REMOVE_NONE
+              value: 'true'
+            - name: PAPERLESS_LOGROTATE_MAX_BACKUPS
+              value: '100'
+            - name: PAPERLESS_URL
+              value: "https://papers.ocelotspot.com"
+            - name: PAPERLESS_OCR_LANGUAGE
+              value: "eng"
+            - name: PAPERLESS_OCR_SKIP_ARCHIVE_FILE
+              value: "with_text"
+            - name: PAPERLESS_OCR_DESKEW
+              value: 'true'
+            - name: PAPERLESS_OCR_ROTATE_PAGES
+              value: 'true'
+            - name: PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD
+              value: '6'
+            - name: PAPERLESS_TASK_WORKERS
+              value: '3'
+            - name: PAPERLESS_TIME_ZONE
+              value: "Australia/Perth"
+            - name: PAPERLESS_TRAIN_TASK_CRON
+              value: "* 3 * * *"
+            - name: PAPERLESS_CONSUMER_RECURSIVE
+              value: 'true'
+            - name: PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
+              value: 'true'
+            - name: PAPERLESS_FILENAME_DATE_ORDER
+              value: "YMD"
+            - name: PAPERLESS_IGNORE_DATES
+              value: "17/10/1987,20/06/1985"
+            - name: PAPERLESS_CONSUMER_POLLING
+              value: '30'
+            - name: USERMAP_UID
+              value: '1001'
+            - name: USERMAP_GID
+              value: '1001'
+          # securityContext:
+          #   runAsUser: 1001
+          #   runAsGroup: 1001
+          #   fsGroup: 1001
+          volumeMounts:
+            - name: nfs
+              mountPath: /nfs
+            - name: longhorn
+              mountPath: /longhorn
+          readinessProbe:
+            tcpSocket:
+              port: 8000
+          livenessProbe:
+            exec:
+              command:
+                - ls
+                - /longhorn/lost+found
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: nfs
+          hostPath:
+            path: /mnt/fileserver/paperless
+            type: Directory
+        - name: longhorn
+          existingVolumeClaim:
+            claimName: paperless
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: paperless
+  namespace: home
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: papers.ocelotspot.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: paperless
+              port:
+                number: 80
+  tls:
+  - secretName: "papers.ocelotspot.com-tls"

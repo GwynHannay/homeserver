@@ -1,25 +1,46 @@
-defaultNamespace: metallb-system
+defaultNamespace: longhorn
 
 helm:
-  chart: metallb
+  chart: longhorn
 
-  repo: https://charts.bitnami.com/bitnami
+  repo: https://charts.longhorn.io
 
-  releaseName: metallb
+  releaseName: longhorn
   # Makes helm skip the check for its own annotations
   takeOwnership: false
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 4.5.4
+  version: 1.4.2
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    speaker:
-      psp:
-        enabled: false
-      secretName: metallb-memberlist
-      secretKey: secretkey
+    persistence:
+      defaultClassReplicaCount: 1
+    csi:
+      attacherReplicaCount: 1
+      provisionerReplicaCount: 1
+      resizerReplicaCount: 1
+      snapshotterReplicaCount: 1
+    defaultSettings:
+      defaultLonghornStaticStorageClass: longhorn
+    longhornUI:
+      replicas: 1
+    longhornConversionWebhook:
+      replicas: 1
+    longhornAdmissionWebhook:
+      replicas: 1
+    longhornRecoveryBackend:
+      replicas: 1
+    ingress:
+      enabled: true
+      host: files.ocelotspot.com
+      tls: true
+      secureBackends: true
+      tlsSecret: files.ocelotspot.com-tls
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+    namespaceOverride: longhorn
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -37,27 +58,8 @@ dependsOn:
   # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
-  - name: homeserver-rke2
+  - name: homeserver-services-external-dns
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
   #       app: weak-monkey
-
-diff:
-  comparePatches:
-  - apiVersion: apiextensions.k8s.io/v1
-    kind: CustomResourceDefinition
-    name: addresspools.metallb.io
-    operations:
-    - op: remove
-      path: /spec/conversion/webhook
-    - op: remove
-      path: /status
-  - apiVersion: apiextensions.k8s.io/v1
-    kind: CustomResourceDefinition
-    name: bgppeers.metallb.io
-    operations:
-    - op: remove
-      path: /spec/conversion/webhook
-    - op: remove
-      path: /status
