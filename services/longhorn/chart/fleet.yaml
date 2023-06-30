@@ -1,4 +1,4 @@
-defaultNamespace: longhorn
+defaultNamespace: longhorn-system
 
 helm:
   chart: longhorn
@@ -40,7 +40,6 @@ helm:
       tlsSecret: files.ocelotspot.com-tls
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
-    namespaceOverride: longhorn
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
