@@ -23,7 +23,7 @@ helm:
       resizerReplicaCount: 1
       snapshotterReplicaCount: 1
     defaultSettings:
-      defaultLonghornStaticStorageClass: longhorn
+      defaultLonghornStaticStorageClass: longhorn-static
     longhornUI:
       replicas: 1
     longhornConversionWebhook:
