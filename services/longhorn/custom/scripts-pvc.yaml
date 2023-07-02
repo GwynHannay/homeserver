@@ -31,7 +31,7 @@ spec:
     requests:
       storage: 10Gi
   volumeName: scripts
-  storageClassName: longhorn
+  storageClassName: longhorn-static
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -46,4 +46,4 @@ spec:
     requests:
       storage: 10Gi
   volumeName: scripts
-  storageClassName: longhorn
+  storageClassName: longhorn-static
