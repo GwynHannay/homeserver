@@ -16,7 +16,7 @@ helm:
   # install.
   values:
     global:
-      storageClass: longhorn
+      storageClass: longhorn-static
       postgresql:
         auth:
           postgresPassword: "$POSTGRES_PASSWORD"
