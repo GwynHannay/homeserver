@@ -32,18 +32,3 @@ spec:
       storage: 10Gi
   volumeName: scripts
   storageClassName: longhorn-static
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: scripts
-  namespace: home
-spec:
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  volumeName: scripts
-  storageClassName: longhorn-static
