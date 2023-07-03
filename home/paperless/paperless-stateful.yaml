@@ -13,6 +13,7 @@ spec:
     - name: http
       port: 80
       targetPort: http
+      protocol: TCP
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -121,6 +122,8 @@ spec:
               value: "17/10/1987,20/06/1985"
             - name: PAPERLESS_CONSUMER_POLLING
               value: '30'
+            - name: PAPERLESS_PORT
+              value: '8000'
             - name: USERMAP_UID
               value: '1001'
             - name: USERMAP_GID

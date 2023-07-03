@@ -1,13 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: paperless
-  namespace: home
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     ingress.kubernetes.io/secure-backends: true
   labels:
     app.kubernetes.io/name: paperless
+  name: paperless
+  namespace: home
 spec:
   rules:
     - host: papers.ocelotspot.com
