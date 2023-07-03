@@ -16,10 +16,11 @@ spec:
             - copy 
             - /nfs/ 
             - /longhorn
-          # securityContext:
-          #   runAsUser: 1001
-          #   runAsGroup: 1001
-          #   fsGroup: 1001
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 1001
+            fsGroup: 1001
+            allowPrivilegeEscalation: true
           volumeMounts:
             - mountPath: /nfs
               name: nfs
