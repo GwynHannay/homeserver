@@ -22,3 +22,9 @@ diff:
     operations:
     - op: remove
       path: /spec/template/spec/securityContext
+
+# A paused bundle will not update downstream clusters but instead mark the bundle
+# as OutOfSync. One can then manually confirm that a bundle should be deployed to
+# the downstream clusters.
+# Default: false
+paused: true
