@@ -85,7 +85,7 @@ spec:
             - name: PAPERLESS_EXPORT_DIR
               value: "/nfs/export"
             - name: PAPERLESS_DATA_DIR
-              value: "/longhorn/data"
+              value: "/local/paperless/data"
             - name: PAPERLESS_MEDIA_ROOT
               value: "/longhorn/media"
             - name: PAPERLESS_FILENAME_FORMAT
@@ -131,6 +131,8 @@ spec:
               mountPath: /nfs
             - name: longhorn
               mountPath: /longhorn
+            - name: local
+              mountPath: /local/data
           readinessProbe:
             tcpSocket:
               port: 8000
@@ -150,6 +152,10 @@ spec:
         - name: nfs
           hostPath:
             path: /mnt/fileserver/paperless
+            type: Directory
+        - name: local
+          hostPath:
+            path: /home/practice/sqlite/paperless
             type: Directory
         - name: longhorn
           existingVolumeClaim:

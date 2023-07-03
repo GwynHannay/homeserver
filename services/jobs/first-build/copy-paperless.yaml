@@ -15,14 +15,14 @@ spec:
           args:
             - copy 
             - /nfs/ 
-            - /longhorn/data
+            - /local/data
             - -v
           volumeMounts:
             - mountPath: /nfs
               name: nfs
               readOnly: true
-            - mountPath: /longhorn
-              name: longhorn
+            - mountPath: /local
+              name: local
       restartPolicy: Never
       securityContext:
         runAsUser: 1001
@@ -34,7 +34,8 @@ spec:
             path: /mnt/fileserver/apps/paperless/data
             type: Directory
           name: nfs
-        - name: longhorn
-          persistentVolumeClaim:
-            claimName: paperless
+        - name: local
+          hostPath:
+            path: /home/practice/sqlite/paperless
+            type: Directory
   backoffLimit: 3
