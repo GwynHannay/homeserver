@@ -32,7 +32,7 @@ spec:
                 secretKeyRef:
                   name: pg-paperless-creds
                   key: db-pass
-            - name: POSTGRES_PASSWORD
+            - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pg-creds
