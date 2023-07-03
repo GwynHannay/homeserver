@@ -140,7 +140,7 @@ spec:
             exec:
               command:
                 - ls
-                - /longhorn/lost+found
+                - /longhorn
             initialDelaySeconds: 5
             periodSeconds: 5
       securityContext:
