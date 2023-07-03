@@ -85,7 +85,7 @@ spec:
             - name: PAPERLESS_EXPORT_DIR
               value: "/nfs/export"
             - name: PAPERLESS_DATA_DIR
-              value: "/local/paperless/data"
+              value: "/local/data"
             - name: PAPERLESS_MEDIA_ROOT
               value: "/longhorn/media"
             - name: PAPERLESS_FILENAME_FORMAT
@@ -132,7 +132,7 @@ spec:
             - name: longhorn
               mountPath: /longhorn
             - name: local
-              mountPath: /local/data
+              mountPath: /local
           readinessProbe:
             tcpSocket:
               port: 8000
