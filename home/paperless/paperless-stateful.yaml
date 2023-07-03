@@ -132,9 +132,9 @@ spec:
               mountPath: /longhorn
             - name: local
               mountPath: /local
-          readinessProbe:
-            tcpSocket:
-              port: 8000
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: 8000
           livenessProbe:
             exec:
               command:
