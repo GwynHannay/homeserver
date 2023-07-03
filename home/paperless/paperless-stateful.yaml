@@ -134,7 +134,8 @@ spec:
             - name: local
               mountPath: /local
           readinessProbe:
-            tcpSocket:
+            httpGet:
+              path: /
               port: 8000
           livenessProbe:
             exec:
