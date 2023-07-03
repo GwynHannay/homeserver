@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    ingress.kubernetes.io/secure-backends: true
   labels:
     app.kubernetes.io/name: paperless
   name: paperless
