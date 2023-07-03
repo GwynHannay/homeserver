@@ -18,7 +18,7 @@ diff:
   - apiVersion: batch/v1
     kind: Job
     name: restore-paperless
-    namespace: home
+    namespace: infra
     operations:
     - op: remove
       path: /spec/template/spec/securityContext
