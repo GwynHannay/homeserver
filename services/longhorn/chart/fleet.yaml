@@ -17,6 +17,7 @@ helm:
   values:
     persistence:
       defaultClassReplicaCount: 1
+      reclaimPolicy: Retain
     csi:
       attacherReplicaCount: 1
       provisionerReplicaCount: 1
@@ -24,6 +25,7 @@ helm:
       snapshotterReplicaCount: 1
     defaultSettings:
       defaultLonghornStaticStorageClass: longhorn-static
+      defaultReplicaCount: 1
     longhornUI:
       replicas: 1
     longhornConversionWebhook:
