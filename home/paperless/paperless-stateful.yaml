@@ -13,7 +13,9 @@ spec:
     - name: http
       port: 80
       targetPort: http
-      protocol: TCP
+    - name: https
+      port: 443
+      targetPort: https
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -168,13 +170,16 @@ metadata:
   namespace: home
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingress.kubernetes.io/secure-backends: true
+  labels:
+    app.kubernetes.io/name: paperless
 spec:
   rules:
     - host: papers.ocelotspot.com
       http:
         paths:
         - path: /
-          pathType: Prefix
+          pathType: ImplementationSpecific
           backend:
             service:
               name: paperless
