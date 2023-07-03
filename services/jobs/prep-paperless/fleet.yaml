@@ -8,6 +8,7 @@ dependsOn:
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homeserver-services-jobs-first-build
+  - name: homeserver-services-databases
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
