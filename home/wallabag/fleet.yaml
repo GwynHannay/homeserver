@@ -44,6 +44,8 @@ helm:
         value: "Australia/Perth"
       - name: SYMFONY__ENV__DATABASE_DRIVER
         value: pdo_pgsql
+      - name: SYMFONY__ENV__DATABASE_NAME
+        value: *app
       - name: POSTGRES_USER
         value: postgres
       - name: POSTGRES_PASSWORD
