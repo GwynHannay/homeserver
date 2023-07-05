@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: copy-paperless
+  name: copy-paperless-data
   namespace: home
 spec:
   template:
@@ -38,4 +38,43 @@ spec:
           hostPath:
             path: /home/practice/sqlite/paperless
             type: Directory
-  backoffLimit: 3
+  backoffLimit: 2
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: copy-paperless-media
+  namespace: home
+spec:
+  template:
+    metadata:
+      namespace: home
+    spec:
+      containers:
+        - image: bitnami/rclone
+          imagePullPolicy: IfNotPresent
+          name: rclone
+          args:
+            - copy 
+            - /nfs/ 
+            - /longhorn/media
+          volumeMounts:
+            - mountPath: /nfs
+              name: nfs
+              readOnly: true
+            - mountPath: /longhorn
+              name: longhorn
+      restartPolicy: Never
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        allowPrivilegeEscalation: true
+      volumes:
+        - name: nfs
+          hostPath:
+            path: /mnt/fileserver/apps/paperless/media
+            type: Directory
+        - name: longhorn
+          existingVolumeClaim: paperless-longhorn
+  backoffLimit: 2

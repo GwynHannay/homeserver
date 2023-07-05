@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: paperless
+  name: paperless-longhorn
 spec:
   capacity:
-    storage: 20Gi
+    storage: 50Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -16,12 +16,12 @@ spec:
     volumeAttributes:
       numberOfReplicas: '1'
       staleReplicaTimeout: '20'
-    volumeHandle: paperless
+    volumeHandle: paperless-longhorn
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: paperless
+  name: paperless-longhorn
   namespace: home
 spec:
   volumeMode: Filesystem
@@ -29,6 +29,6 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
-  volumeName: paperless
+      storage: 50Gi
+  volumeName: paperless-longhorn
   storageClassName: longhorn-static

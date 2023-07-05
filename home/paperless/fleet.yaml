@@ -1,5 +1,142 @@
 defaultNamespace: home
 
+helm:
+  chart: app-template
+
+  repo: https://bjw-s.github.io/helm-charts
+
+  releaseName: paperless-ngx
+  # Makes helm skip the check for its own annotations
+  takeOwnership: false
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 1.5.1
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: ghcr.io/paperless-ngx/paperless-ngx
+      tag: latest
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    env:
+      - name: TZ
+        value: "Australia/Perth"
+      - name: PAPERLESS_DBHOST
+        valueFrom:
+          secretKeyRef:
+            name: pg-paperless-creds
+            key: db-host
+      - name: PAPERLESS_DBUSER
+        valueFrom:
+          secretKeyRef:
+            name: pg-paperless-creds
+            key: db-user
+      - name: PAPERLESS_DBPASS
+        valueFrom:
+          secretKeyRef:
+            name: pg-paperless-creds
+            key: db-pass
+      - name: PAPERLESS_TIKA_ENABLED
+        value: 'true'
+      - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
+        value: "http://localhost:3000"
+      - name: PAPERLESS_TIKA_ENDPOINT
+        value: "http://localhost:9998"
+      - name: PAPERLESS_CONSUMPTION_DIR
+        value: "/nfs/consume"
+      - name: PAPERLESS_EXPORT_DIR
+        value: "/nfs/export"
+      - name: PAPERLESS_DATA_DIR
+        value: "/local/data"
+      - name: PAPERLESS_MEDIA_ROOT
+        value: "/longhorn/media"
+      - name: PAPERLESS_FILENAME_FORMAT
+        value: "{document_type}/{correspondent}_{title}_{created}"
+      - name: PAPERLESS_FILENAME_FORMAT_REMOVE_NONE
+        value: 'true'
+      - name: PAPERLESS_LOGROTATE_MAX_BACKUPS
+        value: '100'
+      - name: PAPERLESS_URL
+        value: "https://papers.ocelotspot.com"
+      - name: PAPERLESS_OCR_LANGUAGE
+        value: "eng"
+      - name: PAPERLESS_OCR_SKIP_ARCHIVE_FILE
+        value: "with_text"
+      - name: PAPERLESS_OCR_DESKEW
+        value: 'true'
+      - name: PAPERLESS_OCR_ROTATE_PAGES
+        value: 'true'
+      - name: PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD
+        value: '6'
+      - name: PAPERLESS_TASK_WORKERS
+        value: '3'
+      - name: PAPERLESS_TIME_ZONE
+        value: "Australia/Perth"
+      - name: PAPERLESS_TRAIN_TASK_CRON
+        value: "* 3 * * *"
+      - name: PAPERLESS_CONSUMER_RECURSIVE
+        value: 'true'
+      - name: PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
+        value: 'true'
+      - name: PAPERLESS_FILENAME_DATE_ORDER
+        value: "YMD"
+      - name: PAPERLESS_IGNORE_DATES
+        value: "17/10/1987,20/06/1985"
+      - name: PAPERLESS_CONSUMER_POLLING
+        value: '30'
+      - name: PAPERLESS_PORT
+        value: '8000'
+      - name: USERMAP_UID
+        value: '1001'
+      - name: USERMAP_GID
+        value: '1001'
+    persistence:
+      data:
+        enabled: true
+        existingClaim: paperless-local
+        mountPath: /local
+      media:
+        enabled: true
+        existingClaim: paperless-longhorn
+        mountPath: /longhorn
+      nfs:
+        enabled: true
+        existingClaim: paperless-nfs
+        mountPath: /nfs
+    sidecars:
+      redis:
+        name: redis
+        image: bitnami/redis
+        env:
+          - name: ALLOW_EMPTY_PASSWORD
+            value: "yes"
+      gotenberg:
+        name: gotenberg
+        image: docker.io/gotenberg/gotenberg:7.8
+        command:
+          - gotenberg
+          - --chromium-disable-javascript=true
+          - --chromium-allow-list=file:///tmp/.*
+      tika:
+        name: tika
+        image: ghcr.io/paperless-ngx/tika:latest
+  # Override immutable resources. This could be dangerous.
+  force: false
+  # Set the Helm --atomic flag when upgrading
+  atomic: false
+  # Disable go template pre-processing on the fleet values
+  disablePreProcess: false
+  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+  # It will wait for as long as timeoutSeconds
+  waitForJobs: true
+
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
 dependsOn:
@@ -13,15 +150,15 @@ dependsOn:
   #     matchLabels:
   #       app: weak-monkey
 
-diff:
-  comparePatches:
-  - apiVersion: apps/v1
-    kind: StatefulSet
-    name: paperless
-    namespace: home
-    operations:
-    - op: remove
-      path: /spec/template/spec/securityContext
+# diff:
+#   comparePatches:
+#   - apiVersion: apps/v1
+#     kind: StatefulSet
+#     name: paperless
+#     namespace: home
+#     operations:
+#     - op: remove
+#       path: /spec/template/spec/securityContext
 
 # A paused bundle will not update downstream clusters but instead mark the bundle
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to

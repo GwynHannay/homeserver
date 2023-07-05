@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: restore-paperless
+  name: restore-paperless-db
   namespace: infra
 spec:
   template:

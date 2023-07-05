@@ -25,20 +25,6 @@ helm:
         ports:
           http:
             port: 80
-    # ingress:
-    #   main:
-    #     enabled: true
-    #     annotations:
-    #       cert-manager.io/cluster-issuer: letsencrypt-prod
-    #     hosts:
-    #       - host: "walls.ocelotspot.com"
-    #         paths:
-    #           - path: /
-    #             pathType: Prefix
-    #     tls:
-    #       - hosts:
-    #           - "walls.ocelotspot.com"
-    #         secretName: "walls.ocelotspot.com-tls"
     env:
       - name: TZ
         value: "Australia/Perth"
