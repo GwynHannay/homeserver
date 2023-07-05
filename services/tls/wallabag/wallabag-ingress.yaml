@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  labels:
+    app.kubernetes.io/name: wallabag
+  name: wallabag
+  namespace: home
+spec:
+  rules:
+    - host: walls.ocelotspot.com
+      http:
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: wallabag
+              port:
+                name: http
+  tls:
+    - hosts:
+        - walls.ocelotspot.com
+      secretName: "walls.ocelotspot.com-tls"
