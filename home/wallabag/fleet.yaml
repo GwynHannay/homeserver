@@ -26,14 +26,14 @@ helm:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
         hosts:
-          - host: walls.ocelotspot.com
+          - host: "walls.ocelotspot.com"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - secretName: walls.ocelotspot.com-tls
-                host: walls.ocelotspot.com
+              - secretName: "walls.ocelotspot.com-tls"
+                host: "walls.ocelotspot.com"
     env:
       - name: TZ
         value: "Australia/Perth"
