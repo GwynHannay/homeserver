@@ -18,7 +18,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/practice/apps/db/postgresql
+    path: /home/practice/postgresql
   nodeAffinity:
     required:
       nodeSelectorTerms:
