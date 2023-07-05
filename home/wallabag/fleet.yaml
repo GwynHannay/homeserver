@@ -46,6 +46,8 @@ helm:
         value: pdo_pgsql
       - name: SYMFONY__ENV__DATABASE_NAME
         value: *app
+      - name: SYMFONY__ENV__DATABASE_PORT
+        value: 5432
       - name: POSTGRES_USER
         value: postgres
       - name: POSTGRES_PASSWORD
