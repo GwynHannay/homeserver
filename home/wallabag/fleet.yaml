@@ -32,8 +32,8 @@ helm:
                 pathType: Prefix
         tls:
           - hosts:
-              - secretName: "walls.ocelotspot.com-tls"
-                host: "walls.ocelotspot.com"
+              - "walls.ocelotspot.com"
+            secretName: "walls.ocelotspot.com-tls"
     env:
       - name: TZ
         value: "Australia/Perth"
