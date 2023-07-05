@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: immich
+  name: immich-longhorn
 spec:
   capacity:
     storage: 80Gi
@@ -16,12 +16,12 @@ spec:
     volumeAttributes:
       numberOfReplicas: '1'
       staleReplicaTimeout: '20'
-    volumeHandle: immich
+    volumeHandle: immich-longhorn
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: immich
+  name: immich-longhorn
   namespace: home
 spec:
   volumeMode: Filesystem
@@ -30,5 +30,5 @@ spec:
   resources:
     requests:
       storage: 80Gi
-  volumeName: immich
+  volumeName: immich-longhorn
   storageClassName: longhorn-static
