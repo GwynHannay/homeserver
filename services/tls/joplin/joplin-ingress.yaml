@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  labels:
+    app.kubernetes.io/name: joplin
+  name: joplin
+  namespace: home
+spec:
+  rules:
+    - host: jopps.ocelotspot.com
+      http:
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: joplin
+              port:
+                name: http
+  tls:
+    - hosts:
+        - jopps.ocelotspot.com
+      secretName: "jopps.ocelotspot.com-tls"

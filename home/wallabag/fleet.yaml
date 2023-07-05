@@ -1,0 +1,93 @@
+defaultNamespace: home
+
+helm:
+  chart: app-template
+
+  repo: https://bjw-s.github.io/helm-charts
+
+  releaseName: &app wallabag
+  # Makes helm skip the check for its own annotations
+  takeOwnership: false
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 1.5.1
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: wallabag/wallabag
+      tag: latest
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - host: walls.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - secretName: walls.ocelotspot.com-tls
+                host: walls.ocelotspot.com
+    env:
+      - name: TZ
+        value: "Australia/Perth"
+      - name: SYMFONY__ENV__DATABASE_DRIVER
+        value: pdo_pgsql
+      - name: POSTGRES_USER
+        value: postgres
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: pg-wallabag-creds
+            key: pg-root-pass
+      - name: SYMFONY__ENV__DATABASE_HOST
+        valueFrom:
+          secretKeyRef:
+            name: pg-wallabag-creds
+            key: db-host
+      - name: SYMFONY__ENV__DATABASE_USER
+        valueFrom:
+          secretKeyRef:
+            name: pg-wallabag-creds
+            key: db-user
+      - name: SYMFONY__ENV__DATABASE_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: pg-wallabag-creds
+            key: db-pass
+      - name: SYMFONY__ENV__DOMAIN_NAME
+        value: https://walls.ocelotspot.com
+    persistence:
+      images:
+        enabled: true
+        existingClaim: wallabag
+  # Override immutable resources. This could be dangerous.
+  force: false
+  # Set the Helm --atomic flag when upgrading
+  atomic: false
+  # Disable go template pre-processing on the fleet values
+  disablePreProcess: false
+  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+  # It will wait for as long as timeoutSeconds
+  waitForJobs: true
+
+# dependsOn allows you to configure dependencies to other bundles. The current bundle
+# will only be deployed, after all dependencies are deployed and in a Ready state.
+dependsOn:
+  # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
+  # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
+  # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
+  # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
+  - name: homeserver-services-metallb-custom
+  - name: homeserver-services-jobs-first-build
+  - name: homeserver-services-filepaths
+  # Select bundles to depend on based on their label.
+  # - selector:
+  #     matchLabels:
+  #       app: weak-monkey
