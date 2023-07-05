@@ -20,6 +20,11 @@ helm:
     image:
       repository: wallabag/wallabag
       tag: latest
+    service:
+      main:
+        ports:
+          http:
+            port: 80
     ingress:
       main:
         enabled: true
