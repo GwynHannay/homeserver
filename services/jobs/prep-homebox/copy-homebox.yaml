@@ -1,12 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: rclone-copy-scripts
-  namespace: infra
+  name: copy-homebox-data
+  namespace: home
 spec:
   template:
     metadata:
-      namespace: infra
+      namespace: home
     spec:
       containers:
         - image: bitnami/rclone
@@ -15,25 +15,25 @@ spec:
           args:
             - copy 
             - /nfs/ 
-            - /longhorn
+            - /local/sqlite
+            - -v
           volumeMounts:
             - mountPath: /nfs
               name: nfs
               readOnly: true
-            - mountPath: /longhorn
-              name: longhorn
+            - mountPath: /local
+              name: local
       restartPolicy: Never
       securityContext:
-        runAsUser: 1001
-        runAsGroup: 1001
-        fsGroup: 1001
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         allowPrivilegeEscalation: true
       volumes:
-        - hostPath:
-            path: /mnt/fileserver/rke2
+        - name: nfs
+          hostPath:
+            path: /mnt/fileserver/databases/sqlite/homebox
             type: Directory
-          name: nfs
-        - name: longhorn
-          persistentVolumeClaim:
-            claimName: scripts-longhorn
-  backoffLimit: 3
+        - name: local
+          existingVolumeClaim: homebox-local
+  backoffLimit: 2

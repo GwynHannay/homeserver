@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: restore-paperless-db
+  name: restore-wallabag-db
   namespace: infra
 spec:
   template:
@@ -15,22 +15,22 @@ spec:
           command:
             - "/bin/bash"
             - "-c"
-            - "echo \"SELECT 'CREATE ROLE $DB_USER LOGIN PASSWORD ''$DB_PASS'';' WHERE NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '$DB_USER')\\gexec\" | psql -h $DB_HOST -U postgres && psql -h $DB_HOST -U postgres -f /longhorn/paperless_full_dump.sql"
+            - "echo \"SELECT 'CREATE ROLE $DB_USER LOGIN PASSWORD ''$DB_PASS'';' WHERE NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '$DB_USER')\\gexec\" | psql -h $DB_HOST -U postgres && psql -h $DB_HOST -U postgres -f /longhorn/wallabag_full_dump.sql"
           env:
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  name: pg-paperless-creds
+                  name: pg-wallabag-creds
                   key: db-host
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: pg-paperless-creds
+                  name: pg-wallabag-creds
                   key: db-user
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: pg-paperless-creds
+                  name: pg-wallabag-creds
                   key: db-pass
             - name: PGPASSWORD
               valueFrom:

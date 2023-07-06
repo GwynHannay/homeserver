@@ -4,7 +4,7 @@ metadata:
   name: postgresql
 spec:
   capacity:
-    storage: 100Gi
+    storage: 20Gi
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce

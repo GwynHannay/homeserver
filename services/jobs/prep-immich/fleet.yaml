@@ -24,7 +24,7 @@ paused: true
 #   comparePatches:
 #   - apiVersion: batch/v1
 #     kind: Job
-#     name: restore-paperless-db
+#     name: restore-immich-db
 #     namespace: infra
 #     operations:
 #     - op: remove

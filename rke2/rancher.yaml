@@ -1,0 +1,13 @@
+hostname: rancher.ocelotspot.com
+ingress:
+  extraAnnotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  tls:
+    source: secret
+    secretName: rancher.ocelotspot.com-tls
+replicas: 1
+bootstrapPassword: eatmyshorts
+global:
+  cattle:
+    psp:
+      enabled: false

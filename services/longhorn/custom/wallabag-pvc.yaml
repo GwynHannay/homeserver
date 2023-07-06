@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: wallabag
+  name: wallabag-longhorn
 spec:
   capacity:
     storage: 10Gi
@@ -16,12 +16,12 @@ spec:
     volumeAttributes:
       numberOfReplicas: '1'
       staleReplicaTimeout: '20'
-    volumeHandle: wallabag
+    volumeHandle: wallabag-longhorn
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wallabag
+  name: wallabag-longhorn
   namespace: home
 spec:
   volumeMode: Filesystem
@@ -30,5 +30,5 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  volumeName: wallabag
+  volumeName: wallabag-longhorn
   storageClassName: longhorn-static

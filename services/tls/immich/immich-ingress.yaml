@@ -4,22 +4,22 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
   labels:
-    app.kubernetes.io/name: wallabag
-  name: wallabag
+    app.kubernetes.io/name: immich
+  name: immich
   namespace: home
 spec:
   rules:
-    - host: walls.ocelotspot.com
+    - host: pics.ocelotspot.com
       http:
         paths:
         - path: /
           pathType: ImplementationSpecific
           backend:
             service:
-              name: wallabag
+              name: immich
               port:
                 name: http
   tls:
     - hosts:
-        - walls.ocelotspot.com
-      secretName: "walls.ocelotspot.com-tls"
+        - pics.ocelotspot.com
+      secretName: "pics.ocelotspot.com-tls"

@@ -15,13 +15,13 @@ dependsOn:
 
 diff:
   comparePatches:
-  - apiVersion: batch/v1
-    kind: Job
-    name: copy-paperless
-    namespace: home
-    operations:
-    - op: remove
-      path: /spec/template/spec/securityContext
+  # - apiVersion: batch/v1
+  #   kind: Job
+  #   name: copy-paperless
+  #   namespace: home
+  #   operations:
+  #   - op: remove
+  #     path: /spec/template/spec/securityContext
   - apiVersion: batch/v1
     kind: Job
     name: rclone-copy-scripts

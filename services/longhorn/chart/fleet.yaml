@@ -41,7 +41,7 @@ helm:
       secureBackends: true
       tlsSecret: files.ocelotspot.com-tls
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
+        cert-manager.io/cluster-issuer: letsencrypt-staging
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -59,7 +59,7 @@ dependsOn:
   # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
-  - name: homeserver-services-external-dns
+  # - name: homeserver-services-external-dns
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:

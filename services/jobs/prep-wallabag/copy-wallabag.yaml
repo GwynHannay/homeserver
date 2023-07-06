@@ -1,12 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: rclone-copy-scripts
-  namespace: infra
+  name: copy-wallabag-images
+  namespace: home
 spec:
   template:
     metadata:
-      namespace: infra
+      namespace: home
     spec:
       containers:
         - image: bitnami/rclone
@@ -15,7 +15,7 @@ spec:
           args:
             - copy 
             - /nfs/ 
-            - /longhorn
+            - /longhorn/images
           volumeMounts:
             - mountPath: /nfs
               name: nfs
@@ -24,16 +24,15 @@ spec:
               name: longhorn
       restartPolicy: Never
       securityContext:
-        runAsUser: 1001
-        runAsGroup: 1001
-        fsGroup: 1001
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         allowPrivilegeEscalation: true
       volumes:
-        - hostPath:
-            path: /mnt/fileserver/rke2
+        - name: nfs
+          hostPath:
+            path: /mnt/fileserver/apps/wallabag/images
             type: Directory
-          name: nfs
         - name: longhorn
-          persistentVolumeClaim:
-            claimName: scripts-longhorn
-  backoffLimit: 3
+          existingVolumeClaim: wallabag-longhorn
+  backoffLimit: 2

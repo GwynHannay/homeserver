@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: immich
+  name: immich-local
 spec:
   capacity:
     storage: 20Gi
@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: immich
+  name: immich-local
   namespace: home
 spec:
   volumeMode: Filesystem
@@ -34,5 +34,5 @@ spec:
   resources:
     requests:
       storage: 20Gi
-  volumeName: immich
+  volumeName: immich-local
   storageClassName: local-storage

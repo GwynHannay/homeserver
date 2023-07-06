@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: copy-paperless-data
+  name: copy-immich-uploads
   namespace: home
 spec:
   template:
@@ -15,47 +15,7 @@ spec:
           args:
             - copy 
             - /nfs/ 
-            - /local/data
-            - -v
-          volumeMounts:
-            - mountPath: /nfs
-              name: nfs
-              readOnly: true
-            - mountPath: /local
-              name: local
-      restartPolicy: Never
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        allowPrivilegeEscalation: true
-      volumes:
-        - name: nfs
-          hostPath:
-            path: /mnt/fileserver/apps/paperless/data
-            type: Directory
-        - name: local
-          existingVolumeClaim: paperless-local
-  backoffLimit: 2
----
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: copy-paperless-media
-  namespace: home
-spec:
-  template:
-    metadata:
-      namespace: home
-    spec:
-      containers:
-        - image: bitnami/rclone
-          imagePullPolicy: IfNotPresent
-          name: rclone
-          args:
-            - copy 
-            - /nfs/ 
-            - /longhorn/media
+            - /longhorn/uploads
           volumeMounts:
             - mountPath: /nfs
               name: nfs
@@ -71,8 +31,54 @@ spec:
       volumes:
         - name: nfs
           hostPath:
-            path: /mnt/fileserver/apps/paperless/media
+            path: /mnt/fileserver/apps/immich/uploads
             type: Directory
         - name: longhorn
-          existingVolumeClaim: paperless-longhorn
+          existingVolumeClaim: immich-longhorn
+  backoffLimit: 2
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: copy-immich-models-typesense
+  namespace: home
+spec:
+  template:
+    metadata:
+      namespace: home
+    spec:
+      containers:
+        - image: bitnami/rclone
+          imagePullPolicy: IfNotPresent
+          name: rclone
+          args:
+            - copy 
+            - /nfs/ 
+            - /local
+          volumeMounts:
+            - mountPath: /nfs/models
+              name: models
+              readOnly: true
+            - mountPath: /nfs/typesense
+              name: typesense
+              readOnly: true
+            - mountPath: /local
+              name: local
+      restartPolicy: Never
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        allowPrivilegeEscalation: true
+      volumes:
+        - name: models
+          hostPath:
+            path: /mnt/fileserver/apps/immich/models
+            type: Directory
+        - name: typesense
+          hostPath:
+            path: /mnt/fileserver/apps/immich/typesense
+            type: Directory
+        - name: local
+          existingVolumeClaim: immich-local
   backoffLimit: 2
