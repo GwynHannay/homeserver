@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  labels:
+    app.kubernetes.io/name: homebox
+  name: homebox
+  namespace: home
+spec:
+  rules:
+    - host: box.ocelotspot.com
+      http:
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: homebox
+              port:
+                name: http
+  tls:
+    - hosts:
+        - box.ocelotspot.com
+      secretName: "box.ocelotspot.com-tls"

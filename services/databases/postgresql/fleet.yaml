@@ -25,6 +25,7 @@ helm:
     primary:
       service:
         type: LoadBalancer
+        loadBalancerIP: 10.172.90.81
       persistence:
         enabled: true
         existingClaim: postgresql
