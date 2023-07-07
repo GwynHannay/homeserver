@@ -32,7 +32,7 @@ spec:
       volumes:
         - name: nfs
           hostPath:
-            path: /mnt/fileserver/apps/homer
+            path: /mnt/fileserver/apps/homer/assets
             type: Directory
         - name: longhorn
           persistentVolumeClaim:
