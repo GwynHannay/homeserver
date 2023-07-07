@@ -40,7 +40,7 @@ helm:
         valueFrom:
           secretKeyRef:
             name: pg-wallabag-creds
-            key: pg-root-pass
+            key: postgres-password
       - name: SYMFONY__ENV__DATABASE_HOST
         valueFrom:
           secretKeyRef:
