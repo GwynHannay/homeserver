@@ -18,3 +18,13 @@ dependsOn:
 # the downstream clusters.
 # Default: false
 paused: false
+
+diff:
+  comparePatches:
+  - apiVersion: batch/v1
+    kind: Job
+    name: copy-homer-files
+    namespace: home
+    operations:
+    - op: remove
+      path: /spec/template/spec/securityContext
