@@ -108,8 +108,9 @@ helm:
         mountPath: /longhorn
       nfs:
         enabled: true
-        existingClaim: paperless-nfs
         mountPath: /nfs
+        type: hostPath
+        path: /mnt/fileserver/paperless
     sidecars:
       redis:
         name: redis

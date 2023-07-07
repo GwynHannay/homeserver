@@ -1,38 +1,40 @@
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: postgresql
-spec:
-  capacity:
-    storage: 20Gi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
-  local:
-    path: /home/practice/apps/db/postgresql
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - practice
-          - homesys
----
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: postgresql
+# spec:
+#   capacity:
+#     storage: 20Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#   - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: local-storage
+#   local:
+#     path: /home/practice/apps/db/postgresql
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#       - matchExpressions:
+#         - key: kubernetes.io/hostname
+#           operator: In
+#           values:
+#           - practice
+#           - homesys
+# ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgresql
   namespace: infra
+  annotations:
+    volumeType: hostPath
 spec:
-  volumeMode: Filesystem
+  # volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
-  volumeName: postgresql
-  storageClassName: local-storage
+  # volumeName: postgresql
+  storageClassName: local-path
