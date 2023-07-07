@@ -61,7 +61,7 @@ helm:
     persistence:
       images:
         enabled: true
-        existingClaim: wallabag
+        existingClaim: wallabag-longhorn
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -82,8 +82,7 @@ dependsOn:
   - name: homeserver-services-metallb-custom
   - name: homeserver-services-longhorn-custom
   - name: homeserver-services-jobs-first-build
-  - name: homeserver-services-filepaths
-  - name: homeserver-services-jobs-prep-wallabag
+  # - name: homeserver-services-jobs-prep-wallabag
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -93,4 +92,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
