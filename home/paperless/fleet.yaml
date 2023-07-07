@@ -110,7 +110,7 @@ helm:
         enabled: true
         mountPath: /nfs
         type: hostPath
-        path: /mnt/fileserver/paperless
+        hostPath: /mnt/fileserver/paperless
     sidecars:
       redis:
         name: redis
