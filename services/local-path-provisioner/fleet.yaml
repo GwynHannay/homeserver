@@ -1,7 +1,7 @@
 defaultNamespace: infra
 
 helm:
-  chart: containeroo/local-path-provisioner
+  chart: local-path-provisioner
 
   repo: https://charts.containeroo.ch
 
