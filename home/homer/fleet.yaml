@@ -30,6 +30,11 @@ helm:
         value: "Australia/Perth"
       - name: INIT_ASSETS
         value: 1
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      allowPrivilegeEscalation: true
     persistence:
       assets:
         enabled: true
