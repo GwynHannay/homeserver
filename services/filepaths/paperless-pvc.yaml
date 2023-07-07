@@ -21,23 +21,23 @@ spec:
           values:
           - practice
           - homesys
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: paperless-local
-  namespace: home
-  # annotations:
-  #   volumeType: hostPath
-spec:
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-  volumeName: paperless-local
-  storageClassName: local-storage
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: paperless-local
+#   namespace: home
+#   # annotations:
+#   #   volumeType: hostPath
+# spec:
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 20Gi
+#   volumeName: paperless-local
+#   storageClassName: local-storage
 ---
 apiVersion: v1
 kind: PersistentVolume
