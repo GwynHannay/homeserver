@@ -1,5 +1,50 @@
 defaultNamespace: home
 
+helm:
+  chart: app-template
+
+  repo: https://bjw-s.github.io/helm-charts
+
+  releaseName: homer
+  # Makes helm skip the check for its own annotations
+  takeOwnership: false
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 1.5.1
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    image:
+      repository: b4bz/homer
+      tag: latest
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: 10.172.90.82
+        ports:
+          http:
+            port: 8080
+    env:
+      - name: TZ
+        value: "Australia/Perth"
+      - name: INIT_ASSETS
+        value: 1
+    persistence:
+      assets:
+        enabled: true
+        existingClaim: homer-longhorn
+        mountPath: /www/assets
+  # Override immutable resources. This could be dangerous.
+  force: false
+  # Set the Helm --atomic flag when upgrading
+  atomic: false
+  # Disable go template pre-processing on the fleet values
+  disablePreProcess: false
+  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+  # It will wait for as long as timeoutSeconds
+  waitForJobs: true
+
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
 dependsOn:
@@ -19,4 +64,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
