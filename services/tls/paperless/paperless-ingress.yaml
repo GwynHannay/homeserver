@@ -4,8 +4,8 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   labels:
-    app.kubernetes.io/name: paperless
-  name: paperless
+    app.kubernetes.io/name: paperless-ngx
+  name: paperless-ngx
   namespace: home
 spec:
   rules:
@@ -16,7 +16,7 @@ spec:
           pathType: ImplementationSpecific
           backend:
             service:
-              name: paperless
+              name: paperless-ngx
               port:
                 name: http
   tls:
