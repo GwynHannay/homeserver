@@ -20,12 +20,19 @@ dependsOn:
 # Default: false
 paused: false
 
-# diff:
-#   comparePatches:
-#   - apiVersion: batch/v1
-#     kind: Job
-#     name: restore-paperless-db
-#     namespace: infra
-#     operations:
-#     - op: remove
-#       path: /spec/template/spec/securityContext
+diff:
+  comparePatches:
+  # - apiVersion: batch/v1
+  #   kind: Job
+  #   name: restore-paperless-db
+  #   namespace: infra
+  #   operations:
+  #   - op: remove
+  #     path: /spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: Job
+    name: copy-paperless-data
+    namespace: home
+    operations:
+    - op: remove
+      path: /spec/template/spec/securityContext
