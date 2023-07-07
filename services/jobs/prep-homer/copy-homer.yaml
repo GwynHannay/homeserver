@@ -35,5 +35,5 @@ spec:
             path: /mnt/fileserver/apps/homer
             type: Directory
         - name: longhorn
-          existingVolumeClaim: homebox-longhorn
+          existingVolumeClaim: homer-longhorn
   backoffLimit: 2
