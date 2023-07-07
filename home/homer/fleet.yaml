@@ -29,7 +29,7 @@ helm:
       - name: TZ
         value: "Australia/Perth"
       - name: INIT_ASSETS
-        value: 1
+        value: 0
     securityContext:
       runAsUser: 1000
       runAsGroup: 1000
