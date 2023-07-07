@@ -34,7 +34,8 @@ spec:
             path: /mnt/fileserver/apps/immich/uploads
             type: Directory
         - name: longhorn
-          existingVolumeClaim: immich-longhorn
+          persistentVolumeClaim:
+            claimName: immich-longhorn
   backoffLimit: 2
 ---
 apiVersion: batch/v1
@@ -80,5 +81,6 @@ spec:
             path: /mnt/fileserver/apps/immich/typesense
             type: Directory
         - name: local
-          existingVolumeClaim: immich-local
+          persistentVolumeClaim:
+            claimName: immich-local
   backoffLimit: 2

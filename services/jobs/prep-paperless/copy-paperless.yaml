@@ -35,7 +35,8 @@ spec:
             path: /mnt/fileserver/apps/paperless/data
             type: Directory
         - name: local
-          existingVolumeClaim: paperless-local
+          persistentVolumeClaim:
+            claimName: paperless-local
   backoffLimit: 2
 ---
 apiVersion: batch/v1
@@ -75,5 +76,6 @@ spec:
             path: /mnt/fileserver/apps/paperless/media
             type: Directory
         - name: longhorn
-          existingVolumeClaim: paperless-longhorn
+          persistentVolumeClaim:
+            claimName: paperless-longhorn
   backoffLimit: 2

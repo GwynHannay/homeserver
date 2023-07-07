@@ -35,5 +35,6 @@ spec:
             path: /mnt/fileserver/databases/sqlite/homebox
             type: Directory
         - name: local
-          existingVolumeClaim: homebox-local
+          persistentVolumeClaim:
+            claimName: homebox-local
   backoffLimit: 2

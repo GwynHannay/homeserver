@@ -34,5 +34,6 @@ spec:
             path: /mnt/fileserver/apps/wallabag/images
             type: Directory
         - name: longhorn
-          existingVolumeClaim: wallabag-longhorn
+          persistentVolumeClaim:
+            claimName: wallabag-longhorn
   backoffLimit: 2
