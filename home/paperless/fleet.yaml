@@ -24,7 +24,7 @@ helm:
       main:
         ports:
           http:
-            port: 80
+            port: 8000
     env:
       - name: TZ
         value: "Australia/Perth"
