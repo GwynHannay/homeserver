@@ -1,40 +1,40 @@
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: immich-local
-# spec:
-#   capacity:
-#     storage: 20Gi
-#   volumeMode: Filesystem
-#   accessModes:
-#   - ReadWriteOnce
-#   persistentVolumeReclaimPolicy: Retain
-#   storageClassName: local-storage
-#   local:
-#     path: /home/practice/apps/immich
-#   nodeAffinity:
-#     required:
-#       nodeSelectorTerms:
-#       - matchExpressions:
-#         - key: kubernetes.io/hostname
-#           operator: In
-#           values:
-#           - practice
-#           - homesys
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: immich-local
+spec:
+  capacity:
+    storage: 20Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /home/practice/apps/immich
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - practice
+          - homesys
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: immich-local
   namespace: home
-  annotations:
-    volumeType: hostPath
+  # annotations:
+  #   volumeType: hostPath
 spec:
-  # volumeMode: Filesystem
+  volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 20Gi
-  # volumeName: immich-local
-  storageClassName: local-path
+  volumeName: immich-local
+  storageClassName: local-storage
