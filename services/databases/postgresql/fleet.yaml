@@ -29,13 +29,13 @@ helm:
       persistence:
         enabled: true
         existingClaim: postgresql
-      extraVolumeMounts:
-        - name: scripts
-          mountPath: /scripts
-      extraVolumes:
-        - name: scripts
-          persistentVolumeClaim:
-            claimName: scripts-longhorn
+      # extraVolumeMounts:
+      #   - name: scripts
+      #     mountPath: /scripts
+      # extraVolumes:
+      #   - name: scripts
+      #     persistentVolumeClaim:
+      #       claimName: scripts-longhorn
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
