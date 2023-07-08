@@ -1,45 +1,32 @@
-defaultNamespace: home
+defaultNamespace: infra
 
 helm:
-  chart: app-template
+  chart: redis
 
-  repo: https://bjw-s.github.io/helm-charts
+  repo: https://charts.bitnami.com/bitnami
 
-  releaseName: homer
+  releaseName: redis
   # Makes helm skip the check for its own annotations
   takeOwnership: false
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 1.5.1
+  version: 17.11.7
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    image:
-      repository: b4bz/homer
-      tag: latest
-    service:
-      main:
+    auth:
+      enabled: false
+      sentinel: false
+    sentinel:
+      enabled: true
+      masterSet: redis-master
+      getMasterTimeout: 10
+      startupProbe:
+        failureThreshold: 2
+      service:
         type: LoadBalancer
-        loadBalancerIP: 10.172.90.83
-        ports:
-          http:
-            port: 8080
-    env:
-      - name: TZ
-        value: "Australia/Perth"
-      - name: INIT_ASSETS
-        value: 0
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      allowPrivilegeEscalation: true
-    persistence:
-      assets:
-        enabled: true
-        existingClaim: homer-longhorn
-        mountPath: /www/assets
+        loadBalancerIP: 10.172.90.82
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -58,15 +45,7 @@ dependsOn:
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homeserver-services-metallb-custom
-  - name: homeserver-services-longhorn-custom
-  - name: homeserver-services-jobs-prep-homer
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
   #       app: weak-monkey
-
-# A paused bundle will not update downstream clusters but instead mark the bundle
-# as OutOfSync. One can then manually confirm that a bundle should be deployed to
-# the downstream clusters.
-# Default: false
-paused: true

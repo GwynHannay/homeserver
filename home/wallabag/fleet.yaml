@@ -28,19 +28,14 @@ helm:
     env:
       - name: TZ
         value: "Australia/Perth"
+      - name: PHP_TIMEZONE
+        value: "Australia/Perth"
       - name: SYMFONY__ENV__DATABASE_DRIVER
         value: pdo_pgsql
       - name: SYMFONY__ENV__DATABASE_NAME
         value: *app
       - name: SYMFONY__ENV__DATABASE_PORT
         value: 5432
-      - name: POSTGRES_USER
-        value: postgres
-      - name: POSTGRES_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: pg-wallabag-creds
-            key: postgres-password
       - name: SYMFONY__ENV__DATABASE_HOST
         valueFrom:
           secretKeyRef:
@@ -56,8 +51,17 @@ helm:
           secretKeyRef:
             name: pg-wallabag-creds
             key: db-pass
+      - name: SYMFONY__ENV__REDIS_HOST
+        valueFrom:
+          secretKeyRef:
+            name: pg-wallabag-creds
+            key: redis-host
       - name: SYMFONY__ENV__DOMAIN_NAME
         value: https://walls.ocelotspot.com
+      - name: SYMFONY__ENV__SERVER_NAME
+        value: Wallabag
+      - name: POPULATE_DATABASE
+        value: false
     persistence:
       images:
         enabled: true
