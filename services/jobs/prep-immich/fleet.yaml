@@ -29,3 +29,24 @@ diff:
     operations:
     - op: remove
       path: /spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: Job
+    name: copy-immich-uploads
+    namespace: home
+    operations:
+    - op: remove
+      path: /spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: Job
+    name: copy-immich-models
+    namespace: home
+    operations:
+    - op: remove
+      path: /spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: Job
+    name: copy-immich-typesense
+    namespace: home
+    operations:
+    - op: remove
+      path: /spec/template/spec/securityContext

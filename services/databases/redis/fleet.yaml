@@ -22,6 +22,7 @@ helm:
       persistence:
         existingClaim: redis
     replicas:
+      replicaCount: 1
       persistence:
         existingClaim: redis
     sentinel:
