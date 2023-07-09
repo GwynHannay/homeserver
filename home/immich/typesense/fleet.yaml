@@ -66,7 +66,6 @@ dependsOn:
   - name: homeserver-services-jobs-first-build
   - name: homeserver-services-filepaths
   - name: homeserver-services-jobs-prep-immich
-  - name: homeserver-home-immich-typesense
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
