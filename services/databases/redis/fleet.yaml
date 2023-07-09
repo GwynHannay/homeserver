@@ -18,6 +18,12 @@ helm:
     auth:
       enabled: false
       sentinel: false
+    master:
+      persistence:
+        existingClaim: redis
+    replicas:
+      persistence:
+        existingClaim: redis
     sentinel:
       enabled: true
       masterSet: redis-master
