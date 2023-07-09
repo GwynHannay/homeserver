@@ -29,10 +29,10 @@ helm:
       startup:
         enabled: false
     envFrom:
-      - secretRef:
-        name: immich-secrets
-      - configMapRef:
-        name: immich-config
+    - secretRef:
+      name: immich-secrets
+    - configMapRef:
+      name: immich-config
     persistence:
       uploads:
         enabled: true
