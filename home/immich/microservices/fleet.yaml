@@ -16,7 +16,8 @@ helm:
   # install.
   values:
     controller:
-      type: statefulset
+      replicas: 1
+      strategy: RollingUpdate
     image:
       repository: ghcr.io/immich-app/immich-server
       tag: v1.66.1
@@ -39,8 +40,6 @@ helm:
       requests:
         cpu: 100m
         memory: 250Mi
-      limits:
-        memory: 1000Mi
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading

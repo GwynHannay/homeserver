@@ -42,8 +42,6 @@ helm:
       requests:
         cpu: 100m
         memory: 250Mi
-      limits:
-        memory: 1000Mi
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
