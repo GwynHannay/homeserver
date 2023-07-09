@@ -15,6 +15,7 @@ helm:
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
+    architecture: standalone
     auth:
       enabled: false
       sentinel: false
