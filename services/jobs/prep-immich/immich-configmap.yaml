@@ -14,3 +14,4 @@ data:
   IMMICH_MACHINE_LEARNING_URL: http://machine-learning.immich.svc.cluster.local:3003
   MACHINE_LEARNING_PORT: '3003'
   TYPESENSE_HOST: http://typesense.immich.svc.cluster.local
+  TYPESENSE_DATA_DIR: /config
