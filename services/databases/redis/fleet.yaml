@@ -25,10 +25,10 @@ helm:
       service:
         type: LoadBalancer
         loadBalancerIP: 10.172.90.82
-    replicas:
-      replicaCount: 1
-      persistence:
-        existingClaim: redis
+    # replicas:
+    #   replicaCount: 1
+    #   persistence:
+    #     existingClaim: redis
     # sentinel:
     #   enabled: true
     #   masterSet: redis-master
