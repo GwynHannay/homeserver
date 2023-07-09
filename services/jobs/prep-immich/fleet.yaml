@@ -20,12 +20,12 @@ dependsOn:
 # Default: false
 paused: true
 
-# diff:
-#   comparePatches:
-#   - apiVersion: batch/v1
-#     kind: Job
-#     name: restore-immich-db
-#     namespace: infra
-#     operations:
-#     - op: remove
-#       path: /spec/template/spec/securityContext
+diff:
+  comparePatches:
+  - apiVersion: batch/v1
+    kind: Job
+    name: restore-immich-db
+    namespace: infra
+    operations:
+    - op: remove
+      path: /spec/template/spec/securityContext
