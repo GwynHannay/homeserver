@@ -18,8 +18,13 @@ helm:
     controller:
       type: statefulset
     image:
-      repository: typesense/typesense
+      repository: docker.io/typesense/typesense
       tag: 0.24.1
+    envFrom:
+      - configMapRef:
+        name: immich-config
+      - secretRef:
+        name: immich-secrets
     service:
       main:
         ports:
@@ -28,13 +33,8 @@ helm:
     probes:
       startup:
         enabled: false
-    envFrom:
-    - secretRef:
-      name: immich-secrets
-    - configMapRef:
-      name: immich-config
     persistence:
-      uploads:
+      config:
         enabled: true
         existingClaim: immich-local-config
         mountPath: /config
