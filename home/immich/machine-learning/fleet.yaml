@@ -27,9 +27,9 @@ helm:
             port: 3003
     envFrom:
       - secretRef:
-        name: immich-secrets
+          name: immich-secrets
       - configMapRef:
-        name: immich-config
+          name: immich-config
     persistence:
       uploads:
         enabled: true

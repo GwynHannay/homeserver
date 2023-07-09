@@ -27,7 +27,7 @@ helm:
             port: 8080
     envFrom:
       - configMapRef:
-        name: immich-config
+          name: immich-config
     resources:
       requests:
         cpu: 100m
