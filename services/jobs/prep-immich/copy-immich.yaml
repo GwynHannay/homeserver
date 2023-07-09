@@ -41,7 +41,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: copy-immich-models-typesense
+  name: copy-immich-models
   namespace: home
 spec:
   template:
@@ -60,9 +60,6 @@ spec:
             - mountPath: /nfs/models
               name: models
               readOnly: true
-            - mountPath: /nfs/typesense
-              name: typesense
-              readOnly: true
             - mountPath: /local
               name: local
       restartPolicy: Never
@@ -76,11 +73,47 @@ spec:
           hostPath:
             path: /mnt/fileserver/apps/immich/models
             type: Directory
+        - name: local
+          persistentVolumeClaim:
+            claimName: immich-local-cache
+  backoffLimit: 2
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: copy-immich-typesense
+  namespace: home
+spec:
+  template:
+    metadata:
+      namespace: home
+    spec:
+      containers:
+        - image: bitnami/rclone
+          imagePullPolicy: IfNotPresent
+          name: rclone
+          args:
+            - copy 
+            - /nfs/ 
+            - /local
+          volumeMounts:
+            - mountPath: /nfs/typesense
+              name: typesense
+              readOnly: true
+            - mountPath: /local
+              name: local
+      restartPolicy: Never
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        allowPrivilegeEscalation: true
+      volumes:
         - name: typesense
           hostPath:
             path: /mnt/fileserver/apps/immich/typesense
             type: Directory
         - name: local
           persistentVolumeClaim:
-            claimName: immich-local
+            claimName: immich-local-config
   backoffLimit: 2

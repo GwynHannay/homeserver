@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: immich-config
+  namespace: home
+  labels:
+    app.kubernetes.io/name: immich
+data:
+  TZ: "Australia/Perth"
+  NODE_ENV: production
+  DB_DATABASE_NAME: immich
+  IMMICH_WEB_URL: http://web.immich.svc.cluster.local:3000
+  IMMICH_SERVER_URL: http://server.immich.svc.cluster.local:3001
+  IMMICH_MACHINE_LEARNING_URL: http://machine-learning.immich.svc.cluster.local:3003
+  MACHINE_LEARNING_PORT: 3003
+  TYPESENSE_HOST: http://typesense.immich.svc.cluster.local

@@ -5,7 +5,7 @@ helm:
 
   repo: https://bjw-s.github.io/helm-charts
 
-  releaseName: &app wallabag
+  releaseName: immich-microservices
   # Makes helm skip the check for its own annotations
   takeOwnership: false
   # The version of the chart or semver constraint of the chart to find. If a constraint
@@ -18,54 +18,29 @@ helm:
     controller:
       type: statefulset
     image:
-      repository: wallabag/wallabag
-      tag: latest
+      repository: ghcr.io/immich-app/immich-server
+      tag: v1.66.1
+    args:
+      - "start-microservices.sh"
     service:
       main:
-        ports:
-          http:
-            port: 80
-    env:
-      - name: TZ
-        value: "Australia/Perth"
-      - name: PHP_TIMEZONE
-        value: "Australia/Perth"
-      - name: SYMFONY__ENV__DATABASE_DRIVER
-        value: pdo_pgsql
-      - name: SYMFONY__ENV__DATABASE_NAME
-        value: *app
-      - name: SYMFONY__ENV__DATABASE_PORT
-        value: 5432
-      - name: SYMFONY__ENV__DATABASE_HOST
-        valueFrom:
-          secretKeyRef:
-            name: pg-wallabag-creds
-            key: db-host
-      - name: SYMFONY__ENV__DATABASE_USER
-        valueFrom:
-          secretKeyRef:
-            name: pg-wallabag-creds
-            key: db-user
-      - name: SYMFONY__ENV__DATABASE_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: pg-wallabag-creds
-            key: db-pass
-      - name: SYMFONY__ENV__REDIS_HOST
-        valueFrom:
-          secretKeyRef:
-            name: pg-wallabag-creds
-            key: redis-host
-      - name: SYMFONY__ENV__DOMAIN_NAME
-        value: https://walls.ocelotspot.com
-      - name: SYMFONY__ENV__SERVER_NAME
-        value: Wallabag
-      - name: POPULATE_DATABASE
-        value: false
+        enabled: false
+    envFrom:
+      - secretRef:
+        name: immich-secrets
+      - configMapRef:
+        name: immich-config
     persistence:
-      images:
+      uploads:
         enabled: true
-        existingClaim: wallabag-longhorn
+        existingClaim: immich-longhorn
+        mountPath: /usr/src/app/upload
+    resources:
+      requests:
+        cpu: 100m
+        memory: 250Mi
+      limits:
+        memory: 1000Mi
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -86,9 +61,9 @@ dependsOn:
   - name: homeserver-services-metallb-custom
   - name: homeserver-services-longhorn-custom
   - name: homeserver-services-jobs-first-build
-  - name: homeserver-services-jobs-prep-wallabag
-  - name: homeserver-services-databases-postgresql
-  - name: homeserver-services-databases-redis
+  - name: homeserver-services-filepaths
+  - name: homeserver-services-jobs-prep-immich
+  - name: homeserver-home-immich-typesense
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -98,4 +73,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
+paused: true

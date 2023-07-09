@@ -43,6 +43,11 @@ helm:
           secretKeyRef:
             name: pg-paperless-creds
             key: db-pass
+      - name: PAPERLESS_REDIS
+        valueFrom:
+          secretKeyRef:
+            name: pg-paperless-creds
+            key: redis-host
       - name: PAPERLESS_TIKA_ENABLED
         value: 'true'
       - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
@@ -111,12 +116,6 @@ helm:
         existingClaim: paperless-nfs
         mountPath: /nfs
     sidecars:
-      redis:
-        name: redis
-        image: bitnami/redis
-        env:
-          - name: ALLOW_EMPTY_PASSWORD
-            value: "yes"
       gotenberg:
         name: gotenberg
         image: docker.io/gotenberg/gotenberg:7.8
@@ -147,7 +146,8 @@ dependsOn:
   - name: homeserver-services-metallb-custom
   - name: homeserver-services-longhorn-custom
   - name: homeserver-services-jobs-first-build
-  - name: homeserver-services-local-path-provisioner
+  - name: homeserver-services-services-databases-postgresql
+  - name: homeserver-services-services-databases-redis
   - name: homeserver-services-jobs-prep-paperless
   # Select bundles to depend on based on their label.
   # - selector:

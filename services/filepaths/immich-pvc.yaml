@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: immich-local
+  name: immich-local-cache
 spec:
   capacity:
     storage: 20Gi
@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/practice/apps/immich
+    path: /home/practice/apps/immich/models
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -25,10 +25,8 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: immich-local
+  name: immich-local-cache
   namespace: home
-  # annotations:
-  #   volumeType: hostPath
 spec:
   volumeMode: Filesystem
   accessModes:
@@ -36,5 +34,44 @@ spec:
   resources:
     requests:
       storage: 20Gi
-  volumeName: immich-local
+  volumeName: immich-local-cache
+  storageClassName: local-storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: immich-local-config
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /home/practice/apps/immich/typesense
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - practice
+          - homesys
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-local-config
+  namespace: home
+spec:
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: immich-local-config
   storageClassName: local-storage
