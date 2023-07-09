@@ -22,9 +22,9 @@ helm:
       tag: 0.24.1
     envFrom:
       - configMapRef:
-        name: immich-config
+          name: immich-config
       - secretRef:
-        name: immich-secrets
+          name: immich-secrets
     service:
       main:
         ports:
