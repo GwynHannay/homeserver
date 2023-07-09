@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   labels:
     app.kubernetes.io/name: immich
   name: immich
@@ -16,7 +16,7 @@ spec:
           pathType: ImplementationSpecific
           backend:
             service:
-              name: immich
+              name: immich-proxy
               port:
                 name: http
   tls:
