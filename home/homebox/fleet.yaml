@@ -1,5 +1,45 @@
 defaultNamespace: home
 
+helm:
+  chart: app-template
+
+  repo: https://bjw-s.github.io/helm-charts
+
+  releaseName: homebox
+  # Makes helm skip the check for its own annotations
+  takeOwnership: false
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 1.5.1
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: ghcr.io/hay-kot/homebox
+      tag: latest
+    service:
+      main:
+        ports:
+          http:
+            port: 7745
+    env:
+      - name: TZ
+        value: "Australia/Perth"
+      - name: HBOX_LOG_LEVEL
+        value: info
+      - name: HBOX_LOG_FORMAT
+        value: text
+      - name: HBOX_WEB_MAX_UPLOAD_SIZE
+        value: '10'
+    persistence:
+      data:
+        enabled: true
+        existingClaim: homebox-local
+        mountPath: /data
+
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
 dependsOn:
