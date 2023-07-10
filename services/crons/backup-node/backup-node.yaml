@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-node
+  namespace: infra
+spec:
+  concurrencyPolicy: Replace
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          namespace: infra
+        spec:
+          containers:
+            - image: bitnami/rclone
+              imagePullPolicy: IfNotPresent
+              name: rclone
+              args:
+                - copy 
+                - /local/ 
+                - /longhorn
+                - -v
+              volumeMounts:
+                - mountPath: /local
+                  name: local
+                  readOnly: true
+                - mountPath: /longhorn
+                  name: longhorn
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            allowPrivilegeEscalation: true
+          volumes:
+            - name: local
+              hostPath:
+                path: /home/homesys/apps
+                type: Directory
+            - name: longhorn
+              persistentVolumeClaim:
+                claimName: node-backups-longhorn
+      backoffLimit: 2

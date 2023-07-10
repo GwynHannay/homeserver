@@ -1,0 +1,31 @@
+defaultNamespace: infra
+
+# dependsOn allows you to configure dependencies to other bundles. The current bundle
+# will only be deployed, after all dependencies are deployed and in a Ready state.
+dependsOn:
+  # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
+  # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
+  # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
+  # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
+  - name: homesys-services-longhorn-custom
+  - name: homesys-services-filepaths
+  # Select bundles to depend on based on their label.
+  # - selector:
+  #     matchLabels:
+  #       app: weak-monkey
+
+# A paused bundle will not update downstream clusters but instead mark the bundle
+# as OutOfSync. One can then manually confirm that a bundle should be deployed to
+# the downstream clusters.
+# Default: false
+paused: false
+
+# diff:
+#   comparePatches:
+#   - apiVersion: batch/v1
+#     kind: Job
+#     name: backup-node
+#     namespace: infra
+#     operations:
+#     - op: remove
+#       path: /spec/template/spec/securityContext
