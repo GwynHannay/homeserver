@@ -115,6 +115,13 @@ helm:
         enabled: true
         existingClaim: paperless-nfs
         mountPath: /nfs
+    resources:
+      requests:
+        cpu: 100m
+        memory: 300Mi
+      limits:
+        cpu: 2000m
+        memory: 2000Mi
     sidecars:
       gotenberg:
         name: gotenberg
