@@ -1,7 +1,7 @@
 hostname: rancher.ocelotspot.com
 ingress:
   extraAnnotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   tls:
     source: secret
     secretName: rancher.ocelotspot.com-tls
