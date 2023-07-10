@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/practice/apps/paperless
+    path: /home/homesys/apps/paperless
   nodeAffinity:
     required:
       nodeSelectorTerms:

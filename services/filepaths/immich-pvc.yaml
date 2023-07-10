@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/practice/apps/immich/models
+    path: /home/homesys/apps/immich/models
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -50,7 +50,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/practice/apps/immich/typesense
+    path: /home/homesys/apps/immich/typesense
   nodeAffinity:
     required:
       nodeSelectorTerms:
