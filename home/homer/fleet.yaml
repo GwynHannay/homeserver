@@ -21,10 +21,11 @@ helm:
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: 10.172.90.83
+        loadBalancerIP: 10.172.90.52
         ports:
           http:
-            port: 8080
+            port: 80
+            targetPort: 8080
     env:
       - name: TZ
         value: "Australia/Perth"
@@ -69,4 +70,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
