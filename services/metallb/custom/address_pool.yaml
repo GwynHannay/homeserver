@@ -13,7 +13,7 @@ spec:
   # will all share the same settings. Each range can be either a
   # CIDR prefix, or an explicit start-end range of IPs.
   addresses:
-  - 10.172.90.80-10.172.90.100
+  - 10.172.90.50-10.172.90.100
 
 ---
 

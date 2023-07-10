@@ -9,7 +9,7 @@ metadata:
   namespace: home
 spec:
   rules:
-    - host: box.ocelotspot.com
+    - host: homebox.ocelotspot.com
       http:
         paths:
         - path: /
@@ -21,5 +21,5 @@ spec:
                 name: http
   tls:
     - hosts:
-        - box.ocelotspot.com
-      secretName: "box.ocelotspot.com-tls"
+        - homebox.ocelotspot.com
+      secretName: "homebox.ocelotspot.com-tls"

@@ -9,7 +9,7 @@ metadata:
   namespace: home
 spec:
   rules:
-    - host: papers.ocelotspot.com
+    - host: paperless.ocelotspot.com
       http:
         paths:
         - path: /
@@ -21,5 +21,5 @@ spec:
                 name: http
   tls:
     - hosts:
-        - papers.ocelotspot.com
-      secretName: "papers.ocelotspot.com-tls"
+        - paperless.ocelotspot.com
+      secretName: "paperless.ocelotspot.com-tls"

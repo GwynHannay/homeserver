@@ -4,7 +4,7 @@ metadata:
   name: immich-longhorn
 spec:
   capacity:
-    storage: 80Gi
+    storage: 300Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -29,6 +29,6 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 80Gi
+      storage: 300Gi
   volumeName: immich-longhorn
   storageClassName: longhorn-static

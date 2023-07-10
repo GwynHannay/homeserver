@@ -4,7 +4,7 @@ metadata:
   name: wallabag-longhorn
 spec:
   capacity:
-    storage: 10Gi
+    storage: 20Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -29,6 +29,6 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 20Gi
   volumeName: wallabag-longhorn
   storageClassName: longhorn-static

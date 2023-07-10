@@ -52,7 +52,7 @@ helm:
       - name: APP_PORT
         value: '80'
       - name: APP_BASE_URL
-        value: 'https://jopps.ocelotspot.com'
+        value: 'https://joplin.ocelotspot.com'
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
@@ -75,4 +75,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
+paused: true

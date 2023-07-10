@@ -69,7 +69,7 @@ helm:
       - name: PAPERLESS_LOGROTATE_MAX_BACKUPS
         value: '100'
       - name: PAPERLESS_URL
-        value: "https://papers.ocelotspot.com"
+        value: "https://paperless.ocelotspot.com"
       - name: PAPERLESS_OCR_LANGUAGE
         value: "eng"
       - name: PAPERLESS_OCR_SKIP_ARCHIVE_FILE
@@ -168,4 +168,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
+paused: true

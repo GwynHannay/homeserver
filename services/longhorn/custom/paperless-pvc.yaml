@@ -4,7 +4,7 @@ metadata:
   name: paperless-longhorn
 spec:
   capacity:
-    storage: 50Gi
+    storage: 200Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -29,6 +29,6 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 200Gi
   volumeName: paperless-longhorn
   storageClassName: longhorn-static

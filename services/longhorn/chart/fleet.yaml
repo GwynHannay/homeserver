@@ -41,7 +41,7 @@ helm:
       secureBackends: true
       tlsSecret: files.ocelotspot.com-tls
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
+        cert-manager.io/cluster-issuer: letsencrypt-prod
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
