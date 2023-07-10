@@ -57,6 +57,7 @@ dependsOn:
   - name: homeserver-services-filepaths
   - name: homeserver-services-jobs-prep-immich
   - name: homeserver-home-immich-server
+  - name: homeserver-home-immich-web
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
