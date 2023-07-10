@@ -146,8 +146,8 @@ dependsOn:
   - name: homeserver-services-metallb-custom
   - name: homeserver-services-longhorn-custom
   - name: homeserver-services-jobs-first-build
-  - name: homeserver-services-services-databases-postgresql
-  - name: homeserver-services-services-databases-redis
+  - name: homeserver-services-databases-postgresql
+  - name: homeserver-services-databases-redis
   - name: homeserver-services-jobs-prep-paperless
   # Select bundles to depend on based on their label.
   # - selector:
