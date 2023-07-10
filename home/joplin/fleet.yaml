@@ -1,5 +1,59 @@
 defaultNamespace: home
 
+helm:
+  chart: app-template
+
+  repo: https://bjw-s.github.io/helm-charts
+
+  releaseName: joplin
+  # Makes helm skip the check for its own annotations
+  takeOwnership: false
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 1.5.1
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: joplin/server
+      tag: latest
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    env:
+      - name: TZ
+        value: "Australia/Perth"
+      - name: DB_CLIENT
+        value: pg
+      - name: POSTGRES_DB
+        value: joplin
+      - name: POSTGRES_HOST
+        valueFrom:
+          secretKeyRef:
+            name: pg-joplin-creds
+            key: db-host
+      - name: POSTGRES_USER
+        valueFrom:
+          secretKeyRef:
+            name: pg-joplin-creds
+            key: db-user
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: pg-joplin-creds
+            key: db-pass
+      - name: POSTGRES_DB
+        value: '5432'
+      - name: APP_PORT
+        value: '80'
+      - name: APP_BASE_URL
+        value: 'https://jopps.ocelotspot.com'
+
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
 dependsOn:
