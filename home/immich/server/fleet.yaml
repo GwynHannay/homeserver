@@ -15,8 +15,8 @@ helm:
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    controller:
-      type: statefulset
+    # controller:
+    #   type: statefulset
     image:
       repository: ghcr.io/immich-app/immich-server
       tag: v1.66.1

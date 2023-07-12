@@ -15,8 +15,8 @@ helm:
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    controller:
-      type: statefulset
+    # controller:
+    #   type: statefulset
     image:
       repository: ghcr.io/immich-app/immich-web
       tag: v1.66.1
@@ -25,6 +25,25 @@ helm:
         ports:
           http:
             port: 3000
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - host: immich.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+              - path: /api
+                pathType: Prefix
+                service:
+                  name: immich-server
+                  port: 3001
+        tls:
+          - hosts:
+              - immich.ocelotspot.com
+            secretName: "immich.ocelotspot.com-tls"
     envFrom:
       - secretRef:
           name: immich-secrets
