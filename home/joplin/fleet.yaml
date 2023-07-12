@@ -53,6 +53,9 @@ helm:
         value: '80'
       - name: APP_BASE_URL
         value: 'https://joplin.ocelotspot.com'
+    resources:
+      requests:
+        cpu: 2m
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.

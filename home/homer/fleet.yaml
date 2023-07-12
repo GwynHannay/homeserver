@@ -41,6 +41,9 @@ helm:
         enabled: true
         existingClaim: homer-longhorn
         mountPath: /www/assets
+    resources:
+      requests:
+        cpu: 1m
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
