@@ -40,7 +40,7 @@ helm:
         mountPath: /config
     resources:
       requests:
-        cpu: 100m
+        cpu: 5m
         memory: 250Mi
   # Override immutable resources. This could be dangerous.
   force: false

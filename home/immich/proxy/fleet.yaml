@@ -30,7 +30,7 @@ helm:
           name: immich-config
     resources:
       requests:
-        cpu: 100m
+        cpu: 5m
         memory: 250Mi
       limits:
         memory: 1000Mi
