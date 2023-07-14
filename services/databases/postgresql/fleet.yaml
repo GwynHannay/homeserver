@@ -29,6 +29,9 @@ helm:
       persistence:
         enabled: true
         existingClaim: postgresql
+      resources:
+        requests:
+          cpu: "50m"
       # extraVolumeMounts:
       #   - name: scripts
       #     mountPath: /scripts
