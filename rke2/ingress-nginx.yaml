@@ -12,3 +12,6 @@ spec:
         enabled: true
       service:
         enabled: true
+      resources:
+        requests:
+          cpu: "10m"
