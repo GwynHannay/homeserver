@@ -8,6 +8,7 @@ metadata:
 data:
   TZ: "Australia/Perth"
   NODE_ENV: "production"
+  LOG_LEVEL: "verbose"
   DB_DATABASE_NAME: immich
   DB_PORT: '5432'
   IMMICH_WEB_URL: http://immich-web.home.svc.cluster.local:3000
