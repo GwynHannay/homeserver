@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: home
+  labels:
+    app.kubernetes.io/name: homepage
+data:
+  bookmarks.yaml: |
+    - Repo:
+        - Github:
+            - abbr: GH
+              href: https://github.com/GwynHannay/Homeserver
+  kubernetes.yaml: |
+    mode: cluster
+  services.yaml: |
+    - Goats
+        - Here is a goat:
+            href: https://paperless.ocelotspot.com
+  widgets.yaml: |
+    - resources:
+        backend: kubernetes
+        expanded: true
+        cpu: true
+        memory: true
+    - search:
+        provider: duckduckgo
+        target: _blank
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "cluster"
+        nodes:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
