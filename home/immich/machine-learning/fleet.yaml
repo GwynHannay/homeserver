@@ -31,20 +31,17 @@ helm:
       - configMapRef:
           name: immich-config
     persistence:
-      uploads:
+      library:
         enabled: true
         existingClaim: immich-longhorn
         mountPath: /usr/src/app/upload
-      models:
+      cache:
         enabled: true
-        existingClaim: immich-local-cache
-        mountPath: /cache
+        type: emptyDir
     resources:
       requests:
         cpu: 15m
         memory: 250Mi
-      limits:
-        memory: 4000Mi
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading

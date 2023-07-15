@@ -32,6 +32,7 @@ helm:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/configuration-snippet: |
             rewrite /api/(.*) /$1 break;
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
         hosts:
           - host: immich.ocelotspot.com
             paths:
@@ -52,7 +53,7 @@ helm:
       - configMapRef:
           name: immich-config
     persistence:
-      uploads:
+      library:
         enabled: true
         existingClaim: immich-longhorn
         mountPath: /usr/src/app/upload
@@ -60,8 +61,6 @@ helm:
       requests:
         cpu: 5m
         memory: 250Mi
-      limits:
-        memory: 1000Mi
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
