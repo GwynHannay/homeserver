@@ -40,7 +40,7 @@ helm:
           gethomepage.dev/name: Immich
           gethomepage.dev/widget.type: immich
           gethomepage.dev/widget.url: "https://immich.ocelotspot.com"
-          gethomepage.dev/widget.key: "${IMMICH_API_KEY}"
+          gethomepage.dev/widget.key: "{{IMMICH_API_KEY}}"
         hosts:
           - host: immich.ocelotspot.com
             paths:
