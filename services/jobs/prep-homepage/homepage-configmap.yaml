@@ -16,7 +16,8 @@ data:
   settings.yaml: |
     title: Home
   services.yaml: |
-    - Goats
+    ---
+    - Goats:
         - Here is a goat:
             href: https://paperless.ocelotspot.com
   widgets.yaml: |
