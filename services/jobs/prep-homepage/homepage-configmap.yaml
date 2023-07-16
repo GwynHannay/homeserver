@@ -25,7 +25,7 @@ data:
             widget:
               type: bazarr
               url: http://mediarr.int.lan:6767
-              key: {{BAZARR_API_KEY}}
+              key: ${BAZARR_API_KEY}
   widgets.yaml: |
     - resources:
         backend: kubernetes
@@ -36,12 +36,6 @@ data:
         provider: duckduckgo
         target: _blank
     - kubernetes:
-        cluster:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
-          label: "cluster"
         nodes:
           show: true
           cpu: true
