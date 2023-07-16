@@ -18,6 +18,11 @@ helm:
     image:
       repository: ghcr.io/benphelps/homepage
       tag: latest
+    service:
+      main:
+        ports:
+          http:
+            port: 3000
     envFrom:
       - configMapRef:
           name: homepage-config
