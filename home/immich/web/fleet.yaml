@@ -33,6 +33,13 @@ helm:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             rewrite /api/(.*) /$1 break;
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Photos
+          gethomepage.dev/group: homesys
+          gethomepage.dev/icon: immich.png
+          gethomepage.dev/name: Immich
+          gethomepage.dev/widget.type: immich
+          gethomepage.dev/widget.url: "https://immich.ocelotspot.com"
         hosts:
           - host: immich.ocelotspot.com
             paths:
