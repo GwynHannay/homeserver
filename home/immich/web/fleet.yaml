@@ -38,6 +38,9 @@ helm:
           gethomepage.dev/group: homesys
           gethomepage.dev/icon: immich.png
           gethomepage.dev/name: Immich
+          gethomepage.dev/widget.type: immich
+          gethomepage.dev/widget.url: "https://immich.ocelotspot.com"
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_IMMICH}}"
         hosts:
           - host: immich.ocelotspot.com
             paths:
