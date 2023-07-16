@@ -18,6 +18,13 @@ data:
   services.yaml: |
     ---
     - Mediarr:
+        - NZBGet:
+            icon: nzbget.png
+            href: http://mediarr.int.lan:6789
+            description: UseNet Downloads
+            widget:
+              type: nzbget
+              url: http://mediarr.int.lan:6789
         - Bazarr:
             icon: bazarr.png
             href: http://mediarr.int.lan:6767
@@ -34,6 +41,22 @@ data:
               type: sonarr
               url: http://mediarr.int.lan:8989
               key: {{HOMEPAGE_VAR_SONARR}}
+        - Radarr:
+            icon: radarr.png
+            href: http://mediarr.int.lan:7878
+            description: Movies
+            widget:
+              type: radarr
+              url: http://mediarr.int.lan:7878
+              key: {{HOMEPAGE_VAR_RADARR}}
+        - Readarr:
+            icon: readarr.png
+            href: http://mediarr.int.lan:8787
+            description: Books
+            widget:
+              type: readarr
+              url: http://mediarr.int.lan:8787
+              key: {{HOMEPAGE_VAR_READARR}}
   widgets.yaml: |
     - resources:
         backend: kubernetes
