@@ -24,9 +24,8 @@ data:
     layout:
       homesys:
         icon: mdi-server-network
-        style: row
-        columns: 4
       Mediarr:
+        icon: mdi-projector
         style: row
         columns: 3
   services.yaml: |
@@ -82,7 +81,6 @@ data:
         target: _blank
     - longhorn:
         expanded: true
-        total: true
     - kubernetes:
         cluster:
           show: false
