@@ -63,6 +63,9 @@ helm:
             mountPath: /app/config/settings.yaml
           - path: widgets.yaml
             mountPath: /app/config/widgets.yaml
+    envFrom:
+      - secretRef:
+          name: homepage-secrets
     serviceAccount:
       create: true
   # Override immutable resources. This could be dangerous.

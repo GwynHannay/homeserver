@@ -17,9 +17,15 @@ data:
     title: Home
   services.yaml: |
     ---
-    - Goats:
-        - Here is a goat:
-            href: https://paperless.ocelotspot.com
+    - Mediarr:
+        - Bazarr:
+            icon: bazarr.png
+            href: http://mediarr.int.lan:6767
+            description: Subtitles
+            widget:
+              type: bazarr
+              url: http://mediarr.int.lan:6767
+              key: {{BAZARR_API_KEY}}
   widgets.yaml: |
     - resources:
         backend: kubernetes
