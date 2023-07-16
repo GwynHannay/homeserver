@@ -36,14 +36,23 @@ data:
         columns: 2
   services.yaml: |
     ---
+    - homesys:
+        - Rancher:
+            icon: rancher.png
+            href: https://rancher.ocelotspot.com
+            description: Kubernetes Management GUI
     - Hosts:
+        - Home Assistant:
+            icon: home-assistant.png
+            href: https://krn-ha.duckdns.org:8123
+            description: Home Automation
         - Brother Printer:
             icon: brother.png
-            href: printer.int.lan
+            href: http://printer.int.lan
             description: Printer & Scanner
         - EliteDesk:
             icon: vmware-esxi.png
-            href: elite.mgt.lan
+            href: http://elite.mgt.lan
             description: homesys ESXi
     - Mediarr:
         - NZBGet:
