@@ -1,9 +1,9 @@
 defaultNamespace: home
 
 helm:
-  chart: homepage
+  chart: app-template
 
-  repo: https://jameswynn.github.io/helm-charts
+  repo: https://bjw-s.github.io/helm-charts
 
   releaseName: homepage
   # Makes helm skip the check for its own annotations
@@ -11,21 +11,16 @@ helm:
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 1.2.0
+  version: 1.5.1
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
     image:
       repository: ghcr.io/benphelps/homepage
       tag: latest
-    enableRbac: true
-    serviceAccount:
-      create: true
-    config:
-      useExistingConfigMap: homepage-config
-    widgets:
-      - resources:
-          backend: kubernetes
+    envFrom:
+      - configMapRef:
+          name: homepage-config
     ingress:
       main:
         enabled: true
