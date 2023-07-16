@@ -23,9 +23,6 @@ helm:
         ports:
           http:
             port: 3000
-    envFrom:
-      - configMapRef:
-          name: homepage-config
     ingress:
       main:
         enabled: true
@@ -46,6 +43,28 @@ helm:
           - hosts:
               - home.ocelotspot.com
             secretName: "home.ocelotspot.com-tls"
+    persistence:
+      config:
+        enabled: true
+        type: custom
+        volumeSpec:
+          configMap:
+            name: homepage-config
+        subPath:
+          - path: bookmarks.yaml
+            mountPath: /app/config/bookmarks.yaml
+          - path: docker.yaml
+            mountPath: /app/config/docker.yaml
+          - path: kubernetes.yaml
+            mountPath: /app/config/kubernetes.yaml
+          - path: services.yaml
+            mountPath: /app/config/services.yaml
+          - path: settings.yaml
+            mountPath: /app/config/settings.yaml
+          - path: widgets.yaml
+            mountPath: /app/config/widgets.yaml
+    serviceAccount:
+      create: true
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
