@@ -15,8 +15,20 @@ data:
     mode: cluster
   settings.yaml: |
     title: Home
+    headerStyle: clean
     quicklaunch:
       searchDescriptions: true
+    providers:
+      longhorn:
+        url: https://files.ocelotspot.com
+    layout:
+      homesys:
+        icon: mdi-server-network
+        style: row
+        columns: 4
+      Mediarr:
+        style: row
+        columns: 3
   services.yaml: |
     ---
     - Mediarr:
