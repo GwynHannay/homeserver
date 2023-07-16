@@ -24,6 +24,7 @@ data:
     layout:
       homesys:
         icon: mdi-server-network
+        columns: 2
       Mediarr:
         icon: mdi-projector
         style: row
@@ -80,7 +81,7 @@ data:
         provider: duckduckgo
         target: _blank
     - longhorn:
-        expanded: true
+        total: true
     - kubernetes:
         cluster:
           show: false
