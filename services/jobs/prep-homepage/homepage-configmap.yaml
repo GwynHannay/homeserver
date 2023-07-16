@@ -26,6 +26,14 @@ data:
               type: bazarr
               url: http://mediarr.int.lan:6767
               key: ${BAZARR_API_KEY}
+        - Sonarr:
+            icon: sonarr.png
+            href: http://mediarr.int.lan:8989
+            description: TV Shows
+            widget:
+              type: sonarr
+              url: http://mediarr.int.lan:8989
+              key: ${SONARR_API_KEY}
   widgets.yaml: |
     - resources:
         backend: kubernetes
