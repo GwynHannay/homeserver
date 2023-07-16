@@ -8,6 +8,9 @@ metadata:
     gethomepage.dev/group: homesys
     gethomepage.dev/icon: paperless-ngx.png
     gethomepage.dev/name: Paperless-NGX
+    gethomepage.dev/widget.type: paperlessngx
+    gethomepage.dev/widget.url: "https://paperless.ocelotspot.com"
+    gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PAPERLESS}}"
   labels:
     app.kubernetes.io/name: paperless-ngx
   name: paperless-ngx

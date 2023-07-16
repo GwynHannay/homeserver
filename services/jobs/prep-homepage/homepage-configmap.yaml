@@ -15,6 +15,8 @@ data:
     mode: cluster
   settings.yaml: |
     title: Home
+    quicklaunch:
+      searchDescriptions: true
   services.yaml: |
     ---
     - Mediarr:
@@ -66,6 +68,9 @@ data:
     - search:
         provider: duckduckgo
         target: _blank
+    - longhorn:
+        expanded: true
+        total: true
     - kubernetes:
         cluster:
           show: false
