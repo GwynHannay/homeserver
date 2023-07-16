@@ -3,6 +3,11 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Bookmarked Articles
+    gethomepage.dev/group: homesys
+    gethomepage.dev/icon: wallabag.png
+    gethomepage.dev/name: Wallabag
   labels:
     app.kubernetes.io/name: wallabag
   name: wallabag

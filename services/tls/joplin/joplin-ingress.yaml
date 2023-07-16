@@ -3,6 +3,11 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Encrypted Notes
+    gethomepage.dev/group: homesys
+    gethomepage.dev/icon: joplin.png
+    gethomepage.dev/name: Joplin
   labels:
     app.kubernetes.io/name: joplin
   name: joplin

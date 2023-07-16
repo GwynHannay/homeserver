@@ -3,6 +3,11 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Documents
+    gethomepage.dev/group: homesys
+    gethomepage.dev/icon: paperless-ngx.png
+    gethomepage.dev/name: Paperless-NGX
   labels:
     app.kubernetes.io/name: paperless-ngx
   name: paperless-ngx

@@ -3,6 +3,11 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: House Inventory
+    gethomepage.dev/group: homesys
+    gethomepage.dev/icon: homebox.png
+    gethomepage.dev/name: Homebox
   labels:
     app.kubernetes.io/name: homebox
   name: homebox
