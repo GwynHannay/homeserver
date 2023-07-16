@@ -37,10 +37,10 @@ data:
         target: _blank
     - kubernetes:
         cluster:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
+          show: false
+          cpu: false
+          memory: false
+          showLabel: false
           label: "cluster"
         nodes:
           show: true
