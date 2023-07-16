@@ -18,6 +18,7 @@ helm:
     image:
       repository: ghcr.io/benphelps/homepage
       tag: latest
+    enableRbac: true
     serviceAccount:
       create: true
     config:
