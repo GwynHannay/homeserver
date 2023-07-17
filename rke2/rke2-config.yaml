@@ -1,0 +1,7 @@
+control-plane-resource-requests:
+  - cloud-controller-manager-cpu=5m
+  - etcd-cpu=50m
+  - kube-apiserver-cpu=150m
+  - kube-controller-manager-cpu=20m
+  - kube-proxy-cpu=1m
+  - kube-scheduler-cpu=5m

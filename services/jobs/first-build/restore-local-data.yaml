@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rclone-restore-local
+  namespace: infra
+spec:
+  template:
+    metadata:
+      namespace: infra
+    spec:
+      containers:
+        - image: bitnami/rclone
+          imagePullPolicy: IfNotPresent
+          name: rclone
+          args:
+            - copy 
+            - /nfs/ 
+            - /local
+          volumeMounts:
+            - mountPath: /nfs
+              name: nfs
+              readOnly: true
+            - mountPath: /local
+              name: local
+      restartPolicy: Never
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        allowPrivilegeEscalation: true
+      volumes:
+        - name: nfs
+          hostPath:
+            path: /mnt/fileserver/backups/local
+            type: Directory
+        - name: local
+          hostPath:
+            path: /home/homesys/apps
+            type: DirectoryOrCreate
+  backoffLimit: 3

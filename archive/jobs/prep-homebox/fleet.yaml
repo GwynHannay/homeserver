@@ -1,40 +1,4 @@
-defaultNamespace: home
-
-helm:
-  chart: app-template
-
-  repo: https://bjw-s.github.io/helm-charts
-
-  releaseName: joplin
-  # Makes helm skip the check for its own annotations
-  takeOwnership: false
-  # The version of the chart or semver constraint of the chart to find. If a constraint
-  # is specified it is evaluated each time git changes.
-  # The version also determines which chart to download from OCI registries.
-  version: 1.5.1
-  # Any values that should be placed in the `values.yaml` and passed to helm during
-  # install.
-  values:
-    controller:
-      type: statefulset
-    image:
-      repository: joplin/server
-      tag: latest
-    service:
-      main:
-        ports:
-          http:
-            port: 80
-    envFrom:
-      - secretRef:
-          name: joplin-secrets
-      - configMapRef:
-          name: joplin-config
-      - secretRef:
-          name: app-hosts
-    resources:
-      requests:
-        cpu: 2m
+defaultNamespace: infra
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
@@ -43,11 +7,9 @@ dependsOn:
   # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
-  - name: homesys-services-metallb-custom
   - name: homesys-services-longhorn-custom
   - name: homesys-services-jobs-first-build
   - name: homesys-services-filepaths
-  - name: homesys-services-jobs-prep-joplin
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -58,3 +20,13 @@ dependsOn:
 # the downstream clusters.
 # Default: false
 paused: true
+
+diff:
+  comparePatches:
+  - apiVersion: batch/v1
+    kind: Job
+    name: copy-homebox-data
+    namespace: home
+    operations:
+    - op: remove
+      path: /spec/template/spec/securityContext

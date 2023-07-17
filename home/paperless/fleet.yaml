@@ -25,83 +25,13 @@ helm:
         ports:
           http:
             port: 8000
-    env:
-      - name: TZ
-        value: "Australia/Perth"
-      - name: PAPERLESS_DBHOST
-        valueFrom:
-          secretKeyRef:
-            name: pg-paperless-creds
-            key: db-host
-      - name: PAPERLESS_DBUSER
-        valueFrom:
-          secretKeyRef:
-            name: pg-paperless-creds
-            key: db-user
-      - name: PAPERLESS_DBPASS
-        valueFrom:
-          secretKeyRef:
-            name: pg-paperless-creds
-            key: db-pass
-      - name: PAPERLESS_REDIS
-        valueFrom:
-          secretKeyRef:
-            name: pg-paperless-creds
-            key: redis-host
-      - name: PAPERLESS_TIKA_ENABLED
-        value: 'true'
-      - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
-        value: "http://localhost:3000"
-      - name: PAPERLESS_TIKA_ENDPOINT
-        value: "http://localhost:9998"
-      - name: PAPERLESS_CONSUMPTION_DIR
-        value: "/nfs/consume"
-      - name: PAPERLESS_EXPORT_DIR
-        value: "/nfs/export"
-      - name: PAPERLESS_DATA_DIR
-        value: "/local/data"
-      - name: PAPERLESS_MEDIA_ROOT
-        value: "/longhorn/media"
-      - name: PAPERLESS_FILENAME_FORMAT
-        value: "{document_type}/{correspondent}_{title}_{created}"
-      - name: PAPERLESS_FILENAME_FORMAT_REMOVE_NONE
-        value: 'true'
-      - name: PAPERLESS_LOGROTATE_MAX_BACKUPS
-        value: '100'
-      - name: PAPERLESS_URL
-        value: "https://paperless.ocelotspot.com"
-      - name: PAPERLESS_OCR_LANGUAGE
-        value: "eng"
-      - name: PAPERLESS_OCR_SKIP_ARCHIVE_FILE
-        value: "with_text"
-      - name: PAPERLESS_OCR_DESKEW
-        value: 'true'
-      - name: PAPERLESS_OCR_ROTATE_PAGES
-        value: 'true'
-      - name: PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD
-        value: '6'
-      - name: PAPERLESS_TASK_WORKERS
-        value: '3'
-      - name: PAPERLESS_TIME_ZONE
-        value: "Australia/Perth"
-      # - name: PAPERLESS_TRAIN_TASK_CRON
-      #   value: "* 3 * * *"
-      - name: PAPERLESS_CONSUMER_RECURSIVE
-        value: 'true'
-      - name: PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
-        value: 'true'
-      - name: PAPERLESS_FILENAME_DATE_ORDER
-        value: "YMD"
-      - name: PAPERLESS_IGNORE_DATES
-        value: "17/10/1987,20/06/1985"
-      - name: PAPERLESS_CONSUMER_POLLING
-        value: '30'
-      - name: PAPERLESS_PORT
-        value: '8000'
-      - name: USERMAP_UID
-        value: '1001'
-      - name: USERMAP_GID
-        value: '1001'
+    envFrom:
+      - secretRef:
+          name: paperless-secrets
+      - configMapRef:
+          name: paperless-config
+      - secretRef:
+          name: app-hosts
     persistence:
       data:
         enabled: true
@@ -175,4 +105,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
+paused: true

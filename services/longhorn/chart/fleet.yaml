@@ -11,7 +11,7 @@ helm:
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 1.4.2
+  version: 1.5.0
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
@@ -26,6 +26,8 @@ helm:
     defaultSettings:
       defaultLonghornStaticStorageClass: longhorn-static
       defaultReplicaCount: 1
+      guaranteedEngineManagerCPU: 5
+      guaranteedReplicaManagerCPU: 5
     longhornUI:
       replicas: 1
     longhornConversionWebhook:
@@ -42,6 +44,16 @@ helm:
       tlsSecret: files.ocelotspot.com-tls
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Block Storage
+        gethomepage.dev/group: homesys
+        gethomepage.dev/icon: longhorn.png
+        gethomepage.dev/name: Longhorn
+  valuesFrom:
+  - secretKeyRef:
+      name: longhorn-secrets
+      namespace: longhorn-system
+      key: values.yaml
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading

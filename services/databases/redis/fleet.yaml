@@ -25,16 +25,6 @@ helm:
       service:
         type: LoadBalancer
         loadBalancerIP: 10.172.90.82
-    # replicas:
-    #   replicaCount: 1
-    #   persistence:
-    #     existingClaim: redis
-    # sentinel:
-    #   enabled: true
-    #   masterSet: redis-master
-    #   getMasterTimeout: 10
-    #   startupProbe:
-    #     failureThreshold: 2
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading

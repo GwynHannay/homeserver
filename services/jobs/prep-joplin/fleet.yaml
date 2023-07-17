@@ -1,4 +1,4 @@
-defaultNamespace: infra
+defaultNamespace: home
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
@@ -18,14 +18,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
-
-diff:
-  comparePatches:
-  - apiVersion: batch/v1
-    kind: Job
-    name: restore-joplin-db
-    namespace: infra
-    operations:
-    - op: remove
-      path: /spec/template/spec/securityContext
+paused: true

@@ -60,6 +60,8 @@ helm:
           name: immich-secrets
       - configMapRef:
           name: immich-config
+      - secretRef:
+          name: app-hosts
     persistence:
       library:
         enabled: true
@@ -101,4 +103,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
+paused: true

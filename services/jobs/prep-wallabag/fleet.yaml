@@ -1,4 +1,4 @@
-defaultNamespace: infra
+defaultNamespace: home
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
@@ -9,7 +9,6 @@ dependsOn:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-services-jobs-first-build
   - name: homesys-services-databases-postgresql
-  - name: homesys-services-databases-redis
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -19,21 +18,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
-
-diff:
-  comparePatches:
-  - apiVersion: batch/v1
-    kind: Job
-    name: restore-wallabag-db
-    namespace: infra
-    operations:
-    - op: remove
-      path: /spec/template/spec/securityContext
-  - apiVersion: batch/v1
-    kind: Job
-    name: copy-wallabag-images
-    namespace: home
-    operations:
-    - op: remove
-      path: /spec/template/spec/securityContext
+paused: true
