@@ -28,6 +28,8 @@ helm:
     env:
       - name: TZ
         value: "Australia/Perth"
+      - name: MAX_TIME_DRIFT
+        value: '0'
       - name: DB_CLIENT
         value: pg
       - name: POSTGRES_DB
