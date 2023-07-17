@@ -47,7 +47,7 @@ helm:
           secretKeyRef:
             name: pg-joplin-creds
             key: db-pass
-      - name: POSTGRES_DB
+      - name: POSTGRES_PORT
         value: '5432'
       - name: APP_PORT
         value: '80'
