@@ -37,7 +37,8 @@ helm:
         mountPath: /usr/src/app/upload
       cache:
         enabled: true
-        type: emptyDir
+        existingClaim: immich-local-cache
+        mountPath: /cache
     resources:
       requests:
         cpu: 15m
