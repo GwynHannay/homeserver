@@ -19,7 +19,6 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - practice
           - homesys
 ---
 apiVersion: v1
@@ -58,7 +57,6 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - practice
           - homesys
 ---
 apiVersion: v1
