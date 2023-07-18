@@ -28,4 +28,4 @@ diff:
     namespace: infra
     operations:
     - op: remove
-      path: /spec/template/spec/securityContext
+      path: /spec/jobTemplate/spec/template/spec/securityContext
