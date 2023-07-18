@@ -18,7 +18,7 @@ spec:
               name: rclone
               command: ["/bin/sh", "-c"]
               args:
-                - "backup_timestamp=$(date '%Y%m%d_%H%M%S'); rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --backup-dir=/old --suffix='$backup_timestamp' --suffix-keep-extension --create-empty-src-dirs -v"
+                - "backup_timestamp=$(date +'%Y%m%d_%H%M%S'); rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --backup-dir=/old --suffix='$backup_timestamp' --suffix-keep-extension --create-empty-src-dirs -v"
               volumeMounts:
                 - mountPath: /local
                   name: local
