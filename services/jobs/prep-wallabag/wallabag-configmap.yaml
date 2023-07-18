@@ -13,4 +13,4 @@ data:
   SYMFONY__ENV__DATABASE_PORT: '5432'
   SYMFONY__ENV__DOMAIN_NAME: https://reading.ocelotspot.com
   SYMFONY__ENV__SERVER_NAME: Wallabag
-  POPULATE_DATABASE: false
+  POPULATE_DATABASE: 'false'
