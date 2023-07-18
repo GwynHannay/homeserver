@@ -19,14 +19,14 @@ spec:
               args:
                 - copy 
                 - /local/ 
-                - /longhorn
+                - /nfs
                 - -v
               volumeMounts:
                 - mountPath: /local
                   name: local
                   readOnly: true
-                - mountPath: /longhorn
-                  name: longhorn
+                - mountPath: /nfs
+                  name: nfs
           restartPolicy: OnFailure
           securityContext:
             runAsUser: 1000
@@ -38,7 +38,8 @@ spec:
               hostPath:
                 path: /home/homesys/apps
                 type: Directory
-            - name: longhorn
-              persistentVolumeClaim:
-                claimName: node-backups-longhorn
+            - name: nfs
+              hostPath:
+                path: /mnt/fileserver/backups/rke2
+                type: Directory
       backoffLimit: 2
