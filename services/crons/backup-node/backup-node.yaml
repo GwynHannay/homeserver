@@ -18,9 +18,9 @@ spec:
               name: rclone
               args:
                 - copy 
-                - --exclude "replorigin_checkpoint"
                 - /local/ 
                 - /nfs
+                - --exclude=*/replorigin_checkpoint
                 - -v
               volumeMounts:
                 - mountPath: /local
