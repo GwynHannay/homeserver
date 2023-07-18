@@ -17,10 +17,14 @@ spec:
               imagePullPolicy: IfNotPresent
               name: rclone
               args:
-                - copy 
+                - sync 
                 - /local/ 
                 - /nfs
                 - --exclude=*/replorigin_checkpoint
+                - --backup-dir=/old
+                - --suffix=`date +%Y%m%d_%H%M%S`
+                - --suffix-keep-extension
+                - --create-empty-src-dirs
                 - -v
               volumeMounts:
                 - mountPath: /local
@@ -28,6 +32,8 @@ spec:
                   readOnly: true
                 - mountPath: /nfs
                   name: nfs
+                - mountPath: /old
+                  name: old
           restartPolicy: OnFailure
           securityContext:
             runAsUser: 1000
@@ -42,5 +48,9 @@ spec:
             - name: nfs
               hostPath:
                 path: /mnt/fileserver/backups/rke2
+                type: Directory
+            - name: old
+              hostPath:
+                path: /mnt/fileserver/backups/rke2-old
                 type: Directory
       backoffLimit: 2
