@@ -4,7 +4,7 @@ metadata:
   name: backup-node
   namespace: infra
 spec:
-  concurrencyPolicy: Replace
+  concurrencyPolicy: Forbid
   schedule: "*/5 * * * *"
   jobTemplate:
     spec:
