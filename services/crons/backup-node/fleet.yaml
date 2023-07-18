@@ -23,7 +23,7 @@ paused: false
 diff:
   comparePatches:
   - apiVersion: batch/v1
-    kind: Job
+    kind: CronJob
     name: backup-node
     namespace: infra
     operations:
