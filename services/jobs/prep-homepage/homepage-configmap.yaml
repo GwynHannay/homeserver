@@ -94,6 +94,11 @@ data:
               type: readarr
               url: http://mediarr.int.lan:8787
               key: {{HOMEPAGE_VAR_READARR}}
+    - Documents:
+        - Online Orders:
+            icon: google-sheets.png
+            href: {{HOMEPAGE_VAR_ORDERS_DOC}}
+            description: Online Ordering and Delivery Tracking
   widgets.yaml: |
     - resources:
         backend: kubernetes
