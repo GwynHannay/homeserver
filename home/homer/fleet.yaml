@@ -74,3 +74,13 @@ dependsOn:
 # the downstream clusters.
 # Default: false
 paused: false
+
+diff:
+  comparePatches:
+  - apiVersion: apps/v1
+    kind: Deployment
+    name: homer
+    namespace: home
+    operations:
+    - op: remove
+      path: /spec/template/spec/containers
