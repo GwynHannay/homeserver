@@ -3,7 +3,7 @@ defaultNamespace: infra
 helm:
   chart: reloader
 
-  repo: https://github.com/stakater/Reloader
+  repo: https://stakater.github.io/stakater-charts
 
   releaseName: reloader
   # Makes helm skip the check for its own annotations
