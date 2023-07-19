@@ -44,6 +44,10 @@ helm:
               - home.ocelotspot.com
             secretName: "home.ocelotspot.com-tls"
     persistence:
+      controller:
+        annotations:
+          configmap.reloader.stakater.com/reload: "homepage-config"
+          secret.reloader.stakater.com/reload: "homepage-secrets"
       config:
         enabled: true
         type: custom
