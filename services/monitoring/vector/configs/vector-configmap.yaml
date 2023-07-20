@@ -7,9 +7,9 @@ metadata:
     app.kubernetes.io/name: vector
 data:
   agent.yaml: |
+    data_dir: /vector-data-dir
     api:
-      enabled: true
-      address: 127.0.0.1:8686
+      enabled: false
       playground: false
     sources:
       kubernetes_logs:
