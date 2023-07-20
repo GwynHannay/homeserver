@@ -27,6 +27,8 @@ helm:
     persistence:
       hostPath:
         path: /home/homesys/apps/vector
+    securityContext:
+      privileged: true
     envFrom:
       - secretRef:
           name: vector-secrets
