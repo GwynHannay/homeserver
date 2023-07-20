@@ -31,13 +31,13 @@ data:
         type: influxdb_metrics
         inputs: [host_metrics, internal_metrics]
         bucket: metrics
-        endpoint: http://localhost:8086/
+        endpoint: https://influx.ocelotspot.com
         org: primary
         token: ${INFLUXDB_TOKEN}
       influxdb_logs:
         type: influxdb_logs
         inputs: [kubernetes_logs]
         bucket: logs
-        endpoint: http://localhost:8086/
+        endpoint: https://influx.ocelotspot.com
         org: primary
         token: ${INFLUXDB_TOKEN}
