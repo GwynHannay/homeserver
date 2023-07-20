@@ -37,6 +37,7 @@ data:
         type: influxdb_logs
         inputs: [kubernetes_logs]
         bucket: logs
+        measurement: vector-logs
         endpoint: https://influx.ocelotspot.com
         org: primary
         token: ${INFLUXDB_TOKEN}
