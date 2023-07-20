@@ -47,6 +47,7 @@ dependsOn:
   - name: homesys-services-metallb-custom
   - name: homesys-services-longhorn-custom
   - name: homesys-services-databases-influxdb
+  - name: homesys-services-monitoring-vector-configs
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -56,4 +57,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
