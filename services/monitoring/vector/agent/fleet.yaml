@@ -24,6 +24,9 @@ helm:
     existingConfigMaps:
       - vector-agent-config
     dataDir: /vector-data-dir
+    persistence:
+      hostPath:
+        path: /home/homesys/apps/vector
     envFrom:
       - secretRef:
           name: vector-secrets
