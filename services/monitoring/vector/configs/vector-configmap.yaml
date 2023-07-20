@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vector-agent-config
+  namespace: infra
+  labels:
+    app.kubernetes.io/name: vector
+data:
+  agent.yaml: |
+    data_dir: /home/homesys/apps/vector
+    api:
+      enabled: true
+      address: 127.0.0.1:8686
+      playground: false
+    sources:
+      kubernetes_logs:
+        type: kubernetes_logs
+      host_metrics:
+        filesystem:
+          devices:
+            excludes: [binfmt_misc]
+          filesystems:
+            excludes: [binfmt_misc]
+          mountPoints:
+            excludes: ["*/proc/sys/fs/binfmt_misc"]
+        type: host_metrics
+      internal_metrics:
+        type: internal_metrics
+    sinks:
+      influxdb_metrics:
+        type: influxdb_metrics
+        inputs: [host_metrics, internal_metrics]
+        bucket: metrics
+        endpoint: http://localhost:8086/
+        org: primary
+        token: ${INFLUXDB_TOKEN}
+      influxdb_logs:
+        type: influxdb_logs
+        inputs: [kubernetes_logs]
+        bucket: logs
+        endpoint: http://localhost:8086/
+        org: primary
+        token: ${INFLUXDB_TOKEN}
