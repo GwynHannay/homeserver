@@ -33,7 +33,7 @@ helm:
       - name: SSL_PUB_KEY_PATH
         value: /etc/tls/tls.crt
       - name: HOST
-        value: https://dashy.ocelotspot.com
+        value: dashy.ocelotspot.com
     persistence:
       config:
         enabled: true
