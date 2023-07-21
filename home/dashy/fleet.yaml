@@ -32,8 +32,8 @@ helm:
         value: /etc/tls/tls.key
       - name: SSL_PUB_KEY_PATH
         value: /etc/tls/tls.crt
-      - name: HOST
-        value: dashy.ocelotspot.com
+      - name: VUE_APP_DOMAIN
+        value: https://dashy.ocelotspot.com
     persistence:
       config:
         enabled: true
