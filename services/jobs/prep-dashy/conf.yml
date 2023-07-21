@@ -1,0 +1,14 @@
+pageInfo:
+  title: Home
+sections: # An array of sections
+- name: Example Section
+  icon: far fa-rocket
+  items:
+  - title: GitHub
+    description: Dashy source code and docs
+    icon: fab fa-github
+    url: https://github.com/Lissy93/dashy
+  - title: Issues
+    description: View open issues, or raise a new one
+    icon: fas fa-bug
+    url: https://github.com/Lissy93/dashy/issues

@@ -1,0 +1,68 @@
+defaultNamespace: home
+
+helm:
+  chart: app-template
+
+  repo: https://bjw-s.github.io/helm-charts
+
+  releaseName: dashy
+  # Makes helm skip the check for its own annotations
+  takeOwnership: false
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 1.5.1
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    image:
+      repository: lissy93/dashy
+      tag: latest
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    env:
+      - name: TZ
+        value: "Australia/Perth"
+      - name: NODE_ENV
+        value: production
+    persistence:
+      config:
+        enabled: true
+        existingClaim: dashy-longhorn
+        mountPath: /app/public
+    resources:
+      requests:
+        cpu: 1m
+  # Override immutable resources. This could be dangerous.
+  force: false
+  # Set the Helm --atomic flag when upgrading
+  atomic: false
+  # Disable go template pre-processing on the fleet values
+  disablePreProcess: false
+  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+  # It will wait for as long as timeoutSeconds
+  waitForJobs: true
+
+# dependsOn allows you to configure dependencies to other bundles. The current bundle
+# will only be deployed, after all dependencies are deployed and in a Ready state.
+dependsOn:
+  # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
+  # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
+  # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
+  # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
+  - name: homesys-services-metallb-custom
+  - name: homesys-services-longhorn-custom
+  - name: homesys-services-jobs-prep-dashy
+  # Select bundles to depend on based on their label.
+  # - selector:
+  #     matchLabels:
+  #       app: weak-monkey
+
+# A paused bundle will not update downstream clusters but instead mark the bundle
+# as OutOfSync. One can then manually confirm that a bundle should be deployed to
+# the downstream clusters.
+# Default: false
+paused: false
