@@ -37,8 +37,9 @@ helm:
         enabled: true
         existingClaim: dashy-longhorn
         mountPath: /app/public
-      dashy.ocelotspot.com-tls:
+      tls:
         enabled: true
+        name: dashy.ocelotspot.com-tls
         type: secret
         mountPath: /etc/tls
         readOnly: true
