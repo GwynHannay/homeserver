@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Home Dashboard
+    gethomepage.dev/group: homesys
+    gethomepage.dev/icon: dashy.png
+    gethomepage.dev/name: Dashy
+  labels:
+    app.kubernetes.io/name: dashy
+  name: dashy
+  namespace: home
+spec:
+  rules:
+    - host: dashy.ocelotspot.com
+      http:
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: dashy
+              port:
+                name: http
+  tls:
+    - hosts:
+        - dashy.ocelotspot.com
+      secretName: "dashy.ocelotspot.com-tls"
