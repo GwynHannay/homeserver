@@ -28,11 +28,20 @@ helm:
         value: "Australia/Perth"
       - name: NODE_ENV
         value: production
+      - name: SSL_PRIV_KEY_PATH
+        value: /etc/tls/tls.key
+      - name: SSL_PUB_KEY_PATH
+        value: /etc/tls/tls.crt
     persistence:
       config:
         enabled: true
         existingClaim: dashy-longhorn
         mountPath: /app/public
+      dashy.ocelotspot.com-tls:
+        enabled: true
+        type: secret
+        mountPath: /etc/tls
+        readOnly: true
     resources:
       requests:
         cpu: 1m
