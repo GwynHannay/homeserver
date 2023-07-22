@@ -34,6 +34,8 @@ helm:
         value: /etc/tls/tls.crt
       - name: VUE_APP_DOMAIN
         value: https://dashy.ocelotspot.com
+      - name: BASE_URL
+        value: https://dashy.ocelotspot.com
     persistence:
       config:
         enabled: true
