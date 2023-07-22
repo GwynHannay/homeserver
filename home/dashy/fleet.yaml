@@ -15,6 +15,8 @@ helm:
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
+    controller:
+      type: statefulset
     image:
       repository: lissy93/dashy
       tag: latest
@@ -23,26 +25,24 @@ helm:
         ports:
           http:
             port: 80
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - host: dashy.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
     env:
       - name: TZ
         value: "Australia/Perth"
-      - name: NODE_ENV
-        value: production
-      - name: SSL_PRIV_KEY_PATH
-        value: /etc/tls/tls.key
-      - name: SSL_PUB_KEY_PATH
-        value: /etc/tls/tls.crt
     persistence:
       config:
         enabled: true
         existingClaim: dashy-longhorn
         mountPath: /app/public
-      tls:
-        enabled: true
-        name: dashy.ocelotspot.com-tls
-        type: secret
-        mountPath: /etc/tls
-        readOnly: true
     resources:
       requests:
         cpu: 1m
