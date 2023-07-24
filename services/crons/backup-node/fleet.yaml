@@ -24,7 +24,7 @@ diff:
   comparePatches:
   - apiVersion: batch/v1
     kind: CronJob
-    name: backup-node
+    name: backup-node-postgresql
     namespace: infra
     operations:
     - op: remove

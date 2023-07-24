@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-node
+  name: backup-node-postgresql
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
@@ -18,7 +18,7 @@ spec:
               name: rclone
               command: ["/bin/sh", "-c"]
               args:
-                - "rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --exclude=*/pg_internal.init --exclude=*/influxdb/* --create-empty-src-dirs -v"
+                - "rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --exclude=*/pg_internal.init --create-empty-src-dirs -v"
               # args:
                 # - "backup_timestamp=$(date +'%Y%m%d_%H%M%S'); rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --backup-dir=/old --suffix=_$backup_timestamp --suffix-keep-extension --create-empty-src-dirs -v"
               volumeMounts:
@@ -38,14 +38,10 @@ spec:
           volumes:
             - name: local
               hostPath:
-                path: /home/homesys/apps
+                path: /home/homesys/apps/db/postgresql
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2
-                type: Directory
-            - name: old
-              hostPath:
-                path: /mnt/fileserver/backups/rke2-old
+                path: /mnt/fileserver/backups/rke2/db/postgresql
                 type: Directory
       backoffLimit: 2

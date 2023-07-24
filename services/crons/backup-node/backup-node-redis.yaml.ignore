@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-node-redis
+  namespace: infra
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          namespace: infra
+        spec:
+          containers:
+            - image: bitnami/rclone
+              imagePullPolicy: IfNotPresent
+              name: rclone
+              command: ["/bin/sh", "-c"]
+              args:
+                - "rclone sync /local/ /nfs --create-empty-src-dirs -v"
+              volumeMounts:
+                - mountPath: /local
+                  name: local
+                  readOnly: true
+                - mountPath: /nfs
+                  name: nfs
+                - mountPath: /old
+                  name: old
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            allowPrivilegeEscalation: true
+          volumes:
+            - name: local
+              hostPath:
+                path: /home/homesys/apps/db/redis
+                type: Directory
+            - name: nfs
+              hostPath:
+                path: /mnt/fileserver/backups/rke2
+                type: Directory
+      backoffLimit: 2
