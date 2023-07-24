@@ -29,3 +29,38 @@ diff:
     operations:
     - op: remove
       path: /spec/jobTemplate/spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: CronJob
+    name: backup-node-redis
+    namespace: infra
+    operations:
+    - op: remove
+      path: /spec/jobTemplate/spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: CronJob
+    name: backup-node-influxdb
+    namespace: infra
+    operations:
+    - op: remove
+      path: /spec/jobTemplate/spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: CronJob
+    name: backup-node-homebox
+    namespace: infra
+    operations:
+    - op: remove
+      path: /spec/jobTemplate/spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: CronJob
+    name: backup-node-immich
+    namespace: infra
+    operations:
+    - op: remove
+      path: /spec/jobTemplate/spec/template/spec/securityContext
+  - apiVersion: batch/v1
+    kind: CronJob
+    name: backup-node-paperless
+    namespace: infra
+    operations:
+    - op: remove
+      path: /spec/jobTemplate/spec/template/spec/securityContext

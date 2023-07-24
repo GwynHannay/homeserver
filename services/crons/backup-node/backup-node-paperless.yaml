@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-node-redis
+  name: backup-node-paperless
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
@@ -27,17 +27,17 @@ spec:
                   name: nfs
           restartPolicy: OnFailure
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
+            runAsUser: 1001
+            runAsGroup: 1001
+            fsGroup: 1001
             allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:
-                path: /home/homesys/apps/db/redis
+                path: /home/homesys/apps/paperless
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2
+                path: /mnt/fileserver/backups/rke2/paperless
                 type: Directory
       backoffLimit: 2
