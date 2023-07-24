@@ -27,8 +27,6 @@ spec:
                   readOnly: true
                 - mountPath: /nfs
                   name: nfs
-                - mountPath: /old
-                  name: old
           restartPolicy: OnFailure
           securityContext:
             runAsUser: 1000
