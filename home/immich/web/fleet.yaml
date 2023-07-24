@@ -19,7 +19,7 @@ helm:
     #   type: statefulset
     image:
       repository: ghcr.io/immich-app/immich-web
-      tag: v1.68.0
+      tag: v1.69.0
     service:
       main:
         ports:
@@ -62,11 +62,6 @@ helm:
           name: immich-config
       - secretRef:
           name: app-hosts
-    persistence:
-      library:
-        enabled: true
-        existingClaim: immich-longhorn
-        mountPath: /usr/src/app/upload
     resources:
       requests:
         cpu: 5m

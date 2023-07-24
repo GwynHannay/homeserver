@@ -19,7 +19,7 @@ helm:
       replicas: 1
     image:
       repository: ghcr.io/immich-app/immich-machine-learning
-      tag: v1.68.0
+      tag: v1.69.0
     service:
       main:
         ports:
@@ -33,10 +33,6 @@ helm:
       - secretRef:
           name: app-hosts
     persistence:
-      library:
-        enabled: true
-        existingClaim: immich-longhorn
-        mountPath: /usr/src/app/upload
       cache:
         enabled: true
         existingClaim: immich-local-cache
