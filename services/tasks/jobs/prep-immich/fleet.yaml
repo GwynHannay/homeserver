@@ -1,5 +1,9 @@
 defaultNamespace: home
 
+helm:
+  # Makes helm skip the check for its own annotations
+  takeOwnership: true
+
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
 dependsOn:
@@ -18,4 +22,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
