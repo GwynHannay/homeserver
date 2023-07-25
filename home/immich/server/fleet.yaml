@@ -7,7 +7,7 @@ helm:
 
   releaseName: immich-server
   # Makes helm skip the check for its own annotations
-  takeOwnership: false
+  takeOwnership: true
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
