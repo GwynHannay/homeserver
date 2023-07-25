@@ -17,12 +17,15 @@ helm:
   values:
     auth:
       existingSecret: "minio-creds"
+    tls:
+      enabled: true
+      existingSecret: "minio.ocelotspot.com-tls"
     ingress:
       enabled: true
       hostname: minio.ocelotspot.com
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
-        tls: true
+      tls: true
     persistence:
       existingClaim: minio-longhorn
   # Override immutable resources. This could be dangerous.
