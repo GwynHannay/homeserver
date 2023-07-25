@@ -35,6 +35,10 @@ helm:
             paths:
               - path: /
                 pathType: Prefix
+        tls:
+          - hosts:
+              - dashy.ocelotspot.com
+            secretName: "dashy.ocelotspot.com-tls"
     env:
       - name: TZ
         value: "Australia/Perth"
