@@ -1,60 +1,22 @@
-defaultNamespace: home
+defaultNamespace: infra
 
 helm:
-  chart: app-template
+  chart: reloader
 
-  repo: https://bjw-s.github.io/helm-charts
+  repo: https://stakater.github.io/stakater-charts
 
-  releaseName: dashy
+  releaseName: reloader
   # Makes helm skip the check for its own annotations
   takeOwnership: false
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 1.5.1
+  version: 1.0.30
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    controller:
-      type: statefulset
-    image:
-      repository: lissy93/dashy
-      tag: latest
-    service:
-      main:
-        ports:
-          http:
-            port: 80
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-          - host: dashy.ocelotspot.com
-            paths:
-              - path: /
-                pathType: Prefix
-    env:
-      - name: TZ
-        value: "Australia/Perth"
-    persistence:
-      config:
-        enabled: true
-        existingClaim: dashy-longhorn
-        mountPath: /app/public
-    resources:
-      requests:
-        cpu: 1m
-  # Override immutable resources. This could be dangerous.
-  force: false
-  # Set the Helm --atomic flag when upgrading
-  atomic: false
-  # Disable go template pre-processing on the fleet values
-  disablePreProcess: false
-  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
-  # It will wait for as long as timeoutSeconds
-  waitForJobs: true
+    reloader:
+      reloadStrategy: annotations
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
@@ -65,7 +27,7 @@ dependsOn:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-services-networking-metallb-custom
   - name: homesys-services-storage-longhorn-custom
-  - name: homesys-services-tasks-jobs-prep-dashy
+  - name: homesys-services-tasks-jobs-first-build
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:

@@ -1,51 +1,44 @@
-defaultNamespace: home
+defaultNamespace: infra
 
 helm:
-  chart: app-template
+  chart: influxdb
 
-  repo: https://bjw-s.github.io/helm-charts
+  repo: https://charts.bitnami.com/bitnami
 
-  releaseName: dashy
+  releaseName: influxdb
   # Makes helm skip the check for its own annotations
   takeOwnership: false
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 1.5.1
+  version: 5.7.2
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    controller:
-      type: statefulset
-    image:
-      repository: lissy93/dashy
-      tag: latest
-    service:
-      main:
-        ports:
-          http:
-            port: 80
+    auth:
+      enabled: true
+      existingSecret: influx-secrets
+    influxdb:
+      service:
+        type: LoadBalancer
+        loadBalancerIP: 10.172.90.83
+      resources:
+        requests:
+          cpu: "50m"
     ingress:
-      main:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-          - host: dashy.ocelotspot.com
-            paths:
-              - path: /
-                pathType: Prefix
-    env:
-      - name: TZ
-        value: "Australia/Perth"
+      enabled: true
+      hostname: influx.ocelotspot.com
+      tls: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Time Series DB
+        gethomepage.dev/group: homesys
+        gethomepage.dev/icon: influxdb.png
+        gethomepage.dev/name: InfluxDB
     persistence:
-      config:
-        enabled: true
-        existingClaim: dashy-longhorn
-        mountPath: /app/public
-    resources:
-      requests:
-        cpu: 1m
+      enabled: true
+      existingClaim: influxdb
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -64,8 +57,8 @@ dependsOn:
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-services-networking-metallb-custom
-  - name: homesys-services-storage-longhorn-custom
-  - name: homesys-services-tasks-jobs-prep-dashy
+  - name: homesys-services-storage-filepaths
+  - name: homesys-services-tasks-jobs-first-build
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -75,4 +68,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
+paused: true

@@ -1,51 +1,30 @@
-defaultNamespace: home
+defaultNamespace: infra
 
 helm:
-  chart: app-template
+  chart: redis
 
-  repo: https://bjw-s.github.io/helm-charts
+  repo: https://charts.bitnami.com/bitnami
 
-  releaseName: dashy
+  releaseName: redis
   # Makes helm skip the check for its own annotations
   takeOwnership: false
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 1.5.1
+  version: 17.11.7
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    controller:
-      type: statefulset
-    image:
-      repository: lissy93/dashy
-      tag: latest
-    service:
-      main:
-        ports:
-          http:
-            port: 80
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-          - host: dashy.ocelotspot.com
-            paths:
-              - path: /
-                pathType: Prefix
-    env:
-      - name: TZ
-        value: "Australia/Perth"
-    persistence:
-      config:
-        enabled: true
-        existingClaim: dashy-longhorn
-        mountPath: /app/public
-    resources:
-      requests:
-        cpu: 1m
+    architecture: standalone
+    auth:
+      enabled: false
+      sentinel: false
+    master:
+      persistence:
+        existingClaim: redis
+      service:
+        type: LoadBalancer
+        loadBalancerIP: 10.172.90.82
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -64,15 +43,8 @@ dependsOn:
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-services-networking-metallb-custom
-  - name: homesys-services-storage-longhorn-custom
-  - name: homesys-services-tasks-jobs-prep-dashy
+  - name: homesys-services-storage-filepaths
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
   #       app: weak-monkey
-
-# A paused bundle will not update downstream clusters but instead mark the bundle
-# as OutOfSync. One can then manually confirm that a bundle should be deployed to
-# the downstream clusters.
-# Default: false
-paused: false
