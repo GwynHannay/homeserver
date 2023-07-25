@@ -17,9 +17,6 @@ helm:
   values:
     auth:
       existingSecret: "minio-creds"
-    tls:
-      enabled: true
-      existingSecret: "minio.ocelotspot.com-tls"
     ingress:
       enabled: true
       hostname: minio.ocelotspot.com
