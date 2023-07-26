@@ -33,8 +33,7 @@ helm:
       hosts:
         - host: loki.ocelotspot.com
           paths:
-            - path: /
-              pathType: Prefix
+            - /
       tls:
         - hosts:
             - loki.ocelotspot.com
