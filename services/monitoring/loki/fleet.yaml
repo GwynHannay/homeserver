@@ -31,12 +31,12 @@ helm:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
-        - host: loki.ocelotspot.com
+        - host: "loki.ocelotspot.com"
           paths:
             - /
       tls:
         - hosts:
-            - loki.ocelotspot.com
+            - "loki.ocelotspot.com"
           secretName: "loki.ocelotspot.com-tls"
     gateway:
       enabled: false
