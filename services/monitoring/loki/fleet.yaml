@@ -43,8 +43,8 @@ helm:
     monitoring:
       serviceMonitor:
         enabled: false 
-      selfMonitoring:
-        enabled: false 
+      # selfMonitoring:
+      #   enabled: false 
       lokiCanary:
         enabled: false 
   # Override immutable resources. This could be dangerous.
