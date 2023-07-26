@@ -1,0 +1,270 @@
+# Configuration options for Loki, fetched original from Bitnami loki.configuration, notes added from grafana.com
+
+# target - components to run, default is "all"
+
+auth_enabled: false # Grafana default = true
+
+# ballast_bytes - amount of virtual memory in bytes to reserve for garbage collection optimisation
+
+    server:
+      # http_listen (network, address)
+      http_listen_port: {{ .Values.loki.containerPorts.http }}
+      # http_listen (conn_limit)
+      # grpc_listen (network, address, port, conn_limit)
+      # tls (cipher_suites, min_version)
+      # http_tls_config
+      # grpc_tls_config
+      # register_instrumentation
+      # graceful_shutdown_timeout
+      # http_server (read_timeout, write_timeout, idle_timeout)
+      # grcp_server_max (recv_msg_size, send_msg_size, concurrent_streams, connection_idle, connection_args, connection_age_gracce)
+      # grpc_server (keepalive_time, keepalive_timeout, min_time_between_pings, ping_without_stream_allowed)
+      # log (format [logfmt, json], level [debug, info, warn, error])
+      # log_source (ips_enabled, ips_header, ips_regex)
+      # log_request_at_info_level_enabled
+      # http_path_prefix - base path to serve all API routes from, e.g. /v1/
+
+    distributor:
+      ring:
+        kvstore:
+          store: memberlist # [consul, etcd, inmemory, memberlist, multi]
+          # prefix
+          # consul (configs for consul client)
+          # etcd (configs for etcd v3 client)
+          # multi
+            # (primary, seconday, mirror_enabled, mirror_timeout)
+        # heartbeat (period, timeout)
+        # instance_interface_names
+      # rate_store
+        # max_request_parallelism (max concurrent requests to make to ingester streams apis)
+        # stream_rate_update_interval
+        # ingestor_request_timeout (comms between distributors and any ingestor)
+
+# querier (only when running all modules or just querier)
+  # tail_max_duration
+  # extra_query_delay
+  # query_ingesters_within
+  # engine 
+    # timeout (deprecated: use querier.query_timeout)
+    # max_look_back_peroid
+  # max_concurrent
+  # query_store_only
+  # query_ingester_only
+  # multi_tenant_queries_enabled
+  # per_request_limits_enabled
+
+# query_scheduler (separates tenant query queues from query-frontend)
+
+    frontend:
+      log_queries_longer_than: 5s
+      # max_body_size
+      # query_stats_enabled
+      # max_outstanding_per_tenant
+      # querier_forget_delay
+      # scheduler (address, dns_lookup_period, worker_concurrency)
+      # grpc_client_config
+      # graceful_shutdown_timeout
+      # instance_interface_names
+      compress_responses: true
+      # downstream_url
+      tail_proxy_url: http://{{ include "grafana-loki.querier.fullname" . }}:{{ .Values.querier.service.ports.http }}
+      # tail_tls_config
+
+    query_range: # splitting and caching in Loki query-frontend
+      # split_queries_by_interval
+      align_queries_with_step: true
+      results_cache:
+        cache:
+          {{- if .Values.memcachedfrontend.enabled }}
+          memcached_client:
+            consistent_hash: true
+            addresses: dns+{{ include "grafana-loki.memcached-frontend.host" . }}
+            max_idle_conns: 16
+            timeout: 500ms
+            update_interval: 1m
+          {{- else }}
+          embedded-cache:
+            enabled: true
+            max_size_items: 1024
+            validity: 24h
+          {{- end }}
+        # compression [snappy, '']
+      cache_results: true
+      max_retries: 5
+      # parallelise_shardable_queries
+      # forward_headers_list
+
+    ruler:
+      external_url: https://alertmanager.xx
+      # external_labels
+      # ruler_client
+      # evaluation_interval
+      # poll_interval
+      storage:
+        type: local # configdb, azure, gcs, s3, swift, local, bos
+        # azure, alibabacloud, gcs, s3, bos, swift (configs for backend rules storage)
+        local:
+          directory: {{ .Values.loki.dataDir }}/conf/rules
+      rule_path: /tmp/loki/scratch
+      alertmanager_url: https://alertmanager.xx
+      # enable_alertmanager (discovery, v2)
+      # alertmanager_refresh_interval
+      # alert_relabel_configs
+      # notification (queue_capacity, timeout)
+      # alertmanager_client (tls and auth settings)
+      # for (outage_tolerance, grace_period)
+      # resend_delay
+      # enable_sharding
+      # sharding (strategy, algo, pending_for)
+      # search_pending_for
+      ring: # see "distributor" for other vars
+        kvstore:
+          store: memberlist
+      # flush_period
+      # enable_api
+      # enabled_tenants
+      # disabled_tenants
+      # query_stats_enabled
+      # disable_rule_group_label
+      # wal (dir, truncate_frequency, min_age, max_age)
+      # wal_cleaner (min_age, period)
+      # remote_write (for Prometheus usage)
+
+# ingester_client (how distributors will connect to ingesters - only appropriate for all components, distributor, or querier)
+
+    ingester:
+      lifecycler:
+        ring: # see "distributor" for other vars
+          kvstore:
+            store: memberlist
+          replication_factor: 1
+      max_transfer_retries: 0
+      # concurrent_flushes
+      # flush (check_period, op_timeout)
+      chunk_retain_period: 1m
+      chunk_idle_period: 30m
+      chunk_block_size: 262144
+      # chunk_target_size
+      chunk_encoding: snappy
+      # max_chunk_age
+      # autoforget_unhealthy
+      # sync (period, min_utilization)
+      # max_returned_stream_errors
+      # query_store_max_look_back_period
+      wal:
+        dir: {{ .Values.loki.dataDir }}/wal
+      # index_shards
+      # max_dropped_streams
+
+# index_gateway (serving index queries without constantly interacting with object store)
+
+    storage_config: # possible stores for index and chunks, used in schema_config
+      # alibabacloud, aws, azure, bos, bigtable, gcs, cassandra, boltdb (configs for stores)
+      filesystem:
+        directory: {{ .Values.loki.dataDir }}/chunks
+      # swift, grpc_store, hedging
+      # named_stores - additional stores for provider
+      # index_cache_validity
+      index_queries_cache_config:
+        {{- if .Values.memcachedindexqueries.enabled }}
+        memcached:
+          batch_size: 100
+          parallelism: 100
+        memcached_client:
+          consistent_hash: true
+          addresses: dns+{{ include "grafana-loki.memcached-index-queries.host" . }}
+          service: http
+        {{- end }}
+      # disable_broad_index_queries
+      # max (parallel_get_chunk, chunk_batch_size)
+      boltdb_shipper: # storing index in object store in form of boltdb files
+        active_index_directory: {{ .Values.loki.dataDir }}/loki/index
+        shared_store: filesystem
+        # shared_store_key_prefix
+        cache_location: {{ .Values.loki.dataDir }}/loki/cache
+        cache_ttl: 168h
+        # resync_interval
+        # query_ready_num_delay
+        {{- if .Values.indexGateway.enabled }}
+        index_gateway_client:
+          # grpc_client_config
+          server_address: {{ (printf "dns:///%s:9095" (include "grafana-loki.index-gateway.fullname" .)) }}
+          # log_gateway_address
+        {{- end }}
+        # use_boltdb_shipper_as_backup
+        # ingestername
+        # mode
+
+    chunk_store_config: # how chunks will be cached and how long until saving them in backend
+      {{- if .Values.memcachedchunks.enabled }}
+      chunk_cache_config:
+        memcached:
+          batch_size: 100
+          parallelism: 100
+        memcached_client:
+          consistent_hash: true
+          addresses: dns+{{ include "grafana-loki.memcached-chunks.host" . }}
+      {{- end }}
+      {{- if .Values.memcachedindexwrites.enabled }}
+      write_dedupe_cache_config:
+        memcached:
+          batch_size: 100
+          parallelism: 100
+        memcached_client:
+          consistent_hash: true
+          addresses: dns+{{ include "grafana-loki.memcached-index-writes.host" . }}
+      {{- end }}
+      # cache_lookups_older_than
+      max_look_back_period: 0s
+
+    schema_config: # configures chunk index schema and where it is stored
+      configs: # list of period_configs
+      - from: 2020-10-24
+        store: boltdb-shipper
+        object_store: filesystem
+        schema: v11
+        index:
+          prefix: index_
+          period: 24h
+
+    compactor: # compacts index shards for performance
+      shared_store: filesystem
+
+    limits_config: # global and per-tenant limits in Loki
+      enforce_metric_name: false
+      reject_old_samples: true
+      reject_old_samples_max_age: 168h
+      max_cache_freshness_per_query: 10m
+      split_queries_by_interval: 15m
+
+    {{- if not .Values.queryScheduler.enabled }}
+    frontend_worker: # runs within Loki querier to pick up and execute queries enqueued by query-frontend
+      frontend_address: {{ include "grafana-loki.query-frontend.fullname" . }}:{{ .Values.queryFrontend.service.ports.grpc }}
+    {{- end }}
+
+    table_manager: # table manager for retention
+      retention_deletes_enabled: false
+      retention_period: 0s
+
+    memberlist:
+      join_members:
+        - {{ include "grafana-loki.gossip-ring.fullname" . }}
+
+# runtime_config (responsible for reloading runtime config file)
+
+# tracing (enable/disable tracing)
+
+# analytics (enable/disable anonymous usage report)
+
+    common: # things shared between multiple modules
+      # path_prefix
+      # storage
+      # persist_tokens
+      # replication_factor
+      # ring.kv_store
+      # instance_interface_names
+      # instance_addr
+      compactor_address: http://{{ include "grafana-loki.compactor.fullname" . }}:{{ .Values.compactor.service.ports.http }}
+      # compactor_grpc_address
+
+# shutdown_delay (how long to wait between SIGTERM and shutdown)

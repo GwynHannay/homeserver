@@ -1,7 +1,7 @@
 defaultNamespace: infra
 
 helm:
-  chart: loki
+  chart: grafana/loki
 
   repo: https://grafana.github.io/helm-charts
 
@@ -11,26 +11,42 @@ helm:
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 5.9.0
+  version: 5.9.1
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
     loki:
-      structuredConfig:
-        auth_enabled: false
-    test:
-      enabled: false
-    monitoring:
-      rules:
-        enabled: false
-      serviceMonitor:
-        enabled: false
-      selfMonitoring:
-        enabled: false
-      lokiCanary:
-        enabled: true
-    read:
+      auth_enabled: false
+      commonConfig:
+        replication_factor: 1
+      storage:
+        type: filesystem
+    singleBinary:
       replicas: 1
+      persistence:
+        size: 20Gi
+        storageClass: longhorn
+    gateway:
+      ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - host: loki.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - loki.ocelotspot.com
+            secretName: "loki.ocelotspot.com-tls"
+    monitoring:
+      serviceMonitor:
+        enabled: false 
+      selfMonitoring:
+        enabled: false 
+      lokiCanary:
+        enabled: false 
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -49,8 +65,7 @@ dependsOn:
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-services-networking-metallb-custom
-  - name: homesys-services-storage-longhorn-custom
-  - name: homesys-services-monitoring-vector-configs
+  - name: homesys-services-storage-longhorn-chart
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -60,4 +75,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
