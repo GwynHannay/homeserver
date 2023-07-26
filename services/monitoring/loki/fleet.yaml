@@ -26,7 +26,6 @@ helm:
       persistence:
         size: 20Gi
         storageClass: longhorn
-    gateway:
       ingress:
         enabled: true
         annotations:
@@ -40,6 +39,8 @@ helm:
           - hosts:
               - loki.ocelotspot.com
             secretName: "loki.ocelotspot.com-tls"
+    gateway:
+      enabled: false
     test:
       enabled: false 
     monitoring:
