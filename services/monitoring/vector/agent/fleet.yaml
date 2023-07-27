@@ -5,7 +5,7 @@ helm:
 
   repo: https://helm.vector.dev
 
-  releaseName: vector
+  releaseName: vector-agent
   # Makes helm skip the check for its own annotations
   takeOwnership: true
   # The version of the chart or semver constraint of the chart to find. If a constraint
@@ -17,13 +17,24 @@ helm:
   values:
     role: Agent
     podAnnotations:
-      configmap.reloader.stakater.com/reload: "vector-agent-config"
       secret.reloader.stakater.com/reload: "vector-secrets"
     service:
       enabled: false
-    existingConfigMaps:
-      - vector-agent-config
     dataDir: /vector-data-dir
+    customConfig:
+      data_dir: /vector-data-dir
+      api:
+        enabled: false
+      sources:
+        kubernetes_logs:
+          type: kubernetes_logs
+      sinks:
+        kubernetes_sink:
+          type: vector
+          inputs:
+            - kubernetes_logs
+          address: "vector-aggregator.infra.svc.cluster.local:6000"
+          version: "2"
     persistence:
       hostPath:
         path: /home/homesys/apps/vector

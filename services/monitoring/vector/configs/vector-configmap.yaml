@@ -1,56 +1,42 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vector-agent-config
+  name: vector-config
   namespace: infra
   labels:
     app.kubernetes.io/name: vector
 data:
-  agent.yaml: |
+  aggregator.yaml: |
     data_dir: /vector-data-dir
     api:
-      enabled: false
-      playground: false
+      enabled: true
+      address: 0.0.0.0:8686
     sources:
       kubernetes_logs:
-        type: kubernetes_logs
-      # host_metrics:
-      #   filesystem:
-      #     devices:
-      #       excludes: [binfmt_misc]
-      #     filesystems:
-      #       excludes: [binfmt_misc]
-      #     mountPoints:
-      #       excludes: ["*/proc/sys/fs/binfmt_misc"]
-      #   type: host_metrics
-      # internal_metrics:
-      #   type: internal_metrics
+        type: vector
+        address: 0.0.0.0:6000
+        version: "2"
+    transforms:
+      kubernetes_logs_remaps:
+        type: remap
+        inputs:
+          - kubernetes_logs
+        source: |
+          # Standardize 'app' index
+          .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
     sinks:
       kubernetes_sink:
         type: loki
-        inputs: [kubernetes_logs]
+        inputs: [kubernetes_logs_remaps]
         endpoint: http://loki.infra.svc.cluster.local:3100
         encoding:
           codec: json
+        out_of_order_action: accept
         labels:
+          app: '{{ custom_app_name }}'
           k8s_container: '{{ kubernetes.container_name }}'
           k8s_filename: '{{ kubernetes.file }}'
           k8s_instance: '{{ kubernetes.pod_labels."app.kubernetes.io/instance" }}'
           k8s_namespace: '{{ kubernetes.pod_namespace }}'
           k8s_node: '{{ kubernetes.pod_node_name }}'
           k8s_pod: '{{ kubernetes.pod_name }}'
-      # influxdb_metrics:
-      #   type: influxdb_metrics
-      #   inputs: [host_metrics, internal_metrics]
-      #   bucket: metrics
-      #   endpoint: https://influx.ocelotspot.com
-      #   org: primary
-      #   token: ${INFLUXDB_TOKEN}
-      # influxdb_logs:
-      #   type: influxdb_logs
-      #   inputs: [kubernetes_logs]
-      #   bucket: logs
-      #   measurement: vector-logs
-      #   endpoint: https://influx.ocelotspot.com
-      #   org: primary
-      #   token: ${INFLUXDB_TOKEN}

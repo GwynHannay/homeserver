@@ -5,7 +5,7 @@ helm:
 
   repo: https://helm.vector.dev
 
-  releaseName: vector
+  releaseName: vector-aggregator
   # Makes helm skip the check for its own annotations
   takeOwnership: true
   # The version of the chart or semver constraint of the chart to find. If a constraint
@@ -15,7 +15,12 @@ helm:
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    
+    role: Aggregator
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "vector-config"
+    dataDir: /vector-data-dir
+    existingConfigMaps:
+      - vector-config
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -35,8 +40,9 @@ dependsOn:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-services-networking-metallb-custom
   - name: homesys-services-storage-longhorn-custom
-  - name: homesys-services-storage-databases-influxdb
   - name: homesys-services-monitoring-vector-agent
+  - name: homesys-services-monitoring-vector-configs
+  - name: homesys-services-monitoring-loki
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
