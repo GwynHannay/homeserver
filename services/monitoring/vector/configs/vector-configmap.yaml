@@ -14,30 +14,36 @@ data:
     sources:
       kubernetes_logs:
         type: kubernetes_logs
-      host_metrics:
-        filesystem:
-          devices:
-            excludes: [binfmt_misc]
-          filesystems:
-            excludes: [binfmt_misc]
-          mountPoints:
-            excludes: ["*/proc/sys/fs/binfmt_misc"]
-        type: host_metrics
-      internal_metrics:
-        type: internal_metrics
+      # host_metrics:
+      #   filesystem:
+      #     devices:
+      #       excludes: [binfmt_misc]
+      #     filesystems:
+      #       excludes: [binfmt_misc]
+      #     mountPoints:
+      #       excludes: ["*/proc/sys/fs/binfmt_misc"]
+      #   type: host_metrics
+      # internal_metrics:
+      #   type: internal_metrics
     sinks:
-      influxdb_metrics:
-        type: influxdb_metrics
-        inputs: [host_metrics, internal_metrics]
-        bucket: metrics
-        endpoint: https://influx.ocelotspot.com
-        org: primary
-        token: ${INFLUXDB_TOKEN}
-      influxdb_logs:
-        type: influxdb_logs
+      kubernetes_sink:
+        type: loki
         inputs: [kubernetes_logs]
-        bucket: logs
-        measurement: vector-logs
-        endpoint: https://influx.ocelotspot.com
-        org: primary
-        token: ${INFLUXDB_TOKEN}
+        endpoint: http://loki.infra.svc.cluster.local:3100
+        encoding:
+          codec: json
+      # influxdb_metrics:
+      #   type: influxdb_metrics
+      #   inputs: [host_metrics, internal_metrics]
+      #   bucket: metrics
+      #   endpoint: https://influx.ocelotspot.com
+      #   org: primary
+      #   token: ${INFLUXDB_TOKEN}
+      # influxdb_logs:
+      #   type: influxdb_logs
+      #   inputs: [kubernetes_logs]
+      #   bucket: logs
+      #   measurement: vector-logs
+      #   endpoint: https://influx.ocelotspot.com
+      #   org: primary
+      #   token: ${INFLUXDB_TOKEN}

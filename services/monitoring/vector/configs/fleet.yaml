@@ -12,7 +12,6 @@ dependsOn:
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-services-tasks-jobs-first-build
-  - name: homesys-services-storage-databases-influxdb
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -22,4 +21,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
