@@ -40,9 +40,7 @@ helm:
       enabled: true
       replicas: 1
       image:
-        registry: ghrc.io
-        repository: nginxinc/nginx-unprivileged
-        tag: '1.25'
+        tag: '1.25-alpine'
       ingress:
         enabled: true
         annotations:
