@@ -23,7 +23,7 @@ helm:
       - vector-config
     service:
       ports:
-        - name: kubernetes_logs
+        - name: kubernetes-logs
           port: 6000
   # Override immutable resources. This could be dangerous.
   force: false
