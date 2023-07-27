@@ -11,7 +11,7 @@ helm:
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 5.9.1
+  version: 5.9.2
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
@@ -92,3 +92,13 @@ dependsOn:
 # the downstream clusters.
 # Default: false
 paused: false
+
+diff:
+  comparePatches:
+  - apiVersion: apps/v1
+    kind: StatefulSet
+    name: loki
+    namespace: infra
+    operations:
+    - op: remove
+      path: /spec/persistentVolumeClaimRetentionPolicy
