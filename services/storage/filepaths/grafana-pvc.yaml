@@ -25,7 +25,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: grafana-local
-  namespace: home
+  namespace: infra
 spec:
   volumeMode: Filesystem
   accessModes:
