@@ -22,7 +22,9 @@ helm:
     existingConfigMaps:
       - vector-config
     service:
-      enabled: false
+      ports:
+        - name: kubernetes_logs
+          port: 6000
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
