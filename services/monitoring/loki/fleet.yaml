@@ -42,7 +42,7 @@ helm:
       image:
         registry: ghrc.io
         repository: nginxinc/nginx-unprivileged
-        tag: 1.25-alpine
+        tag: '1.25'
       ingress:
         enabled: true
         annotations:
