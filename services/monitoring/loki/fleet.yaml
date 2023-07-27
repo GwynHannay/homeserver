@@ -37,23 +37,23 @@ helm:
     #         - loki.ocelotspot.com
     #       secretName: "loki.ocelotspot.com-tls"
     gateway:
-      enabled: true
-      replicas: 1
-      image:
-        tag: '1.25-alpine'
-      ingress:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-          - host: loki.ocelotspot.com
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - loki.ocelotspot.com
-            secretName: "loki.ocelotspot.com-tls"
+      enabled: false
+      # replicas: 1
+      # image:
+      #   tag: '1.25-alpine'
+      # ingress:
+      #   enabled: true
+      #   annotations:
+      #     cert-manager.io/cluster-issuer: letsencrypt-prod
+      #   hosts:
+      #     - host: loki.ocelotspot.com
+      #       paths:
+      #         - path: /
+      #           pathType: Prefix
+      #   tls:
+      #     - hosts:
+      #         - loki.ocelotspot.com
+      #       secretName: "loki.ocelotspot.com-tls"
     test:
       enabled: false 
     monitoring:
