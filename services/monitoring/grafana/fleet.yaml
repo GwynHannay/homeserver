@@ -54,7 +54,7 @@ helm:
         datasources:
           - name: Loki
             type: loki
-            url: https://loki.ocelotspot.com:3100
+            url: http://loki.infra.svc.cluster.local:3100
             access: proxy
         deleteDatasources:
           - name: Loki
