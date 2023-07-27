@@ -75,7 +75,7 @@ helm:
       default:
         loki-logs:
           datasource: Loki
-          gnetId: 12019
+          gnetId: 13639
           revision: 2
     grafana.ini:
       server:
