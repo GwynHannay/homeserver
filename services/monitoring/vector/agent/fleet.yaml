@@ -16,8 +16,6 @@ helm:
   # install.
   values:
     role: Agent
-    podAnnotations:
-      secret.reloader.stakater.com/reload: "vector-secrets"
     service:
       enabled: false
     dataDir: /vector-data-dir
@@ -40,9 +38,6 @@ helm:
         path: /home/homesys/apps/vector
     securityContext:
       privileged: true
-    envFrom:
-      - secretRef:
-          name: vector-secrets
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
