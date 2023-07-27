@@ -26,34 +26,8 @@ helm:
       persistence:
         size: 20Gi
         storageClass: longhorn
-    # ingress:
-    #   enabled: true
-    #   annotations:
-    #     cert-manager.io/cluster-issuer: letsencrypt-prod
-    #   hosts:
-    #     - loki.ocelotspot.com
-    #   tls:
-    #     - hosts:
-    #         - loki.ocelotspot.com
-    #       secretName: "loki.ocelotspot.com-tls"
     gateway:
       enabled: false
-      # replicas: 1
-      # image:
-      #   tag: '1.25-alpine'
-      # ingress:
-      #   enabled: true
-      #   annotations:
-      #     cert-manager.io/cluster-issuer: letsencrypt-prod
-      #   hosts:
-      #     - host: loki.ocelotspot.com
-      #       paths:
-      #         - path: /
-      #           pathType: Prefix
-      #   tls:
-      #     - hosts:
-      #         - loki.ocelotspot.com
-      #       secretName: "loki.ocelotspot.com-tls"
     test:
       enabled: false 
     monitoring:
@@ -61,6 +35,8 @@ helm:
         enabled: false 
       selfMonitoring:
         enabled: false 
+        grafanaAgent:
+          installOperator: false
       lokiCanary:
         enabled: false 
   # Override immutable resources. This could be dangerous.
