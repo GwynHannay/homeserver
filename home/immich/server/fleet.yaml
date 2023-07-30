@@ -19,7 +19,7 @@ helm:
     #   type: statefulset
     image:
       repository: ghcr.io/immich-app/immich-server
-      tag: v1.70.0
+      tag: v1.71.0
     args: ["start.sh", "immich"]
     service:
       main:

@@ -19,7 +19,7 @@ helm:
     #   type: statefulset
     image:
       repository: ghcr.io/immich-app/immich-web
-      tag: v1.70.0
+      tag: v1.71.0
     service:
       main:
         ports:
