@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: loki-local
+  name: storage-loki-0
 spec:
   capacity:
     storage: 20Gi
@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: loki-local
+  name: storage-loki-0
   namespace: infra
 spec:
   volumeMode: Filesystem
@@ -33,5 +33,5 @@ spec:
   resources:
     requests:
       storage: 20Gi
-  volumeName: loki-local
+  volumeName: storage-loki-0
   storageClassName: local-storage

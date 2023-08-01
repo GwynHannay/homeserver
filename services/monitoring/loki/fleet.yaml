@@ -25,7 +25,7 @@ helm:
       replicas: 1
       persistence:
         size: 20Gi
-        storageClass: local
+        storageClass: local-storage
     gateway:
       enabled: false
     test:
