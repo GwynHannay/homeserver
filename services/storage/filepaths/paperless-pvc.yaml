@@ -1,10 +1,48 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: paperless-local
+  name: paperless-local-data
 spec:
   capacity:
     storage: 20Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /home/homesys/apps/paperless/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - homesys
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-local-data
+  namespace: home
+spec:
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  volumeName: paperless-local-data
+  storageClassName: local-storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: paperless-local-media
+spec:
+  capacity:
+    storage: 200Gi
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
@@ -24,7 +62,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: paperless-local
+  name: paperless-local-media
   namespace: home
 spec:
   volumeMode: Filesystem
@@ -32,8 +70,8 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
-  volumeName: paperless-local
+      storage: 200Gi
+  volumeName: paperless-local-media
   storageClassName: local-storage
 ---
 apiVersion: v1

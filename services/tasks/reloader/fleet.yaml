@@ -26,7 +26,7 @@ dependsOn:
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-services-networking-metallb-custom
-  - name: homesys-services-storage-longhorn-custom
+  - name: homesys-services-storage-filepaths
   - name: homesys-services-tasks-jobs-first-build
   # Select bundles to depend on based on their label.
   # - selector:
