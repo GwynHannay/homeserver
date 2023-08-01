@@ -5,7 +5,7 @@ metadata:
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
-  schedule: "*/5 * * * *"
+  schedule: "37 * * * *"
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
