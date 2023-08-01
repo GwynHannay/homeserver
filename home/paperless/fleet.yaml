@@ -25,6 +25,28 @@ helm:
         ports:
           http:
             port: 8000
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Documents
+          gethomepage.dev/group: homesys
+          gethomepage.dev/icon: paperless-ngx.png
+          gethomepage.dev/name: Paperless-NGX
+          gethomepage.dev/widget.type: paperlessngx
+          gethomepage.dev/widget.url: "https://paperless.ocelotspot.com"
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PAPERLESS}}"
+        hosts:
+          - host: paperless.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - paperless.ocelotspot.com
+            secretName: paperless.ocelotspot.com-tls
     envFrom:
       - secretRef:
           name: paperless-secrets
@@ -104,4 +126,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
