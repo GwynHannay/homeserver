@@ -108,8 +108,6 @@ data:
     - search:
         provider: duckduckgo
         target: _blank
-    - longhorn:
-        total: true
     - kubernetes:
         cluster:
           show: false
