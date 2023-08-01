@@ -25,6 +25,25 @@ helm:
         ports:
           http:
             port: 7745
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: House Inventory
+          gethomepage.dev/group: homesys
+          gethomepage.dev/icon: homebox.png
+          gethomepage.dev/name: Homebox
+        hosts:
+          - host: homebox.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - homebox.ocelotspot.com
+            secretName: homebox.ocelotspot.com-tls
     env:
       - name: TZ
         value: "Australia/Perth"
@@ -62,4 +81,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
