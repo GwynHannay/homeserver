@@ -1,11 +1,12 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-node-influxdb
+  name: backup-node-wallabag
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
   schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -27,17 +28,17 @@ spec:
                   name: nfs
           restartPolicy: OnFailure
           securityContext:
-            runAsUser: 1001
-            runAsGroup: 1001
-            fsGroup: 1001
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:
-                path: /home/homesys/apps/db/influxdb
+                path: /home/homesys/apps/wallabag
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2/db/influxdb
+                path: /mnt/fileserver/backups/rke2/wallabag
                 type: Directory
       backoffLimit: 2
