@@ -25,6 +25,25 @@ helm:
         ports:
           http:
             port: 80
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Bookmarked Articles
+          gethomepage.dev/group: homesys
+          gethomepage.dev/icon: wallabag.png
+          gethomepage.dev/name: Wallabag
+        hosts:
+          - host: reading.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - reading.ocelotspot.com
+            secretName: reading.ocelotspot.com-tls
     envFrom:
       - secretRef:
           name: wallabag-secrets
@@ -71,4 +90,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false

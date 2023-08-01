@@ -25,6 +25,25 @@ helm:
         ports:
           http:
             port: 80
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Encrypted Notes
+          gethomepage.dev/group: homesys
+          gethomepage.dev/icon: joplin.png
+          gethomepage.dev/name: Joplin
+        hosts:
+          - host: joplin.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - joplin.ocelotspot.com
+            secretName: joplin.ocelotspot.com-tls
     envFrom:
       - secretRef:
           name: joplin-secrets
@@ -56,4 +75,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
