@@ -19,7 +19,7 @@ helm:
       replicas: 1
     image:
       repository: ghcr.io/immich-app/immich-machine-learning
-      tag: v1.72.1
+      tag: v1.72.2
     service:
       main:
         ports:
