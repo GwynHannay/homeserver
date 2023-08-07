@@ -20,7 +20,7 @@ helm:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/immich-app/immich-server
-      tag: v1.72.0
+      tag: v1.72.1
     args: ["start.sh", "microservices"]
     service:
       main:
