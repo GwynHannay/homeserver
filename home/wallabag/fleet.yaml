@@ -32,7 +32,7 @@ helm:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Bookmarked Articles
-          gethomepage.dev/group: homesys
+          gethomepage.dev/group: homesys links
           gethomepage.dev/icon: wallabag.png
           gethomepage.dev/name: Wallabag
         hosts:

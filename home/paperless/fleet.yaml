@@ -32,7 +32,7 @@ helm:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Documents
-          gethomepage.dev/group: homesys
+          gethomepage.dev/group: homesys widgets
           gethomepage.dev/icon: paperless-ngx.png
           gethomepage.dev/name: Paperless-NGX
           gethomepage.dev/widget.type: paperlessngx
