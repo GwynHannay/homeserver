@@ -35,7 +35,7 @@ helm:
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Photos
-          gethomepage.dev/group: homesys
+          gethomepage.dev/group: homesys widgets
           gethomepage.dev/icon: immich.png
           gethomepage.dev/name: Immich
           gethomepage.dev/widget.type: immich
