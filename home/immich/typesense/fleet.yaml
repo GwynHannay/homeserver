@@ -64,7 +64,7 @@ dependsOn:
   - name: homesys-services-networking-metallb-custom
   - name: homesys-services-storage-filepaths
   - name: homesys-services-tasks-jobs-first-build
-  - name: homesys-services-tasks-jobs-prep-immich
+  - name: homesys-services-tasks-jobs-first-build
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
