@@ -26,10 +26,10 @@ helm:
         gethomepage.dev/group: homesys widgets
         gethomepage.dev/icon: grafana.png
         gethomepage.dev/name: Grafana
-        gethomepage.dev/widget.type: grafana
-        gethomepage.dev/widget.url: "https://grafana.ocelotspot.com"
-        gethomepage.dev/widget.username: hannays
-        gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_GRAFANA}}"
+        # gethomepage.dev/widget.type: grafana
+        # gethomepage.dev/widget.url: "https://grafana.ocelotspot.com"
+        # gethomepage.dev/widget.username: hannays
+        # gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_GRAFANA}}"
       hosts:
         - grafana.ocelotspot.com
       tls:
