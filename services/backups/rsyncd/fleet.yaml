@@ -23,6 +23,17 @@ helm:
     service:
       main:
         enabled: false
+    persistence:
+      host:
+        enabled: true
+        type: hostPath
+        hostPath: /home/homesys/apps
+        mountPath: /homesys
+      nfs:
+        enabled: true
+        type: hostPath
+        hostPath: /mnt/fileserver
+        mountPath: /nfs
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
