@@ -22,7 +22,6 @@ spec:
           volumeMounts:
             - mountPath: /nfs
               name: nfs
-              readOnly: true
             - mountPath: /local
               name: local
       restartPolicy: Never
