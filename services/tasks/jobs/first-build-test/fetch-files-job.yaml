@@ -18,7 +18,7 @@ spec:
             - name: RSYNC_TARGET
               value: /nfs
             - name: RSYNC_OPTIONS
-              value: "avz"
+              value: "-avz"
           volumeMounts:
             - mountPath: /nfs
               name: nfs
