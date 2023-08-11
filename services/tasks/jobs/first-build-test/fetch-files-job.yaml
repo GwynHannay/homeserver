@@ -14,11 +14,11 @@ spec:
           name: rsync
           env:
             - name: RSYNC_SOURCE
-              value: /local 
+              value: /nfs 
             - name: RSYNC_TARGET
-              value: /nfs
+              value: /local
             - name: RSYNC_OPTIONS
-              value: "-avz"
+              value: "-avrz"
           volumeMounts:
             - mountPath: /nfs
               name: nfs
@@ -28,7 +28,7 @@ spec:
       volumes:
         - name: nfs
           hostPath:
-            path: /mnt/fileserver/rke2
+            path: /mnt/fileserver/rke2/main
             type: Directory
         - name: local
           hostPath:
