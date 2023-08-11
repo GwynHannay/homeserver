@@ -20,6 +20,9 @@ helm:
     image:
       repository: alpinelinux/rsyncd
       tag: latest
+    service:
+      main:
+        enabled: false
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
