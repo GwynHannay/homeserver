@@ -26,11 +26,6 @@ spec:
             - mountPath: /local
               name: local
       restartPolicy: Never
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        allowPrivilegeEscalation: true
       volumes:
         - name: nfs
           hostPath:

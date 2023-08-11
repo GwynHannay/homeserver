@@ -23,12 +23,12 @@ dependsOn:
 # Default: false
 paused: false
 
-diff:
-  comparePatches:
-  - apiVersion: batch/v1
-    kind: Job
-    name: fetch-files-job
-    namespace: infra
-    operations:
-    - op: remove
-      path: /spec/template/spec/securityContext
+# diff:
+#   comparePatches:
+#   - apiVersion: batch/v1
+#     kind: Job
+#     name: fetch-files-job
+#     namespace: infra
+#     operations:
+#     - op: remove
+#       path: /spec/template/spec/securityContext
