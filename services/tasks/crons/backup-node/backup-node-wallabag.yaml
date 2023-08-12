@@ -28,10 +28,10 @@ spec:
                   name: nfs
           restartPolicy: OnFailure
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            allowPrivilegeEscalation: true
+            runAsUser: 1001
+            runAsGroup: 1001
+            fsGroup: 1001
+            # allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:

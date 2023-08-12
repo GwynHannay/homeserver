@@ -20,6 +20,8 @@ helm:
     image:
       repository: ghcr.io/hay-kot/homebox
       tag: latest
+    securityContext:
+      fsGroup: 1001
     service:
       main:
         ports:

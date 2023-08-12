@@ -18,6 +18,8 @@ helm:
     image:
       repository: b4bz/homer
       tag: latest
+    securityContext:
+      fsGroup: 1001
     service:
       main:
         type: LoadBalancer
@@ -31,11 +33,6 @@ helm:
         value: "Australia/Perth"
       - name: INIT_ASSETS
         value: 0
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      allowPrivilegeEscalation: true
     persistence:
       assets:
         enabled: true

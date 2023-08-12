@@ -21,6 +21,8 @@ helm:
       repository: ghcr.io/immich-app/immich-server
       tag: v1.72.2
     args: ["start.sh", "immich"]
+    securityContext:
+      fsGroup: 1001
     service:
       main:
         ports:
@@ -64,7 +66,6 @@ dependsOn:
   - name: homesys-services-networking-metallb-custom
   - name: homesys-services-storage-filepaths
   - name: homesys-services-tasks-jobs-first-build
-  - name: homesys-services-tasks-jobs-first-build
   - name: homesys-home-immich-typesense
   # Select bundles to depend on based on their label.
   # - selector:
@@ -75,4 +76,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: false
+paused: true

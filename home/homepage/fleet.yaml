@@ -22,6 +22,8 @@ helm:
     image:
       repository: ghcr.io/benphelps/homepage
       tag: latest
+    securityContext:
+      fsGroup: 1001
     service:
       main:
         ports:
@@ -47,6 +49,9 @@ helm:
           - hosts:
               - home.ocelotspot.com
             secretName: "home.ocelotspot.com-tls"
+    envFrom:
+      - secretRef:
+          name: homepage-secrets
     persistence:
       config:
         enabled: true
@@ -67,9 +72,6 @@ helm:
             mountPath: /app/config/settings.yaml
           - path: widgets.yaml
             mountPath: /app/config/widgets.yaml
-    envFrom:
-      - secretRef:
-          name: homepage-secrets
     serviceAccount:
       create: true
   # Override immutable resources. This could be dangerous.

@@ -20,6 +20,8 @@ helm:
     image:
       repository: wallabag/wallabag
       tag: latest
+    securityContext:
+      fsGroup: 1001
     service:
       main:
         ports:
@@ -79,7 +81,6 @@ dependsOn:
   - name: homesys-services-storage-filepaths
   - name: homesys-services-storage-databases-postgresql
   - name: homesys-services-storage-databases-redis
-  - name: homesys-services-tasks-jobs-first-build
   - name: homesys-services-tasks-jobs-first-build
   # Select bundles to depend on based on their label.
   # - selector:
