@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/homesys/apps/wallabag
+    path: /mnt/tera/vols/wallabag
   nodeAffinity:
     required:
       nodeSelectorTerms:

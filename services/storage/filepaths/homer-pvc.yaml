@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/homesys/apps/homer
+    path: /mnt/tera/vols/homer
   nodeAffinity:
     required:
       nodeSelectorTerms:

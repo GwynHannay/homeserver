@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/homesys/apps/grafana
+    path: /mnt/tera/vols/grafana
   nodeAffinity:
     required:
       nodeSelectorTerms:

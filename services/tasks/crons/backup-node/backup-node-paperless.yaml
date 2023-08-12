@@ -35,7 +35,7 @@ spec:
           volumes:
             - name: local
               hostPath:
-                path: /home/homesys/apps/paperless
+                path: /mnt/tera/vols/paperless
                 type: Directory
             - name: nfs
               hostPath:

@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/homesys/apps/paperless/data
+    path: /mnt/tera/vols/paperless/data
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -49,7 +49,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/homesys/apps/paperless
+    path: /mnt/tera/vols/paperless
   nodeAffinity:
     required:
       nodeSelectorTerms:

@@ -35,7 +35,7 @@ spec:
           volumes:
             - name: local
               hostPath:
-                path: /home/homesys/apps/immich
+                path: /mnt/tera/vols/immich
                 type: Directory
             - name: nfs
               hostPath:

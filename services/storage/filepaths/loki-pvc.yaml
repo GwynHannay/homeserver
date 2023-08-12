@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/homesys/apps/loki
+    path: /mnt/tera/vols/loki
   nodeAffinity:
     required:
       nodeSelectorTerms:

@@ -37,7 +37,7 @@ spec:
           volumes:
             - name: local
               hostPath:
-                path: /home/homesys/apps/db/postgresql
+                path: /mnt/tera/vols/postgresql
                 type: Directory
             - name: nfs
               hostPath:

@@ -35,7 +35,7 @@ spec:
           volumes:
             - name: local
               hostPath:
-                path: /home/homesys/apps/homer
+                path: /mnt/tera/vols/homer
                 type: Directory
             - name: nfs
               hostPath:

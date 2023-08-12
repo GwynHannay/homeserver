@@ -35,6 +35,6 @@ spec:
             type: Directory
         - name: local
           hostPath:
-            path: /home/homesys/apps
+            path: /mnt/tera/vols
             type: DirectoryOrCreate
   backoffLimit: 3

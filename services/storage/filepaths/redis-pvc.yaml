@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/homesys/apps/db/redis
+    path: /mnt/tera/vols/redis
   nodeAffinity:
     required:
       nodeSelectorTerms:

@@ -35,7 +35,7 @@ spec:
           volumes:
             - name: local
               hostPath:
-                path: /home/homesys/apps/wallabag
+                path: /mnt/tera/vols/wallabag
                 type: Directory
             - name: nfs
               hostPath:
