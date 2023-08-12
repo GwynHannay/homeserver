@@ -73,7 +73,7 @@ helm:
         cpu: 5m
         memory: 300Mi
       limits:
-        cpu: 1000m
+        cpu: 2500m
         memory: 2000Mi
     sidecars:
       gotenberg:
