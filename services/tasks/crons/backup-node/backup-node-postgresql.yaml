@@ -41,6 +41,6 @@ spec:
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2/db/postgresql
+                path: /mnt/fileserver/backups/rke2/postgresql
                 type: Directory
       backoffLimit: 2

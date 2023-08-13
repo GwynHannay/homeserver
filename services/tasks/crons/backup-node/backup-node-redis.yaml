@@ -39,6 +39,6 @@ spec:
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2/db/redis
+                path: /mnt/fileserver/backups/rke2/redis
                 type: Directory
       backoffLimit: 2
