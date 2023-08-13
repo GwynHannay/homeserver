@@ -20,7 +20,7 @@ helm:
     image:
       repository: ghcr.io/immich-app/immich-machine-learning
       tag: v1.72.2
-    securityContext:
+    podSecurityContext:
       fsGroup: 1001
     service:
       main:

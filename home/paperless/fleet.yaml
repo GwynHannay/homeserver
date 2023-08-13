@@ -20,7 +20,7 @@ helm:
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
       tag: latest
-    securityContext:
+    podSecurityContext:
       fsGroup: 1001
     service:
       main:

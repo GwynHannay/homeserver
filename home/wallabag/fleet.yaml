@@ -20,7 +20,7 @@ helm:
     image:
       repository: wallabag/wallabag
       tag: latest
-    securityContext:
+    podSecurityContext:
       fsGroup: 1001
     service:
       main:

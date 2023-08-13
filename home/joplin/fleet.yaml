@@ -20,7 +20,7 @@ helm:
     image:
       repository: joplin/server
       tag: latest
-    securityContext:
+    podSecurityContext:
       fsGroup: 1001
     service:
       main:
