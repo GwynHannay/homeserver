@@ -22,7 +22,7 @@ helm:
     image:
       repository: ghcr.io/hay-kot/homebox
       tag: latest
-    securityContext:
+    podSecurityContext:
       fsGroup: 1001
     service:
       main:
