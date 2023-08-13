@@ -49,8 +49,8 @@ helm:
               - homebox.ocelotspot.com
             secretName: homebox.ocelotspot.com-tls
     envFrom:
-      - secretRef:
-          name: homebox-secrets
+      - configMapRef:
+          name: homebox-config
     persistence:
       data:
         enabled: true
