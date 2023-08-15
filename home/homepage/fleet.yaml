@@ -87,7 +87,7 @@ helm:
       icons:
         enabled: true
         existingClaim: homepage-local
-        mountPath: /app/tempy
+        mountPath: /app/public
     serviceAccount:
       create: true
   # Override immutable resources. This could be dangerous.
