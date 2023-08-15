@@ -19,7 +19,7 @@ helm:
     #   type: statefulset
     image:
       repository: ghcr.io/immich-app/immich-server
-      tag: v1.72.2
+      tag: v1.73.0
     args: ["start.sh", "immich"]
     podSecurityContext:
       fsGroup: 1001
