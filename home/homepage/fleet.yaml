@@ -84,6 +84,10 @@ helm:
         mountPath: /nfs
         hostPath: /mnt/fileserver
         readOnly: true
+      icons:
+        enabled: true
+        existingClaim: homepage-local
+        mountPath: /apps/public
     serviceAccount:
       create: true
   # Override immutable resources. This could be dangerous.
