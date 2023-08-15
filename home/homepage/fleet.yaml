@@ -78,6 +78,12 @@ helm:
         mountPath: /tera
         hostPath: /mnt/tera
         readOnly: true
+      nfs:
+        enabled: true
+        type: hostPath
+        mountPath: /nfs
+        hostPath: /mnt/fileserver
+        readOnly: true
     serviceAccount:
       create: true
   # Override immutable resources. This could be dangerous.
