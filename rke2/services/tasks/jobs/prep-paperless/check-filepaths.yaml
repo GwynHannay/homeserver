@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: check-filepaths-paperless
+  namespace: infra
+spec:
+  template:
+    metadata:
+      namespace: infra
+    spec:
+      containers:
+        - name: paperless
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - ls /local/data/ && ls /local/media/ && ls /nfs/
+          volumeMounts:
+            - mountPath: /nfs
+              name: nfs
+              readOnly: true
+            - mountPath: /local
+              name: local
+              readOnly: true
+      restartPolicy: OnFailure
+      securityContext:
+        fsGroup: 1001
+      volumes:
+        - name: nfs
+          hostPath:
+            path: /mnt/fileserver/paperless/consume
+            type: Directory
+        - name: local
+          hostPath:
+            path: /mnt/tera/vols/paperless
+            type: Directory
+  backoffLimit: 3

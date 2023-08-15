@@ -1,0 +1,12 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: homesys
+  namespace: fleet-local
+spec:
+  branch: main
+  clientSecretName: ssh-key
+  insecureSkipTLSVerify: false
+  paths:
+    - /rke2
+  repo: git@github.com:GwynHannay/homeserver.git

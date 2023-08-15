@@ -1,0 +1,91 @@
+defaultNamespace: home
+
+helm:
+  chart: app-template
+
+  repo: https://bjw-s.github.io/helm-charts
+
+  releaseName: homebox
+  # Makes helm skip the check for its own annotations
+  takeOwnership: true
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 1.5.1
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        configmap.reloader.stakater.com/reload: "homebox-config"
+    image:
+      repository: ghcr.io/hay-kot/homebox
+      tag: latest
+    podSecurityContext:
+      fsGroup: 1001
+    service:
+      main:
+        ports:
+          http:
+            port: 7745
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: House Inventory
+          gethomepage.dev/group: homesys links
+          gethomepage.dev/icon: homebox.png
+          gethomepage.dev/name: Homebox
+        hosts:
+          - host: homebox.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - homebox.ocelotspot.com
+            secretName: homebox.ocelotspot.com-tls
+    envFrom:
+      - configMapRef:
+          name: homebox-config
+    persistence:
+      data:
+        enabled: true
+        existingClaim: homebox-local
+        mountPath: /data
+    resources:
+      requests:
+        cpu: 1m
+  # Override immutable resources. This could be dangerous.
+  force: false
+  # Set the Helm --atomic flag when upgrading
+  atomic: false
+  # Disable go template pre-processing on the fleet values
+  disablePreProcess: false
+  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+  # It will wait for as long as timeoutSeconds
+  waitForJobs: true
+
+# dependsOn allows you to configure dependencies to other bundles. The current bundle
+# will only be deployed, after all dependencies are deployed and in a Ready state.
+dependsOn:
+  # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
+  # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
+  # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
+  # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
+  - name: homesys-services-networking-metallb-custom
+  - name: homesys-services-storage-filepaths
+  - name: homesys-services-tasks-jobs-prep-homebox
+  # Select bundles to depend on based on their label.
+  # - selector:
+  #     matchLabels:
+  #       app: weak-monkey
+
+# A paused bundle will not update downstream clusters but instead mark the bundle
+# as OutOfSync. One can then manually confirm that a bundle should be deployed to
+# the downstream clusters.
+# Default: false
+paused: false

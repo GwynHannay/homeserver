@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: check-filepaths-loki
+  namespace: infra
+spec:
+  template:
+    metadata:
+      namespace: infra
+    spec:
+      containers:
+        - name: loki
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - ls /local/
+          volumeMounts:
+            - mountPath: /local
+              name: local
+              readOnly: true
+      restartPolicy: OnFailure
+      securityContext:
+        fsGroup: 1001
+      volumes:
+        - name: local
+          hostPath:
+            path: /mnt/tera/vols/loki
+            type: Directory
+  backoffLimit: 3
