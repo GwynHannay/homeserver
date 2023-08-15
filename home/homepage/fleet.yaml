@@ -72,6 +72,12 @@ helm:
             mountPath: /app/config/settings.yaml
           - path: widgets.yaml
             mountPath: /app/config/widgets.yaml
+      host:
+        enabled: true
+        type: hostPath
+        mountPath: /tera
+        hostPath: /mnt/tera
+        readOnly: true
     serviceAccount:
       create: true
   # Override immutable resources. This could be dangerous.
