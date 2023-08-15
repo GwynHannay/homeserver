@@ -85,7 +85,7 @@ dependsOn:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-rke2-services-networking-metallb-custom
   - name: homesys-rke2-services-storage-filepaths
-  - name: homesys-rke2-services-storage-postgresql
+  - name: homesys-rke2-services-storage-databases-postgresql
   - name: homesys-rke2-services-tasks-jobs-prep-immich
   - name: homesys-rke2-home-immich-server
   # Select bundles to depend on based on their label.
