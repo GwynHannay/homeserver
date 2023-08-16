@@ -17,7 +17,7 @@ helm:
   values:
     image:
       repository: nocodb/nocodb
-      tag: latest
+      tag: 0.109.7
     podSecurityContext:
       fsGroup: 1001
     service:
