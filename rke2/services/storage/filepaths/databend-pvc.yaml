@@ -25,7 +25,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: databend-local-meta
-  namespace: home
+  namespace: data
 spec:
   volumeMode: Filesystem
   accessModes:
@@ -63,7 +63,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: databend-local-query
-  namespace: home
+  namespace: data
 spec:
   volumeMode: Filesystem
   accessModes:
@@ -101,7 +101,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: databend-local-logs
-  namespace: home
+  namespace: data
 spec:
   volumeMode: Filesystem
   accessModes:
