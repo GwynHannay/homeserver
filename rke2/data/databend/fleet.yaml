@@ -35,7 +35,7 @@ helm:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Data Warehouse
           gethomepage.dev/group: homesys links
-          gethomepage.dev/icon: icons/databend.png
+          gethomepage.dev/icon: /icons/databend.png
           gethomepage.dev/name: Databend
         hosts:
           - host: data.ocelotspot.com
