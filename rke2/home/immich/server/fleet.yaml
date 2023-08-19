@@ -40,6 +40,11 @@ helm:
         enabled: true
         existingClaim: immich-local-library
         mountPath: /usr/src/app/upload
+      fileserver:
+        enabled: true
+        existingClaim: immich-nfs
+        mountPath: /nfs
+        readOnly: true
     resources:
       requests:
         cpu: 5m

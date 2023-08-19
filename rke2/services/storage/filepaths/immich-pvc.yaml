@@ -111,3 +111,41 @@ spec:
       storage: 300Gi
   volumeName: immich-local-library
   storageClassName: local-storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: immich-nfs
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/fileserver
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - homesys
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-nfs
+  namespace: home
+spec:
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: immich-nfs
+  storageClassName: local-storage
