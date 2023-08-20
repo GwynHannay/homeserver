@@ -17,6 +17,8 @@ helm:
   values:
     controller:
       type: statefulset
+      annotations:
+        secret.reloader.stakater.com/reload: "databend-secrets"
     image:
       repository: datafuselabs/databend
       tag: latest

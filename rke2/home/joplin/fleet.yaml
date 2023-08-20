@@ -17,6 +17,9 @@ helm:
   values:
     controller:
       type: statefulset
+      annotations:
+        configmap.reloader.stakater.com/reload: "joplin-config"
+        secret.reloader.stakater.com/reload: "joplin-secrets"
     image:
       repository: joplin/server
       tag: latest

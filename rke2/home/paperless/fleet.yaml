@@ -17,6 +17,9 @@ helm:
   values:
     controller:
       type: statefulset
+      annotations:
+        configmap.reloader.stakater.com/reload: "paperless-config"
+        secret.reloader.stakater.com/reload: "paperless-secrets"
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
       tag: latest
