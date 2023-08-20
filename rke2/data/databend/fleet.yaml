@@ -31,10 +31,11 @@ helm:
             port: 8000
       mysql:
         enabled: true
+        primary: false
         type: LoadBalancer
         loadBalancerIP: 10.172.90.61
         ports:
-          http:
+          mysql:
             port: 3307
     ingress:
       main:
