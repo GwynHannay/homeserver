@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mage-config
-  namespace: home
+  namespace: data
   labels:
     app.kubernetes.io/name: mage
 data:

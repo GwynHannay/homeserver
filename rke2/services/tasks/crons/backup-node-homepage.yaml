@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-node-homer
+  name: backup-node-homepage
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
@@ -31,14 +31,13 @@ spec:
             runAsUser: 1001
             runAsGroup: 1001
             fsGroup: 1001
-            # allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:
-                path: /mnt/tera/vols/homer
+                path: /mnt/tera/vols/homepage
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2/homer
+                path: /mnt/fileserver/backups/rke2/homepage
                 type: Directory
       backoffLimit: 2

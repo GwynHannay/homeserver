@@ -31,7 +31,6 @@ spec:
             runAsUser: 1001
             runAsGroup: 1001
             fsGroup: 1001
-            # allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:

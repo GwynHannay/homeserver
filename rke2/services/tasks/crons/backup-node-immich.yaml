@@ -1,11 +1,11 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-node-homebox
+  name: backup-node-immich
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
-  schedule: "*/5 * * * *"
+  schedule: "7 * * * *"
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
@@ -31,14 +31,13 @@ spec:
             runAsUser: 1001
             runAsGroup: 1001
             fsGroup: 1001
-            # allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:
-                path: /mnt/tera/vols/homebox
+                path: /mnt/tera/vols/immich
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2/homebox
+                path: /mnt/fileserver/backups/rke2/immich
                 type: Directory
       backoffLimit: 2

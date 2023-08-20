@@ -1,11 +1,11 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-node-paperless
+  name: backup-node-postgresql
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
-  schedule: "37 * * * *"
+  schedule: "*/5 * * * *"
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
@@ -19,7 +19,9 @@ spec:
               name: rclone
               command: ["/bin/sh", "-c"]
               args:
-                - "rclone sync /local/ /nfs --create-empty-src-dirs -v"
+                - "rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --exclude=*/pg_internal.init --create-empty-src-dirs -v"
+              # args:
+                # - "backup_timestamp=$(date +'%Y%m%d_%H%M%S'); rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --backup-dir=/old --suffix=_$backup_timestamp --suffix-keep-extension --create-empty-src-dirs -v"
               volumeMounts:
                 - mountPath: /local
                   name: local
@@ -31,14 +33,13 @@ spec:
             runAsUser: 1001
             runAsGroup: 1001
             fsGroup: 1001
-            # allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:
-                path: /mnt/tera/vols/paperless
+                path: /mnt/tera/vols/postgresql
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2/paperless
+                path: /mnt/fileserver/backups/rke2/postgresql
                 type: Directory
       backoffLimit: 2

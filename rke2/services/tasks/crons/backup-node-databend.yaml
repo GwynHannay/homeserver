@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-node-wallabag
+  name: backup-node-databend
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
@@ -31,14 +31,13 @@ spec:
             runAsUser: 1001
             runAsGroup: 1001
             fsGroup: 1001
-            # allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:
-                path: /mnt/tera/vols/wallabag
+                path: /mnt/tera/vols/databend
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2/wallabag
+                path: /mnt/fileserver/backups/rke2/databend
                 type: Directory
       backoffLimit: 2

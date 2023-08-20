@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-node-postgresql
+  name: backup-node-homer
   namespace: infra
 spec:
   concurrencyPolicy: Forbid
@@ -19,9 +19,7 @@ spec:
               name: rclone
               command: ["/bin/sh", "-c"]
               args:
-                - "rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --exclude=*/pg_internal.init --create-empty-src-dirs -v"
-              # args:
-                # - "backup_timestamp=$(date +'%Y%m%d_%H%M%S'); rclone sync /local/ /nfs --exclude=*/replorigin_checkpoint --backup-dir=/old --suffix=_$backup_timestamp --suffix-keep-extension --create-empty-src-dirs -v"
+                - "rclone sync /local/ /nfs --create-empty-src-dirs -v"
               volumeMounts:
                 - mountPath: /local
                   name: local
@@ -33,14 +31,13 @@ spec:
             runAsUser: 1001
             runAsGroup: 1001
             fsGroup: 1001
-            # allowPrivilegeEscalation: true
           volumes:
             - name: local
               hostPath:
-                path: /mnt/tera/vols/postgresql
+                path: /mnt/tera/vols/homer
                 type: Directory
             - name: nfs
               hostPath:
-                path: /mnt/fileserver/backups/rke2/postgresql
+                path: /mnt/fileserver/backups/rke2/homer
                 type: Directory
       backoffLimit: 2
