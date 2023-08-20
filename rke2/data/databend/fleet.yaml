@@ -29,6 +29,8 @@ helm:
         ports:
           http:
             port: 8000
+          mysql:
+            port: 3307
     ingress:
       main:
         enabled: true
