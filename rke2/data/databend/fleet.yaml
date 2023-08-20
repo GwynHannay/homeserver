@@ -29,7 +29,12 @@ helm:
         ports:
           http:
             port: 8000
-          mysql:
+      mysql:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: 10.172.90.61
+        ports:
+          http:
             port: 3307
     ingress:
       main:
@@ -46,10 +51,6 @@ helm:
             paths:
               - path: /
                 pathType: Prefix
-              - path: /mysql
-                pathType: Prefix
-                service:
-                  port: 3307
         tls:
           - hosts:
               - databend.ocelotspot.com
