@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "db.int.lan",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "homesys-psql",
+            "database": "gpmigration",
+            "username": "postgres"
+        }
+    ]
+}

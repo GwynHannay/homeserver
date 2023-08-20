@@ -8,7 +8,9 @@ metadata:
 data:
   TZ: "Australia/Perth"
   GIT_REPO_LINK: git@github.com:GwynHannay/mage.git
-  GIT_REPO_PATH: /repo
+  GIT_REPO_PATH: /home/src/magerepo
   GIT_USERNAME: GwynHannay
   GIT_EMAIL: gwyn@hannay.id.au
   GIT_AUTH_TYPE: ssh
+  MAGE_PUBLIC_HOST: https://mage.ocelotspot.com
+  USER_CODE_PATH: /home/src/magerepo

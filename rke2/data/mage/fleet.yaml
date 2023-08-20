@@ -5,7 +5,7 @@ helm:
 
   repo: https://bjw-s.github.io/helm-charts
 
-  releaseName: databend
+  releaseName: mage
   # Makes helm skip the check for its own annotations
   takeOwnership: true
   # The version of the chart or semver constraint of the chart to find. If a constraint
@@ -15,10 +15,8 @@ helm:
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    controller:
-      type: statefulset
     image:
-      repository: datafuselabs/databend
+      repository: mageai/mageai
       tag: latest
     podSecurityContext:
       fsGroup: 1001
@@ -26,42 +24,42 @@ helm:
       main:
         ports:
           http:
-            port: 8000
+            port: 6789
     ingress:
       main:
         enabled: true
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Data Warehouse
+          gethomepage.dev/description: Data Orchestration
           gethomepage.dev/group: homesys links
-          gethomepage.dev/icon: /icons/databend.png
-          gethomepage.dev/name: Databend
+          gethomepage.dev/icon: /icons/mage.png
+          gethomepage.dev/name: Mage
         hosts:
-          - host: databend.ocelotspot.com
+          - host: mage.ocelotspot.com
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - databend.ocelotspot.com
-            secretName: databend.ocelotspot.com-tls
+              - mage.ocelotspot.com
+            secretName: mage.ocelotspot.com-tls
     envFrom:
       - secretRef:
-          name: databend-secrets
+          name: mage-secrets
+      - configMapRef:
+          name: mage-config
+      - secretRef:
+          name: app-hosts
     persistence:
-      meta:
+      local:
         enabled: true
-        existingClaim: databend-local-meta
-        mountPath: /var/lib/databend/meta
-      query:
+        existingClaim: mage-local
+        mountPath: /home/localdisk
+      nfs:
         enabled: true
-        existingClaim: databend-local-query
-        mountPath: /var/lib/databend/query
-      logs:
-        enabled: true
-        existingClaim: databend-local-logs
-        mountPath: /var/log/databend
+        existingClaim: mage-nfs
+        mountPath: /home/nfs
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
@@ -72,8 +70,9 @@ dependsOn:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-rke2-services-networking-metallb-custom
   - name: homesys-rke2-services-storage-filepaths
+  - name: homesys-rke2-services-storage-databases-postgresql
   - name: homesys-rke2-services-tasks-jobs-first-build
-  - name: homesys-rke2-services-tasks-jobs-prep-databend
+  - name: homesys-rke2-services-tasks-jobs-prep-mage
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
