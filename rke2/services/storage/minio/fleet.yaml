@@ -22,6 +22,11 @@ helm:
       hostname: minio.ocelotspot.com
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Object Storage
+        gethomepage.dev/group: homesys links
+        gethomepage.dev/icon: minio.png
+        gethomepage.dev/name: Minio
       tls: true
     persistence:
       existingClaim: minio-local
