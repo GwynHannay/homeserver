@@ -1,0 +1,52 @@
+defaultNamespace: infra
+
+helm:
+  chart: minio
+
+  repo: https://charts.bitnami.com/bitnami
+
+  releaseName: minio
+  # Makes helm skip the check for its own annotations
+  takeOwnership: true
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 12.6.10
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    auth:
+      existingSecret: minio-secrets
+    ingress:
+      enabled: true
+      hostname: minio.ocelotspot.com
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      tls: true
+    persistence:
+      existingClaim: minio-local
+  # Override immutable resources. This could be dangerous.
+  force: false
+  # Set the Helm --atomic flag when upgrading
+  atomic: false
+  # Disable go template pre-processing on the fleet values
+  disablePreProcess: false
+  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+  # It will wait for as long as timeoutSeconds
+  waitForJobs: true
+
+# dependsOn allows you to configure dependencies to other bundles. The current bundle
+# will only be deployed, after all dependencies are deployed and in a Ready state.
+dependsOn:
+  # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
+  # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
+  # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
+  # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
+  - name: homesys-rke2-services-networking-metallb-custom
+  - name: homesys-rke2-services-storage-filepaths
+  - name: homesys-rke2-services-tasks-jobs-first-build
+  - name: homesys-rke2-services-tasks-jobs-prep-minio
+  # Select bundles to depend on based on their label.
+  # - selector:
+  #     matchLabels:
+  #       app: weak-monkey
