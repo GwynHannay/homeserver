@@ -21,7 +21,7 @@ helm:
         secret.reloader.stakater.com/reload: "mage-secrets"
     image:
       repository: mageai/mageai
-      tag: latest
+      tag: 0.9.14
     podSecurityContext:
       fsGroup: 1001
     service:
