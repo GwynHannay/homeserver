@@ -20,8 +20,6 @@ helm:
     ingress:
       enabled: true
       hostname: minio.ocelotspot.com
-      pathType: Prefix
-      servicePort: 9001
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         gethomepage.dev/enabled: "true"
@@ -32,10 +30,7 @@ helm:
       tls: true
     apiIngress:
       enabled: true
-      hostname: minio.ocelotspot.com
-      path: /api
-      pathType: Prefix
-      servicePort: 9000
+      hostname: s3.ocelotspot.com
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       tls: true
