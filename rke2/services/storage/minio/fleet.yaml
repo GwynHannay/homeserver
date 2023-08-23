@@ -21,7 +21,7 @@ helm:
       enabled: true
       hostname: minio.ocelotspot.com
       pathType: Prefix
-      servicePort: minio-console
+      servicePort: 9001
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         gethomepage.dev/enabled: "true"
@@ -35,7 +35,7 @@ helm:
       hostname: minio.ocelotspot.com
       path: /api
       pathType: Prefix
-      servicePort: minio-api
+      servicePort: 9000
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       tls: true
