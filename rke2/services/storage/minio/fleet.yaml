@@ -45,6 +45,8 @@ helm:
         service:
           port:
             name: minio-api
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       tls: true
     persistence:
       existingClaim: minio-local
