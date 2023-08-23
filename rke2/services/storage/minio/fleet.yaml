@@ -31,9 +31,6 @@ helm:
     apiIngress:
       enabled: true
       hostname: s3.ocelotspot.com
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      tls: true
     persistence:
       existingClaim: minio-local
   # Override immutable resources. This could be dangerous.
