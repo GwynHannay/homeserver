@@ -24,6 +24,7 @@ helm:
       tag: latest
     podSecurityContext:
       fsGroup: 1001
+    args: ["server", "/data", "--console-address", ":9001"]
     service:
       main:
         ports:
