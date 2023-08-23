@@ -33,7 +33,9 @@ helm:
       extraPaths:
         - path: /api
           pathType: Prefix
-          backend: minio-api
+          backend: 
+            service:
+              name: minio-api
       tls: true
     persistence:
       existingClaim: minio-local
