@@ -58,8 +58,6 @@ helm:
           name: paperless-secrets
       - configMapRef:
           name: paperless-config
-      - secretRef:
-          name: app-hosts
     persistence:
       data:
         enabled: true

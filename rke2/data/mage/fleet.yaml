@@ -60,8 +60,6 @@ helm:
           name: mage-secrets
       - configMapRef:
           name: mage-config
-      - secretRef:
-          name: app-hosts
     persistence:
       local:
         enabled: true

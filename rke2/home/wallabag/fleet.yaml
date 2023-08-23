@@ -54,8 +54,6 @@ helm:
           name: wallabag-secrets
       - configMapRef:
           name: wallabag-config
-      - secretRef:
-          name: app-hosts
     persistence:
       images:
         enabled: true

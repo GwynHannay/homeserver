@@ -54,8 +54,6 @@ helm:
           name: joplin-secrets
       - configMapRef:
           name: joplin-config
-      - secretRef:
-          name: app-hosts
     resources:
       requests:
         cpu: 2m

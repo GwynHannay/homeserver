@@ -64,8 +64,6 @@ helm:
           name: immich-secrets
       - configMapRef:
           name: immich-config
-      - secretRef:
-          name: app-hosts
     resources:
       requests:
         cpu: 5m
