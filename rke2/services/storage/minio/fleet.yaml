@@ -33,8 +33,7 @@ helm:
       extraPaths:
         - path: /api
           pathType: Prefix
-          backend:
-            servicePort: minio-api
+          backend: minio-api
       tls: true
     persistence:
       existingClaim: minio-local
