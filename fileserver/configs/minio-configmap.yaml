@@ -8,4 +8,4 @@ metadata:
 data:
   TZ: "Australia/Perth"
   MINIO_BROWSER_REDIRECT_URL: https://minio.ocelotspot.com
-  MINIO_SERVER_URL: https://s3.ocelotspot.com
+  MINIO_SERVER_URL: http://s3.int.lan
