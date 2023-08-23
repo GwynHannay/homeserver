@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: databend-config
+  namespace: data
+  labels:
+    app.kubernetes.io/name: databend
+data:
+  TZ: "Australia/Perth"
+  QUERY_STORAGE_TYPE: s3
