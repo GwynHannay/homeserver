@@ -27,6 +27,10 @@ helm:
         gethomepage.dev/group: homesys links
         gethomepage.dev/icon: minio.png
         gethomepage.dev/name: Minio
+      extraPaths:
+        - path: /api
+          backend:
+            servicePort: minio-api
       tls: true
     persistence:
       existingClaim: minio-local
