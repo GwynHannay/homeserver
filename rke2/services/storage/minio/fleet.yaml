@@ -18,7 +18,7 @@ helm:
     auth:
       existingSecret: minio-secrets
     extraEnvVarsCM: minio-config
-    commonAnnotations:
+    podAnnotations:
       secret.reloader.stakater.com/reload: "minio-secrets"
       configmap.reloader.stakater.com/reload: "minio-config"
     ingress:
