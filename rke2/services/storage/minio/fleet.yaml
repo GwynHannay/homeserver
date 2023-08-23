@@ -1,9 +1,9 @@
 defaultNamespace: infra
 
 helm:
-  chart: minio
+  chart: app-template
 
-  repo: https://charts.bitnami.com/bitnami
+  repo: https://bjw-s.github.io/helm-charts
 
   releaseName: minio
   # Makes helm skip the check for its own annotations
@@ -11,45 +11,73 @@ helm:
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 12.7.0
+  version: 1.5.1
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    auth:
-      existingSecret: minio-secrets
-    extraEnvVarsCM: minio-config
-    podAnnotations:
-      secret.reloader.stakater.com/reload: "minio-secrets"
-      configmap.reloader.stakater.com/reload: "minio-config"
+    controller:
+      annotations:
+        secret.reloader.stakater.com/reload: "minio-secrets"
+        configmap.reloader.stakater.com/reload: "minio-config"
+    image:
+      repository: minio/minio
+      tag: latest
+    podSecurityContext:
+      fsGroup: 1001
+    service:
+      main:
+        ports:
+          http:
+            port: &console-port 9001
+          api:
+            enabled: true
+            port: &api-port 9000
     ingress:
-      enabled: true
-      hostname: minio.ocelotspot.com
-      pathType: Prefix
-      backend:
-        service:
-          port:
-            name: minio-console
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/description: Object Storage
-        gethomepage.dev/group: homesys links
-        gethomepage.dev/icon: minio.png
-        gethomepage.dev/name: Minio
-      tls: true
-    apiIngress:
-      enabled: true
-      hostname: s3.ocelotspot.com
-      pathType: Prefix
-      backend:
-        service:
-          port:
-            name: minio-api
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      tls: true
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Object Storage
+          gethomepage.dev/group: homesys links
+          gethomepage.dev/icon: minio.png
+          gethomepage.dev/name: Minio
+        hosts: 
+          - host: minio.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: *console-port
+        tls:
+          - hosts:
+              - minio.ocelotspot.com
+            secretName: minio.ocelotspot.com-tls
+      s3:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts: 
+          - host: s3.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: *api-port
+        tls:
+          - hosts:
+              - s3.ocelotspot.com
+            secretName: s3.ocelotspot.com-tls
+    envFrom:
+      - secretRef:
+          name: minio-secrets
+      - configMapRef:
+          name: minio-config
     persistence:
-      existingClaim: minio-local
+      data:
+        enabled: true
+        existingClaim: minio-local
+        mountPath: /data
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
