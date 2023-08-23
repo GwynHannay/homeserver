@@ -22,6 +22,7 @@ helm:
       hostname: minio.ocelotspot.com
       path: /
       pathType: Prefix
+      servicePort: minio-console
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         gethomepage.dev/enabled: "true"
