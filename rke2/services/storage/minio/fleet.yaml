@@ -20,8 +20,6 @@ helm:
     ingress:
       enabled: true
       hostname: minio.ocelotspot.com
-      path: /console
-      pathType: Prefix
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         gethomepage.dev/enabled: "true"
@@ -29,14 +27,13 @@ helm:
         gethomepage.dev/group: homesys links
         gethomepage.dev/icon: minio.png
         gethomepage.dev/name: Minio
-      extraPaths:
-        - path: /api
-          pathType: Prefix
-          backend: 
-            service:
-              name: minio
-              port: 
-                name: minio-api
+      tls: true
+    apiIngress:
+      enabled: true
+      hostname: minio.ocelotspot.com
+      path: /api
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       tls: true
     persistence:
       existingClaim: minio-local
