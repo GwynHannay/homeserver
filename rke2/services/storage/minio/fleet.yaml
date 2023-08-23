@@ -33,7 +33,8 @@ helm:
           backend: 
             service:
               name: minio
-              port: minio-api
+              port: 
+                name: minio-api
       tls: true
     persistence:
       existingClaim: minio-local
