@@ -1,30 +1,37 @@
-defaultNamespace: infra
+defaultNamespace: data
 
 helm:
-  chart: redis
+  chart: postgresql
 
   repo: https://charts.bitnami.com/bitnami
 
-  releaseName: redis
+  releaseName: pgwarehouse
   # Makes helm skip the check for its own annotations
   takeOwnership: true
   # The version of the chart or semver constraint of the chart to find. If a constraint
   # is specified it is evaluated each time git changes.
   # The version also determines which chart to download from OCI registries.
-  version: 17.11.7
+  version: 12.5.8
   # Any values that should be placed in the `values.yaml` and passed to helm during
   # install.
   values:
-    architecture: standalone
-    auth:
-      enabled: false
-      sentinel: false
-    master:
-      persistence:
-        existingClaim: redis
+    global:
+      postgresql:
+        auth:
+          postgresPassword: "$POSTGRES_PASSWORD"
+          existingSecret: "dw-creds"
+    audit:
+      logTimezone: "Australia/Perth"
+    primary:
       service:
         type: LoadBalancer
-        loadBalancerIP: 10.172.90.82
+        loadBalancerIP: 10.172.90.61
+      persistence:
+        enabled: true
+        existingClaim: pgwarehouse-local
+      resources:
+        requests:
+          cpu: "50m"
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -44,8 +51,8 @@ dependsOn:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-rke2-services-networking-metallb-custom
   - name: homesys-rke2-services-storage-filepaths
-  - name: homesys-rke2-services-storage-jobs-first-build
-  - name: homesys-rke2-services-storage-jobs-prep-redis
+  - name: homesys-rke2-services-tasks-jobs-first-build
+  - name: homesys-rke2-services-tasks-jobs-prep-pgwarehouse
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
