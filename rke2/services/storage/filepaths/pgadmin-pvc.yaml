@@ -25,7 +25,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pgadmin-local
-  namespace: home
+  namespace: data
 spec:
   volumeMode: Filesystem
   accessModes:

@@ -1,4 +1,4 @@
-defaultNamespace: home
+defaultNamespace: data
 
 helm:
   chart: app-template
