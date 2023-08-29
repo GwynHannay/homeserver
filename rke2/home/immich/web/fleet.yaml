@@ -21,7 +21,7 @@ helm:
         secret.reloader.stakater.com/reload: "immich-secrets"
     image:
       repository: ghcr.io/immich-app/immich-web
-      tag: v1.75.2
+      tag: v1.76.0
     podSecurityContext:
       fsGroup: 1001
     service:
