@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: it-tools-config
+  namespace: home
+  labels:
+    app.kubernetes.io/name: it-tools
+data:
+  TZ: "Australia/Perth"
