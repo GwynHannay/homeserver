@@ -5,7 +5,7 @@ helm:
 
   repo: https://bjw-s.github.io/helm-charts
 
-  releaseName: monica
+  releaseName: ghostfolio
   # Makes helm skip the check for its own annotations
   takeOwnership: true
   # The version of the chart or semver constraint of the chart to find. If a constraint
@@ -17,10 +17,10 @@ helm:
   values:
     controller:
       annotations:
-        configmap.reloader.stakater.com/reload: "monica-config"
-        secret.reloader.stakater.com/reload: "monica-secrets"
+        configmap.reloader.stakater.com/reload: "ghostfolio-config"
+        secret.reloader.stakater.com/reload: "ghostfolio-secrets"
     image:
-      repository: monica
+      repository: ghostfolio/ghostfolio
       tag: latest
     podSecurityContext:
       fsGroup: 1001
@@ -28,36 +28,31 @@ helm:
       main:
         ports:
           http:
-            port: 80
+            port: 3333
     ingress:
       main:
         enabled: true
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Personal Relationships Manager
+          gethomepage.dev/description: Finance Dashboard
           gethomepage.dev/group: homesys links
-          gethomepage.dev/icon: monica.png
-          gethomepage.dev/name: Monica
+          gethomepage.dev/icon: ghostfolio.png
+          gethomepage.dev/name: Ghostfolio
         hosts:
-          - host: monica.ocelotspot.com
+          - host: ghostfolio.ocelotspot.com
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - monica.ocelotspot.com
-            secretName: monica.ocelotspot.com-tls
+              - ghostfolio.ocelotspot.com
+            secretName: ghostfolio.ocelotspot.com-tls
     envFrom:
       - secretRef:
-          name: monica-secrets
+          name: ghostfolio-secrets
       - configMapRef:
-          name: monica-config
-    persistence:
-      data:
-        enabled: true
-        existingClaim: monica-local
-        mountPath: /var/www/html/storage
+          name: ghostfolio-config
   # Override immutable resources. This could be dangerous.
   force: false
   # Set the Helm --atomic flag when upgrading
@@ -76,10 +71,9 @@ dependsOn:
   # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
   # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
   - name: homesys-rke2-services-networking-metallb-custom
-  - name: homesys-rke2-services-storage-filepaths
   - name: homesys-rke2-services-storage-databases-postgresql
+  - name: homesys-rke2-services-storage-databases-redis
   - name: homesys-rke2-services-tasks-jobs-first-build
-  - name: homesys-rke2-services-tasks-jobs-prep-monica
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -89,4 +83,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false
