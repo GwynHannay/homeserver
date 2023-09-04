@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-node-monica
+  namespace: infra
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          namespace: infra
+        spec:
+          containers:
+            - image: bitnami/rclone
+              imagePullPolicy: IfNotPresent
+              name: rclone
+              command: ["/bin/sh", "-c"]
+              args:
+                - "rclone sync /local/ /nfs --create-empty-src-dirs -v"
+              volumeMounts:
+                - mountPath: /local
+                  name: local
+                  readOnly: true
+                - mountPath: /nfs
+                  name: nfs
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 1001
+            fsGroup: 1001
+          volumes:
+            - name: local
+              hostPath:
+                path: /mnt/tera/vols/monica
+                type: Directory
+            - name: nfs
+              hostPath:
+                path: /mnt/fileserver/backups/rke2/monica
+                type: Directory
+      backoffLimit: 2

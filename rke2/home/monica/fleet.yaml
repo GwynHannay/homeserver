@@ -1,11 +1,11 @@
-defaultNamespace: data
+defaultNamespace: home
 
 helm:
   chart: app-template
 
   repo: https://bjw-s.github.io/helm-charts
 
-  releaseName: mage
+  releaseName: monica
   # Makes helm skip the check for its own annotations
   takeOwnership: true
   # The version of the chart or semver constraint of the chart to find. If a constraint
@@ -17,58 +17,56 @@ helm:
   values:
     controller:
       annotations:
-        configmap.reloader.stakater.com/reload: "mage-config"
-        secret.reloader.stakater.com/reload: "mage-secrets"
+        configmap.reloader.stakater.com/reload: "monica-config"
+        secret.reloader.stakater.com/reload: "monica-secrets"
     image:
-      repository: mageai/mageai
+      repository: monica
       tag: latest
     podSecurityContext:
       fsGroup: 1001
-    serviceAccount:
-      name: mage-user
     service:
       main:
         ports:
           http:
-            port: 6789
+            port: 80
     ingress:
       main:
         enabled: true
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Data Orchestration
+          gethomepage.dev/description: Personal Relationships Manager
           gethomepage.dev/group: homesys links
-          gethomepage.dev/icon: /icons/mage.png
-          gethomepage.dev/name: Mage
+          gethomepage.dev/icon: monica.png
+          gethomepage.dev/name: Monica
         hosts:
-          - host: mage.ocelotspot.com
+          - host: monica.ocelotspot.com
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - mage.ocelotspot.com
-            secretName: mage.ocelotspot.com-tls
-    env:
-      - name: KUBE_NAMESPACE
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.namespace
+              - monica.ocelotspot.com
+            secretName: monica.ocelotspot.com-tls
     envFrom:
       - secretRef:
-          name: mage-secrets
+          name: monica-secrets
       - configMapRef:
-          name: mage-config
+          name: monica-config
     persistence:
-      local:
+      data:
         enabled: true
-        existingClaim: mage-local
-        mountPath: /home/src
-      nfs:
-        enabled: true
-        existingClaim: mage-nfs
-        mountPath: /home/nfs
+        existingClaim: monica-local
+        mountPath: /var/www/html/storage
+  # Override immutable resources. This could be dangerous.
+  force: false
+  # Set the Helm --atomic flag when upgrading
+  atomic: false
+  # Disable go template pre-processing on the fleet values
+  disablePreProcess: false
+  # if set and timeoutSeconds provided, will wait until all Jobs have been completed before marking the GitRepo as ready.
+  # It will wait for as long as timeoutSeconds
+  waitForJobs: true
 
 # dependsOn allows you to configure dependencies to other bundles. The current bundle
 # will only be deployed, after all dependencies are deployed and in a Ready state.
@@ -81,7 +79,7 @@ dependsOn:
   - name: homesys-rke2-services-storage-filepaths
   - name: homesys-rke2-services-storage-databases-postgresql
   - name: homesys-rke2-services-tasks-jobs-first-build
-  - name: homesys-rke2-services-tasks-jobs-prep-mage
+  - name: homesys-rke2-services-tasks-jobs-prep-monica
   # Select bundles to depend on based on their label.
   # - selector:
   #     matchLabels:
@@ -91,4 +89,4 @@ dependsOn:
 # as OutOfSync. One can then manually confirm that a bundle should be deployed to
 # the downstream clusters.
 # Default: false
-paused: true
+paused: false

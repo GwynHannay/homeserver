@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monica-config
+  namespace: home
+  labels:
+    app.kubernetes.io/name: monica
+data:
+  TZ: "Australia/Perth"
+  APP_URL: https://monica.ocelotspot.com
+  APP_ENV: production
+  DB_DATABASE: monica
