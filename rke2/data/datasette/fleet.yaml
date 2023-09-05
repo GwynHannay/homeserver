@@ -24,7 +24,9 @@ helm:
       tag: latest
     command:
       - "datasette"
-      - "-h 0.0.0.0"
+    args:
+      - "-h"
+      - "0.0.0.0"
     podSecurityContext:
       fsGroup: 1001
     service:
