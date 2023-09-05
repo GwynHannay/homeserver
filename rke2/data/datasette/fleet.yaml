@@ -1,0 +1,82 @@
+defaultNamespace: data
+
+helm:
+  chart: app-template
+
+  repo: https://bjw-s.github.io/helm-charts
+
+  releaseName: datasette
+  # Makes helm skip the check for its own annotations
+  takeOwnership: true
+  # The version of the chart or semver constraint of the chart to find. If a constraint
+  # is specified it is evaluated each time git changes.
+  # The version also determines which chart to download from OCI registries.
+  version: 1.5.1
+  # Any values that should be placed in the `values.yaml` and passed to helm during
+  # install.
+  values:
+    # controller:
+    #   annotations:
+    #     configmap.reloader.stakater.com/reload: "datasette-config"
+    #     secret.reloader.stakater.com/reload: "datasette-secrets"
+    image:
+      repository: datasetteproject/datasette
+      tag: latest
+    podSecurityContext:
+      fsGroup: 1001
+    service:
+      main:
+        ports:
+          http:
+            port: 8001
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Data Exploration & Publishing
+          gethomepage.dev/group: homesys links
+          gethomepage.dev/icon: /icons/datasette.png
+          gethomepage.dev/name: Datasette
+        hosts:
+          - host: datasette.ocelotspot.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - datasette.ocelotspot.com
+            secretName: datasette.ocelotspot.com-tls
+    # envFrom:
+    #   - secretRef:
+    #       name: datasette-secrets
+    #   - configMapRef:
+    #       name: datasette-config
+    persistence:
+      data:
+        enabled: true
+        existingClaim: datasette-local
+        mountPath: /mnt
+
+# dependsOn allows you to configure dependencies to other bundles. The current bundle
+# will only be deployed, after all dependencies are deployed and in a Ready state.
+dependsOn:
+  # Format: <GITREPO-NAME>-<BUNDLE_PATH> with all path separators replaced by "-"
+  # Example: GitRepo name "one", Bundle path "/multi-cluster/hello-world" => "one-multi-cluster-hello-world"
+  # Note: Bundle names are limited to 53 characters long. If longer they will be shortened:
+  # opni-fleet-examples-fleets-opni-ui-plugin-operator-crd becomes opni-fleet-examples-fleets-opni-ui-plugin-opera-021f7
+  - name: homesys-rke2-services-networking-metallb-custom
+  - name: homesys-rke2-services-storage-filepaths
+  - name: homesys-rke2-services-tasks-jobs-first-build
+  - name: homesys-rke2-services-tasks-jobs-prep-datasette
+  # Select bundles to depend on based on their label.
+  # - selector:
+  #     matchLabels:
+  #       app: weak-monkey
+
+# A paused bundle will not update downstream clusters but instead mark the bundle
+# as OutOfSync. One can then manually confirm that a bundle should be deployed to
+# the downstream clusters.
+# Default: false
+paused: false
