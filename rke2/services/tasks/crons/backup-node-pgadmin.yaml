@@ -30,7 +30,7 @@ spec:
           securityContext:
             runAsUser: 1001
             runAsGroup: 1001
-            fsGroup: 1001
+            fsGroup: 5050
           volumes:
             - name: local
               hostPath:
