@@ -22,7 +22,7 @@ helm:
         secret.reloader.stakater.com/reload: "immich-secrets"
     image:
       repository: ghcr.io/immich-app/immich-machine-learning
-      tag: v1.78.1
+      tag: v1.79.0
     podSecurityContext:
       fsGroup: 1001
     service:

@@ -23,7 +23,7 @@ helm:
         secret.reloader.stakater.com/reload: "immich-secrets"
     image:
       repository: ghcr.io/immich-app/immich-server
-      tag: v1.78.1
+      tag: v1.79.0
     args: ["start.sh", "microservices"]
     podSecurityContext:
       fsGroup: 1001
@@ -40,6 +40,11 @@ helm:
         enabled: true
         existingClaim: immich-local-library
         mountPath: /usr/src/app/upload
+      external:
+        enabled: true
+        existingClaim: immich-ext
+        mountPath: /mnt/media
+        readOnly: true
     resources:
       requests:
         cpu: 5m
